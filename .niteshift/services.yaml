@@ -70,7 +70,11 @@ services:
                   reverse_proxy 127.0.0.1:8234
               }
               handle {
-                  reverse_proxy 127.0.0.1:8000
+                  reverse_proxy 127.0.0.1:8000 {
+                      # Django rejects preview task hosts because underscores violate RFC 1034/1035.
+                      header_up Host localhost:{$PORT}
+                      header_up X-Forwarded-Host localhost:{$PORT}
+                  }
               }
               # Django sends X-Frame-Options: SAMEORIGIN, which blanks the preview panel.
               header {
