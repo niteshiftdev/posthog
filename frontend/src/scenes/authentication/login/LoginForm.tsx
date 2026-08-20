@@ -103,7 +103,7 @@ export function LoginForm(): JSX.Element {
                             </>
                         )
                     }
-                    sub={isCodeSent ? undefined : "Welcome back. Let's go ship something."}
+                    sub={isCodeSent ? undefined : 'Welcome back. The hedgehogs missed you.'}
                 />
                 <SessionRiskBanner className="mb-4" />
                 {generalError && (
