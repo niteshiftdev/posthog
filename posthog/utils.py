@@ -517,14 +517,33 @@ def _build_template_context(
         context["debug"] = True
         context["git_branch"] = get_git_branch()
         source_path = "src/index.tsx"
+        entry_name = "index"
         if template_name == "exporter.html":
             source_path = "src/exporter/index.tsx"
+            entry_name = "exporter"
         elif template_name == "render_query.html":
             source_path = "src/render-query/index.tsx"
+            entry_name = "render_query"
         # Add vite dev scripts for development
         js_url = get_js_url(request)
         csp_nonce = getattr(request, "csp_nonce", "")
-        context["vite_dev_scripts"] = f"""
+        if os.environ.get("VITE_BUNDLED_DEV") == "true":
+            # Vite's experimental bundled dev mode (frontend/vite.config.mts gates on the same
+            # variable) serves rolldown output at /assets/ and drops the per-module transform
+            # middleware, so /src/*.tsx and /@react-refresh URLs 404. The HMR client and React
+            # refresh runtime are compiled into the bundle; only the global refresh no-ops that
+            # Vite-owned HTML would carry (lazily compiled chunks reference them) plus the entry
+            # tag are needed here.
+            context["vite_dev_scripts"] = f"""
+        <script nonce="{csp_nonce}">
+            window.$RefreshReg$ = () => {{}}
+            window.$RefreshSig$ = () => (type) => type
+            window.__vite_plugin_react_preamble_installed__ = true
+        </script>
+        <!-- Vite development server (bundled dev mode) -->
+        <script type="module" src="{js_url}/assets/{entry_name}.js"></script>"""
+        else:
+            context["vite_dev_scripts"] = f"""
         <script nonce="{csp_nonce}" type="module">
             import RefreshRuntime from '{js_url}/@react-refresh'
             RefreshRuntime.injectIntoGlobalHook(window)
