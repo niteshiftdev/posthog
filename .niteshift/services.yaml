@@ -26,6 +26,11 @@ services:
           # Emit same-origin Vite URLs, so the proxy serves the app and its modules as one origin.
           export JS_URL=""
           exec ./bin/start-backend
+      environment:
+          # Emit the bundled entry script instead of per-module dev URLs; must match the
+          # frontend service's flag.
+          - name: VITE_BUNDLED_DEV
+            value: 'true'
 
     - name: worker
       command: |
@@ -47,6 +52,10 @@ services:
           # Vite rejects the preview hostname otherwise.
           - name: VITE_ALLOWED_HOSTS
             value: localhost,.preview.niteshift.dev
+          # Bundled dev mode collapses thousands of per-module requests into a few chunks,
+          # which is what makes the app load fast through the preview proxy.
+          - name: VITE_BUNDLED_DEV
+            value: 'true'
 
     # One origin for the browser: Django, the Vite dev server, and framing headers the preview
     # panel accepts.
@@ -64,7 +73,8 @@ services:
           }
           :{$PORT} {
               # The Vite dev server owns its module graph; Django serves everything else.
-              @vite path /@* /src/* /node_modules/*
+              # /assets/* is the bundled dev mode output (served from memory by Vite).
+              @vite path /@* /src/* /node_modules/* /assets/*
               @vite_hmr header Sec-WebSocket-Protocol *vite-hmr*
               handle @vite_hmr {
                   reverse_proxy 127.0.0.1:8234

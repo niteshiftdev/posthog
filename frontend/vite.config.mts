@@ -73,7 +73,10 @@ export default defineConfig(({ mode }) => {
                 // it by default when imported from products/*/frontend, like the @posthog/icons case above.
                 // Alias each export explicitly, subpath first: a lone package-root alias would rewrite the
                 // '@posthog/llm-normalizer/types' import to a nonexistent path instead of src/types.ts.
-                '@posthog/llm-normalizer/types': resolve(__dirname, 'node_modules/@posthog/llm-normalizer/src/types.ts'),
+                '@posthog/llm-normalizer/types': resolve(
+                    __dirname,
+                    'node_modules/@posthog/llm-normalizer/src/types.ts'
+                ),
                 '@posthog/llm-normalizer': resolve(__dirname, 'node_modules/@posthog/llm-normalizer/src/index.ts'),
                 // These @tiptap packages live only in frontend/node_modules, which products/*/frontend
                 // files can't reach by walking up from their own directory. Alias each package
@@ -147,6 +150,13 @@ export default defineConfig(({ mode }) => {
         },
         css: {
             devSourcemap: true,
+        },
+        experimental: {
+            // Bundled dev mode serves the app as a handful of rolldown chunks instead of thousands
+            // of module requests, which matters when the dev server sits behind a high-latency
+            // proxy (e.g. cloud sandbox previews). The backend must emit the bundled entry script
+            // when this is on; posthog/utils.py gates on the same variable.
+            bundledDev: process.env.VITE_BUNDLED_DEV === 'true',
         },
         optimizeDeps: {
             include: ['react', 'react-dom', 'buffer'],
