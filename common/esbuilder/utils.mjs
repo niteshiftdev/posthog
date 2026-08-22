@@ -617,7 +617,14 @@ export async function buildOrWatch(config) {
                     path.resolve(absWorkingDir, '../products/*/frontend/**/*'),
                 ],
                 {
-                    ignored: /.*(Type|\.test\.stories)\.[tj]sx?$/,
+                    ignored: [
+                        /.*(Type|\.test\.stories)\.[tj]sx?$/,
+                        // The products glob descends into each product's node_modules, where pnpm's
+                        // symlinks nest without bottom (kea/lib/node_modules/.pnpm/…/node_modules/…).
+                        // chokidar keeps discovering deeper paths and adding a watch for each one,
+                        // so the watcher grows until V8 aborts the process.
+                        /(^|[/\\])node_modules([/\\]|$)/,
+                    ],
                     ignoreInitial: true,
                 }
             )
