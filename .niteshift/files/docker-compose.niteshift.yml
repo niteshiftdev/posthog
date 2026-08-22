@@ -1,0 +1,8 @@
+# Compose override for the Niteshift sandbox. ClickHouse publishes 8443, which the sandbox
+# already listens on. Compose appends to `ports`, so the whole list has to be replaced.
+services:
+    clickhouse:
+        ports: !override
+            - '8123:8123'
+            - '9000:9000'
+            - '9009:9009'

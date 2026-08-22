@@ -5,39 +5,40 @@ services:
     # unit owns: clickhouse declares kafka/zookeeper, personhog-replica declares db.
     - name: db
       command: |
-          exec docker compose -p posthog -f docker-compose.dev.yml -f docker-compose.niteshift.yml \
-              up db
+          exec docker compose -p posthog -f docker-compose.dev.yml \
+              -f .niteshift/files/docker-compose.niteshift.yml up db
       stopGracePeriod: 30s
 
     - name: redis
       command: |
-          exec docker compose -p posthog -f docker-compose.dev.yml -f docker-compose.niteshift.yml \
-              up redis7
+          exec docker compose -p posthog -f docker-compose.dev.yml \
+              -f .niteshift/files/docker-compose.niteshift.yml up redis7
       stopGracePeriod: 20s
 
     # kafka-init pre-creates topics and exits; it re-runs (idempotently) on every unit restart.
     - name: kafka
       command: |
-          exec docker compose -p posthog -f docker-compose.dev.yml -f docker-compose.niteshift.yml \
-              up zookeeper kafka kafka-init
+          exec docker compose -p posthog -f docker-compose.dev.yml \
+              -f .niteshift/files/docker-compose.niteshift.yml up zookeeper kafka kafka-init
       stopGracePeriod: 30s
 
     - name: clickhouse
       command: |
-          exec docker compose -p posthog -f docker-compose.dev.yml -f docker-compose.niteshift.yml \
-              up --no-deps clickhouse
+          exec docker compose -p posthog -f docker-compose.dev.yml \
+              -f .niteshift/files/docker-compose.niteshift.yml up --no-deps clickhouse
       stopGracePeriod: 30s
 
     - name: objectstorage
       command: |
-          exec docker compose -p posthog -f docker-compose.dev.yml -f docker-compose.niteshift.yml \
-              up objectstorage
+          exec docker compose -p posthog -f docker-compose.dev.yml \
+              -f .niteshift/files/docker-compose.niteshift.yml up objectstorage
       stopGracePeriod: 20s
 
     - name: personhog
       command: |
-          exec docker compose -p posthog -f docker-compose.dev.yml -f docker-compose.niteshift.yml \
-              up --no-deps personhog-replica personhog-router
+          exec docker compose -p posthog -f docker-compose.dev.yml \
+              -f .niteshift/files/docker-compose.niteshift.yml up --no-deps \
+              personhog-replica personhog-router
       stopGracePeriod: 20s
       environment:
           # Points the replica at the main database, matching the seeded persons.
@@ -46,16 +47,7 @@ services:
 
     - name: backend
       command: |
-          export PATH="/opt/node/bin:$PWD/.venv/bin:$PATH"
-          # .env.development and .env.services are the repo's committed dev defaults; bin/start
-          # loads them this way for host-side processes.
-          while IFS="=" read -r name value; do
-              if [[ -n "$name" && "$name" != \#* && -z "${!name:-}" ]]; then
-                  export "$name=$value"
-              fi
-          done < <(cat .env.development .env.services)
-          export PERSONS_DB_WRITER_URL="postgres://posthog:posthog@db:5432/posthog"
-          export PERSONS_DB_READER_URL="$PERSONS_DB_WRITER_URL"
+          source .niteshift/files/dev-env.sh
           # bin/start-backend otherwise binds the Docker bridge address, which localhost misses.
           export HOST_BIND=0.0.0.0
           # Emit same-origin Vite URLs, so the proxy serves the app and its modules as one origin.
@@ -64,14 +56,7 @@ services:
 
     - name: worker
       command: |
-          export PATH="/opt/node/bin:$PWD/.venv/bin:$PATH"
-          while IFS="=" read -r name value; do
-              if [[ -n "$name" && "$name" != \#* && -z "${!name:-}" ]]; then
-                  export "$name=$value"
-              fi
-          done < <(cat .env.development .env.services)
-          export PERSONS_DB_WRITER_URL="postgres://posthog:posthog@db:5432/posthog"
-          export PERSONS_DB_READER_URL="$PERSONS_DB_WRITER_URL"
+          source .niteshift/files/dev-env.sh
           exec ./bin/start-celery worker
 
     - name: frontend
@@ -87,6 +72,11 @@ services:
     # panel accepts.
     - name: proxy
       port: 8010
+      # PostHog redirects an anonymous visitor to /login, so the preview needs a session. The
+      # command mints one for the demo account .niteshift/setup seeds.
+      auth:
+          type: cookie-file
+          command: .niteshift/files/mint-preview-session
       command: |
           exec caddy run --adapter caddyfile --config - <<'CADDY'
           {
@@ -107,14 +97,14 @@ services:
               handle @vite {
                   reverse_proxy 127.0.0.1:8234
               }
-            handle {
-                reverse_proxy 127.0.0.1:8000 {
-                    # Django 5.2 rejects hostnames with underscores per RFC 1034/1035;
-                    # sanitize the preview hostname before it reaches the app.
-                    header_up Host "_" "-"
-                    header_up X-Forwarded-Host "_" "-"
-                }
-            }
+              handle {
+                  reverse_proxy 127.0.0.1:8000 {
+                      # Django 5.2 rejects hostnames with underscores per RFC 1034/1035;
+                      # sanitize the preview hostname before it reaches the app.
+                      header_up Host "_" "-"
+                      header_up X-Forwarded-Host "_" "-"
+                  }
+              }
               # Django sends X-Frame-Options: SAMEORIGIN, which blanks the preview panel.
               header {
                   -X-Frame-Options
