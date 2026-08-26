@@ -95,8 +95,10 @@ services:
     - name: proxy
       port: 8010
       auth:
-          type: cookie-file
-          command: .niteshift/files/write-auth-state
+          # Issue the session on the preview host. Localhost storage-state cookies are not
+          # sent into this iframe, so the panel would otherwise open on /login.
+          type: magic-dev-login-url
+          path: /__dev/login?returnTo={returnTo}
       command: |
           # Bundled dev briefly serves the HTML fallback at the asset URL while its first build runs.
           until curl -sfI http://127.0.0.1:8234/assets/index.js | rg -qi '^Content-Type: text/javascript'; do
