@@ -91,7 +91,6 @@ from .utils import opt_slash_path, render_template
 from .views import (
     health,
     login_required,
-    magic_dev_login,
     preferences_page,
     preflight_check,
     render_query,
@@ -487,7 +486,6 @@ urlpatterns = [
     opt_slash_path("_health", health),
     opt_slash_path("_stats", stats),
     opt_slash_path("_preflight", preflight_check),
-    opt_slash_path("__dev/login", magic_dev_login),
     # ee
     *ee_urlpatterns,
     # api

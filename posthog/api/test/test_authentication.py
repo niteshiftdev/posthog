@@ -804,56 +804,6 @@ class TestDevLoginAPI(APIBaseTest):
         response = self.client.get("/api/login/dev")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    @override_settings(DEBUG=True, ALLOW_DEV_LOGIN=True)
-    def test_magic_dev_login_signs_in_and_redirects(self):
-        self.client.logout()
-        response = self.client.get("/__dev/login", {"email": self.user.email, "returnTo": "/home"})
-        self.assertRedirects(response, "/home", fetch_redirect_response=False)
-        me = self.client.get("/api/users/@me")
-        self.assertEqual(me.status_code, status.HTTP_200_OK)
-        self.assertEqual(me.json()["email"], self.user.email)
-
-    @override_settings(DEBUG=True, ALLOW_DEV_LOGIN=True)
-    def test_magic_dev_login_defaults_to_seeded_demo_user(self):
-        User.objects.create_and_join(self.organization, "test@posthog.com", None)
-        self.client.logout()
-        response = self.client.get("/__dev/login")
-        self.assertEqual(response.status_code, status.HTTP_302_FOUND)
-        me = self.client.get("/api/users/@me")
-        self.assertEqual(me.status_code, status.HTTP_200_OK)
-        self.assertEqual(me.json()["email"], "test@posthog.com")
-
-    @parameterized.expand(
-        [
-            ("https://evil.example.com",),
-            ("/login",),
-            ("/signup",),
-        ]
-    )
-    @override_settings(DEBUG=True, ALLOW_DEV_LOGIN=True)
-    def test_magic_dev_login_rejects_unsafe_or_auth_wall_return(self, return_to: str):
-        self.client.logout()
-        response = self.client.get("/__dev/login", {"email": self.user.email, "returnTo": return_to})
-        self.assertRedirects(response, "/", fetch_redirect_response=False)
-
-    @parameterized.expand(
-        [
-            (False, True),
-            (True, False),
-            (False, False),
-        ]
-    )
-    def test_magic_dev_login_hidden_when_not_allowed(self, debug: bool, allow_dev_login: bool):
-        with override_settings(DEBUG=debug, ALLOW_DEV_LOGIN=allow_dev_login):
-            response = self.client.get("/__dev/login", {"email": self.user.email})
-            self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-
-    @override_settings(DEBUG=True, ALLOW_DEV_LOGIN=True)
-    def test_magic_dev_login_unknown_user_is_404(self):
-        self.client.logout()
-        response = self.client.get("/__dev/login", {"email": "nobody@posthog.com"})
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-
 
 class TestLogoutRedirect(APIBaseTest):
     """

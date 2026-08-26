@@ -32,7 +32,7 @@ from posthog.cloud_utils import is_cloud
 from posthog.email import is_email_available
 from posthog.exceptions_capture import capture_exception
 from posthog.health import is_clickhouse_connected, is_kafka_connected
-from posthog.helpers.dev_login import is_dev_login_allowed, perform_magic_dev_login
+from posthog.helpers.dev_login import is_dev_login_allowed
 from posthog.models import Organization, Team, User
 from posthog.models.activity_logging.activity_log import Detail, log_activity
 from posthog.models.integration import SlackIntegration
@@ -118,12 +118,6 @@ def login_required(view):
         return apply_auth_brand_cookie(request, response)
 
     return handler
-
-
-@never_cache
-@require_http_methods(["GET", "HEAD"])
-def magic_dev_login(request: HttpRequest) -> HttpResponse:
-    return perform_magic_dev_login(request)
 
 
 def health(request):
