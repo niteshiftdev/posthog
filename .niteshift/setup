@@ -43,7 +43,12 @@ fi
 # The frontend watchers walk the whole monorepo and exhaust the default inotify budget, which
 # takes the Vite dev server down with ENOSPC.
 echo "→ Raising the inotify limits"
-sysctl -q -w fs.inotify.max_user_watches=1048576 -w fs.inotify.max_user_instances=8192
+# gVisor does not expose these kernel limit controls.
+for limit in max_user_watches=1048576 max_user_instances=8192; do
+    if [[ -e "/proc/sys/fs/inotify/${limit%%=*}" ]]; then
+        sysctl -q -w "fs.inotify.$limit"
+    fi
+done
 
 echo "→ Installing Python dependencies"
 uv sync
