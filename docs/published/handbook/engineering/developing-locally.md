@@ -283,11 +283,6 @@ If you get `Configuration property "enable.ssl.certificate.verification" not sup
 **pyproject.toml parse warnings**
 When running `uv sync`, you may see a `Failed to parse` warning related to `pyproject.toml`. This is usually harmless – if you see the `Activate with:` line at the end, your environment was created successfully.
 
-**pytest-split wheel metadata error**
-If `uv sync` fails with ``Trailing `|| >=6` is not allowed`` while building `pytest-split`, update your checkout and rerun `uv sync`.
-The workspace constrains the isolated build dependency to `poetry-core<2.5` because version 2.5 emits an invalid pytest requirement for the pinned fork.
-Runtime dependency pins in `uv.lock` do not pin isolated build dependencies.
-
 ## Option 2: Developing with Coder workspaces (PostHog employees only)
 
 If you work at PostHog and want a remote workspace instead of running the stack on your laptop, see the [internal Coder workspaces guide](https://github.com/PostHog/posthog/blob/master/docs/internal/coder-workspaces.md).
