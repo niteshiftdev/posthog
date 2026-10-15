@@ -3255,6 +3255,22 @@ export const DashboardsUpdateWidgetsBatchBody = /* @__PURE__ */ zod
     })
     .describe('OpenAPI-only batch-update schema with widget_type-discriminated config shapes for agents.')
 
+export const dashboardsBulkDeleteCreateBodyIdsMax = 100
+
+export const dashboardsBulkDeleteCreateBodyDeleteInsightsDefault = false
+
+export const DashboardsBulkDeleteCreateBody = /* @__PURE__ */ zod.object({
+    ids: zod
+        .array(zod.number().min(1))
+        .min(1)
+        .max(dashboardsBulkDeleteCreateBodyIdsMax)
+        .describe('IDs of 1 to 100 dashboards to soft-delete. Duplicate IDs are processed once.'),
+    delete_insights: zod
+        .boolean()
+        .default(dashboardsBulkDeleteCreateBodyDeleteInsightsDefault)
+        .describe('Also delete insights that are not on any dashboard outside the deleted batch.'),
+})
+
 /**
  * Bulk update tags on multiple objects.
  *

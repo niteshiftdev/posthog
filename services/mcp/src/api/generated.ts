@@ -20079,6 +20079,32 @@ export namespace Schemas {
       readonly search_match_type: SearchMatchTypeEnum | null;
     }
 
+    export interface DashboardBulkDeleteRequest {
+      /**
+         * IDs of 1 to 100 dashboards to soft-delete. Duplicate IDs are processed once.
+         * @minItems 1
+         * @maxItems 100
+         * @items.minimum 1
+         */
+      ids: number[];
+      /** Also delete insights that are not on any dashboard outside the deleted batch. */
+      delete_insights?: boolean;
+    }
+
+    export interface DashboardBulkDeleteSkipped {
+      /** Dashboard ID that was skipped. */
+      id: number;
+      /** Why this dashboard was skipped: not_found or permission_denied. */
+      reason: string;
+    }
+
+    export interface DashboardBulkDeleteResponse {
+      /** IDs of the dashboards soft-deleted. */
+      deleted: number[];
+      /** Skipped IDs and the reason for each skip. */
+      skipped: DashboardBulkDeleteSkipped[];
+    }
+
     export interface DashboardCollaborator {
       readonly id: string;
       readonly dashboard_id: number;

@@ -86,7 +86,8 @@ export function DashboardsTable({
     hideActions,
 }: DashboardsTableProps): JSX.Element {
     const { unpinDashboard, pinDashboard } = useActions(dashboardsModel)
-    const { tableSortingChanged, setFilters, moveDashboardsToFolder } = useActions(dashboardsLogic)
+    const { bulkDeletingDashboardIds } = useValues(dashboardsModel)
+    const { tableSortingChanged, setFilters, moveDashboardsToFolder, showBulkDeleteModal } = useActions(dashboardsLogic)
     const { tableSorting, filters, filedDashboardIds } = useValues(dashboardsLogic)
     // Server-side fuzzy search ranks results by relevance; re-sorting alphabetically by name
     // would push the exact match below partial matches. Suppress the persisted column sort
@@ -343,13 +344,15 @@ export function DashboardsTable({
                     barClassName: 'mb-2',
                     getKey: (dashboard: DashboardType): number => dashboard.id,
                     isRowSelectable: (dashboard: DashboardType) =>
-                        accessLevelSatisfied(
-                            AccessControlResourceType.Dashboard,
-                            dashboard.user_access_level,
-                            AccessControlLevel.Editor
-                        )
-                            ? true
-                            : { disabledReason: DASHBOARD_CANNOT_EDIT_MESSAGE },
+                        bulkDeletingDashboardIds.includes(dashboard.id)
+                            ? { disabledReason: 'This dashboard is being deleted' }
+                            : accessLevelSatisfied(
+                                    AccessControlResourceType.Dashboard,
+                                    dashboard.user_access_level,
+                                    AccessControlLevel.Editor
+                                )
+                              ? true
+                              : { disabledReason: DASHBOARD_CANNOT_EDIT_MESSAGE },
                     rowAriaLabel: (dashboard: DashboardType) => `Select dashboard ${dashboard.name}`,
                     headerAriaLabel: 'Select all dashboards on this page',
                     renderActions: (ctx) => (
@@ -367,6 +370,21 @@ export function DashboardsTable({
                                     dashboardsModel.actions.loadDashboards()
                                 }}
                             />
+                            <LemonButton
+                                size="small"
+                                type="secondary"
+                                status="danger"
+                                disabledReason={
+                                    ctx.selectedKeys.length > 100 ? 'Select up to 100 dashboards' : undefined
+                                }
+                                onClick={() => {
+                                    showBulkDeleteModal([...ctx.selectedKeys])
+                                    ctx.clearSelection()
+                                }}
+                                data-attr="dashboards-bulk-delete"
+                            >
+                                Delete selected
+                            </LemonButton>
                         </>
                     ),
                 }}

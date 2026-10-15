@@ -779,6 +779,29 @@ class CanEditDashboard(BasePermission):
         return view.user_permissions.dashboard(dashboard).can_edit
 
 
+class DashboardBulkDeleteRequestSerializer(serializers.Serializer):
+    ids = serializers.ListField(
+        child=serializers.IntegerField(min_value=1),
+        min_length=1,
+        max_length=100,
+        help_text="IDs of 1 to 100 dashboards to soft-delete. Duplicate IDs are processed once.",
+    )
+    delete_insights = serializers.BooleanField(
+        default=False,
+        help_text="Also delete insights that are not on any dashboard outside the deleted batch.",
+    )
+
+
+class DashboardBulkDeleteSkippedSerializer(serializers.Serializer):
+    id = serializers.IntegerField(help_text="Dashboard ID that was skipped.")
+    reason = serializers.CharField(help_text="Why this dashboard was skipped: not_found or permission_denied.")
+
+
+class DashboardBulkDeleteResponseSerializer(serializers.Serializer):
+    deleted = serializers.ListField(child=serializers.IntegerField(), help_text="IDs of the dashboards soft-deleted.")
+    skipped = DashboardBulkDeleteSkippedSerializer(many=True, help_text="Skipped IDs and the reason for each skip.")
+
+
 def _hide_extra_details(context: dict[str, Any], representation: dict[str, Any]) -> None:
     """Drop authorship details, which carry the name and email of a teammate, when the caller
     can't see them anyway — a shared dashboard, or `hideExtraDetails` on the sharing config."""
@@ -2377,6 +2400,54 @@ class DashboardsViewSet(
     queryset = Dashboard.objects_including_soft_deleted.order_by("-pinned", "name")
     permission_classes = [CanEditDashboard]
     renderer_classes = [SafeJSONRenderer, ServerSentEventRenderer]
+
+    @extend_schema(
+        request=DashboardBulkDeleteRequestSerializer,
+        responses={200: DashboardBulkDeleteResponseSerializer},
+    )
+    @action(methods=["POST"], detail=False, renderer_classes=[SafeJSONRenderer], required_scopes=["dashboard:write"])
+    def bulk_delete(self, request: Request, **kwargs: Any) -> Response:
+        serializer = DashboardBulkDeleteRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(self._bulk_delete_dashboards(**serializer.validated_data))
+
+    def _bulk_delete_dashboards(self, ids: list[int], delete_insights: bool) -> dict[str, Any]:
+        dashboard_ids = list(dict.fromkeys(ids))
+        dashboards = {dashboard.id: dashboard for dashboard in self.get_queryset().filter(id__in=dashboard_ids)}
+        deleted: list[int] = []
+        skipped: list[dict[str, int | str]] = []
+        context = self.get_serializer_context()
+        for dashboard_id in dashboard_ids:
+            dashboard = dashboards.get(dashboard_id)
+            if dashboard is None:
+                skipped.append({"id": dashboard_id, "reason": "not_found"})
+                continue
+            try:
+                self.check_object_permissions(self.request, dashboard)
+            except exceptions.PermissionDenied:
+                skipped.append({"id": dashboard_id, "reason": "permission_denied"})
+                continue
+            serializer = DashboardSerializer(
+                dashboard, data={"deleted": True, "delete_insights": delete_insights}, partial=True, context=context
+            )
+            serializer.is_valid(raise_exception=True)
+            with transaction.atomic():
+                serializer.save()
+            deleted.append(dashboard_id)
+
+        report_user_action(
+            cast(User, self.request.user),
+            "dashboards bulk deleted",
+            {
+                "requested_count": len(dashboard_ids),
+                "deleted_count": len(deleted),
+                "skipped_count": len(skipped),
+                "delete_insights": delete_insights,
+            },
+            team=self.team,
+            request=self.request,
+        )
+        return {"deleted": deleted, "skipped": skipped}
 
     TEMPLATE_MAP = {
         "llm-analytics": get_ai_observability_default_template,

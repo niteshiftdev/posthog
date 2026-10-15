@@ -3,7 +3,7 @@
  * MCP service uses these Zod schemas for generated tool handlers.
  * To regenerate: hogli build:openapi
  *
- * PostHog API - MCP 18 enabled ops
+ * PostHog API - MCP 19 enabled ops
  * OpenAPI spec version: 1.0.0
  */
 import * as zod from 'zod'
@@ -3376,6 +3376,30 @@ export const DashboardsUpdateWidgetsBatchBody = /* @__PURE__ */ zod
             ),
     })
     .describe('OpenAPI-only batch-update schema with widget_type-discriminated config shapes for agents.')
+
+export const DashboardsBulkDeleteCreateParams = /* @__PURE__ */ zod.object({
+    project_id: zod
+        .string()
+        .describe(
+            "Project ID of the project you're trying to access. To find the ID of the project, make a call to \/api\/projects\/."
+        ),
+})
+
+export const dashboardsBulkDeleteCreateBodyIdsMax = 100
+
+export const dashboardsBulkDeleteCreateBodyDeleteInsightsDefault = false
+
+export const DashboardsBulkDeleteCreateBody = /* @__PURE__ */ zod.object({
+    ids: zod
+        .array(zod.number().min(1))
+        .min(1)
+        .max(dashboardsBulkDeleteCreateBodyIdsMax)
+        .describe('IDs of 1 to 100 dashboards to soft-delete. Duplicate IDs are processed once.'),
+    delete_insights: zod
+        .boolean()
+        .default(dashboardsBulkDeleteCreateBodyDeleteInsightsDefault)
+        .describe('Also delete insights that are not on any dashboard outside the deleted batch.'),
+})
 
 /**
  * List registered dashboard widget types and per-type config_schema documentation for agents.
