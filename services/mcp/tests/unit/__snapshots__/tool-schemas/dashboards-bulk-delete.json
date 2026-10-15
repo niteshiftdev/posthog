@@ -1,0 +1,22 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "delete_insights": {
+            "default": false,
+            "description": "Also delete insights that are not on any dashboard outside the deleted batch.",
+            "type": "boolean"
+        },
+        "ids": {
+            "description": "IDs of 1 to 100 dashboards to soft-delete. Duplicate IDs are processed once.",
+            "items": {
+                "minimum": 1,
+                "type": "number"
+            },
+            "maxItems": 100,
+            "minItems": 1,
+            "type": "array"
+        }
+    },
+    "required": ["ids"],
+    "type": "object"
+}

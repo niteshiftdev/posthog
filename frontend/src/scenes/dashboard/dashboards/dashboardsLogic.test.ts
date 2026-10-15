@@ -98,6 +98,46 @@ describe('dashboardsLogic', () => {
         logic.mount()
     })
 
+    it('removes deleted search results and shows the empty state when the filtered list becomes empty', async () => {
+        const visible = allDashboards[0]
+        logic.actions.setSearch('filtered dashboard')
+        logic.actions.loadSearchedDashboardsSuccess([visible])
+        expect(logic.values.dashboards.map((d) => d.id)).toEqual([visible.id])
+
+        dashboardsModel.actions.bulkDeleteDashboardsSuccess([visible.id], { deleted: [visible.id], skipped: [] })
+
+        expect(logic.values.dashboards).toEqual([])
+        expect(logic.values.searchedDashboards).toEqual([])
+        expect(logic.values.showEmptyState).toBe(true)
+        expect(dashboardsModel.values.nameSortedDashboards.length).toBe(allDashboards.length - 1)
+
+        logic.actions.loadSearchedDashboardsSuccess([visible])
+        expect(logic.values.dashboards).toEqual([])
+    })
+
+    it('prunes search results missing from the complete reload after a failed deletion', () => {
+        logic.actions.setSearch('dashboard')
+        logic.actions.loadSearchedDashboardsSuccess(allDashboards)
+        dashboardsModel.actions.dashboardsReloaded([allDashboards[1]])
+
+        expect(logic.values.searchedDashboards).toEqual([allDashboards[1]])
+        expect(logic.values.dashboards.map((d) => d.id)).toEqual([allDashboards[1].id])
+    })
+
+    it('confirms one deletion with the insight option and resets the dialog for the next batch', () => {
+        const deleteBatch = jest.spyOn(dashboardsModel.actions, 'bulkDeleteDashboards')
+        logic.actions.showBulkDeleteModal([allDashboards[0].id])
+        logic.actions.setBulkDeleteInsights(true)
+        logic.actions.confirmBulkDelete()
+        logic.actions.confirmBulkDelete()
+
+        expect(deleteBatch).toHaveBeenCalledTimes(1)
+        expect(deleteBatch).toHaveBeenCalledWith([allDashboards[0].id], true)
+        expect(logic.values.bulkDeleteIds).toEqual([])
+        logic.actions.showBulkDeleteModal([allDashboards[1].id])
+        expect(logic.values.bulkDeleteInsights).toBe(false)
+    })
+
     describe('reflecting a completed move', () => {
         it('updates the moved dashboard to its new folder', async () => {
             await expectLogic(logic, () => {

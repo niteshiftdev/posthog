@@ -9594,6 +9594,32 @@ export interface UpdateDashboardWidgetsBatchResponseApi {
     tiles: DashboardTileApi[]
 }
 
+export interface DashboardBulkDeleteRequestApi {
+    /**
+     * IDs of 1 to 100 dashboards to soft-delete. Duplicate IDs are processed once.
+     * @minItems 1
+     * @maxItems 100
+     * @items.minimum 1
+     */
+    ids: number[]
+    /** Also delete insights that are not on any dashboard outside the deleted batch. */
+    delete_insights?: boolean
+}
+
+export interface DashboardBulkDeleteSkippedApi {
+    /** Dashboard ID that was skipped. */
+    id: number
+    /** Why this dashboard was skipped: not_found or permission_denied. */
+    reason: string
+}
+
+export interface DashboardBulkDeleteResponseApi {
+    /** IDs of the dashboards soft-deleted. */
+    deleted: number[]
+    /** Skipped IDs and the reason for each skip. */
+    skipped: DashboardBulkDeleteSkippedApi[]
+}
+
 /**
  * * `add` - add
  * * `remove` - remove

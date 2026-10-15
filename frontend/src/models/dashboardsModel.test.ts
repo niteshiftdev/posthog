@@ -2,13 +2,18 @@ import { MOCK_DEFAULT_TEAM } from 'lib/api.mock'
 
 import { expectLogic } from 'kea-test-utils'
 
+import { lemonToast } from 'lib/lemon-ui/LemonToast/LemonToast'
 import { teamLogic } from 'scenes/teamLogic'
 
 import { useMocks } from '~/mocks/jest'
 import { initKeaTests } from '~/test/init'
 import { AccessControlLevel, DashboardBasicType } from '~/types'
 
+import { dashboardsBulkDeleteCreate } from 'products/dashboards/frontend/generated/api'
+
 import { dashboardsModel, mergeTileTextUpdatesIntoDashboard, nameCompareFunction } from './dashboardsModel'
+
+jest.mock('products/dashboards/frontend/generated/api', () => ({ dashboardsBulkDeleteCreate: jest.fn() }))
 
 const dashboards: Partial<DashboardBasicType>[] = [
     {
@@ -81,6 +86,7 @@ describe('the dashboards model', () => {
     let logic: ReturnType<typeof dashboardsModel.build>
 
     beforeEach(async () => {
+        jest.mocked(dashboardsBulkDeleteCreate).mockReset()
         useMocks({
             get: {
                 '/api/environments/:team_id/dashboards/': () => {
@@ -99,6 +105,107 @@ describe('the dashboards model', () => {
         initKeaTests()
         logic = dashboardsModel()
         logic.mount()
+    })
+
+    it('keeps overlapping deletions independent and completes after the list unmounts', async () => {
+        await expectLogic(logic).toDispatchActions(['loadDashboardsSuccess'])
+        type Result = Awaited<ReturnType<typeof dashboardsBulkDeleteCreate>>
+        let finishFirst!: (result: Result) => void
+        let finishSecond!: (result: Result) => void
+        jest.mocked(dashboardsBulkDeleteCreate)
+            .mockImplementationOnce(
+                () =>
+                    new Promise((resolve) => {
+                        finishFirst = resolve
+                    })
+            )
+            .mockImplementationOnce(
+                () =>
+                    new Promise((resolve) => {
+                        finishSecond = resolve
+                    })
+            )
+        const pending = jest.spyOn(lemonToast, 'loading')
+        const success = jest.spyOn(lemonToast, 'success')
+        const warning = jest.spyOn(lemonToast, 'warning')
+        const remove = jest.spyOn(lemonToast, 'dismiss')
+
+        logic.actions.bulkDeleteDashboards([3], false)
+        logic.actions.bulkDeleteDashboards([5, 6], true)
+        logic.unmount()
+        expect(logic.isMounted()).toBe(true)
+        expect(logic.values.bulkDeletingDashboardIds).toEqual([3, 5, 6])
+        expect(pending).toHaveBeenCalledTimes(2)
+        expect(pending.mock.calls[0][1]?.toastId).not.toEqual(pending.mock.calls[1][1]?.toastId)
+
+        await expectLogic(logic, () => {
+            finishSecond({ deleted: [5], skipped: [{ id: 6, reason: 'permission_denied' }] })
+        }).toDispatchActions(['bulkDeleteDashboardsSuccess'])
+        expect(logic.values.nameSortedDashboards.some((d) => d.id === 5)).toBe(false)
+        expect(logic.values.nameSortedDashboards.some((d) => d.id === 6)).toBe(true)
+        expect(logic.values.bulkDeletingDashboardIds).toEqual([3])
+        expect(warning).toHaveBeenCalledWith(expect.stringContaining('1 skipped'), expect.anything())
+
+        await expectLogic(logic, () => {
+            finishFirst({ deleted: [3], skipped: [] })
+        }).toDispatchActions(['bulkDeleteDashboardsSuccess'])
+        expect(logic.values.nameSortedDashboards.some((d) => d.id === 3)).toBe(false)
+        expect(logic.values.bulkDeletingDashboardIds).toEqual([])
+        expect(success).toHaveBeenCalledWith(expect.stringMatching(/1\s+dashboard deleted/), expect.anything())
+        expect(remove).toHaveBeenCalledTimes(2)
+        jest.restoreAllMocks()
+    })
+
+    it('replaces the model from every page after a request fails', async () => {
+        await expectLogic(logic).toDispatchActions(['loadDashboardsSuccess'])
+        jest.mocked(dashboardsBulkDeleteCreate).mockRejectedValue(new Error('Request failed'))
+        useMocks({
+            get: {
+                '/api/environments/:team_id/dashboards/': ({ request }) => [
+                    200,
+                    {
+                        count: 2,
+                        next: new URL(request.url).searchParams.has('offset')
+                            ? null
+                            : '/api/environments/997/dashboards/?offset=1',
+                        results: [dashboards[new URL(request.url).searchParams.has('offset') ? 5 : 4]],
+                    },
+                ],
+            },
+        })
+
+        await expectLogic(logic, () => logic.actions.bulkDeleteDashboards([3], false)).toDispatchActions([
+            'bulkDeleteDashboardsFailure',
+            'dashboardsReloaded',
+        ])
+        expect(Object.keys(logic.values.rawDashboards).sort()).toEqual(['5', '6'])
+        expect(logic.values.bulkDeletingDashboardIds).toEqual([])
+    })
+
+    it('does not let a stale list response restore a deleted dashboard', async () => {
+        await expectLogic(logic).toDispatchActions(['loadDashboardsSuccess'])
+        logic.actions.bulkDeleteDashboardsSuccess([3], { deleted: [3], skipped: [] })
+        logic.actions.loadDashboardsSuccess({
+            results: dashboards as DashboardBasicType[],
+            count: dashboards.length,
+            next: null,
+            previous: null,
+        })
+        logic.actions.dashboardsReloaded(dashboards as DashboardBasicType[])
+        expect(logic.values.nameSortedDashboards.some((d) => d.id === 3)).toBe(false)
+    })
+
+    it('removes missing dashboards while keeping permission skips', async () => {
+        await expectLogic(logic).toDispatchActions(['loadDashboardsSuccess'])
+        logic.actions.bulkDeleteDashboardsSuccess([3, 5], {
+            deleted: [],
+            skipped: [
+                { id: 3, reason: 'not_found' },
+                { id: 5, reason: 'permission_denied' },
+            ],
+        })
+        expect(logic.values.nameSortedDashboards.some((d) => d.id === 3)).toBe(false)
+        expect(logic.values.nameSortedDashboards.some((d) => d.id === 5)).toBe(true)
     })
 
     describe('sorting dashboards', () => {

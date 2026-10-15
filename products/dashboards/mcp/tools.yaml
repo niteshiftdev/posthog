@@ -9,6 +9,19 @@ feature: dashboards
 url_prefix: /dashboard
 ui_apps: {}
 tools:
+    dashboards-bulk-delete:
+        operation: dashboards_bulk_delete_create
+        enabled: true
+        scopes:
+            - dashboard:write
+        annotations:
+            readOnly: false
+            destructive: true
+            idempotent: true
+        title: Delete dashboards
+        description: >
+            Soft-delete up to 100 dashboards. Returns deleted IDs and skipped IDs with reasons.
+            Optionally delete insights, keeping those on dashboards outside the deleted batch.
     dashboard-create:
         operation: dashboards_create
         enabled: true

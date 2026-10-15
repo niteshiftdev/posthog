@@ -17,6 +17,8 @@ import type {
     CopyDashboardTileRequestApi,
     CreateTextTileRequestApi,
     DashboardApi,
+    DashboardBulkDeleteRequestApi,
+    DashboardBulkDeleteResponseApi,
     DashboardCollaboratorApi,
     DashboardSubscribeNudgeResponseApi,
     DashboardTemplateApi,
@@ -938,6 +940,23 @@ export const dashboardsUpdateWidgetsBatch = async (
             body: JSON.stringify(patchedUpdateDashboardWidgetsBatchRequestOpenApiApi),
         }
     )
+}
+
+export const getDashboardsBulkDeleteCreateUrl = (projectId: string) => {
+    return `/api/projects/${projectId}/dashboards/bulk_delete/`
+}
+
+export const dashboardsBulkDeleteCreate = async (
+    projectId: string,
+    dashboardBulkDeleteRequestApi: DashboardBulkDeleteRequestApi,
+    options?: RequestInit
+): Promise<DashboardBulkDeleteResponseApi> => {
+    return apiMutator<DashboardBulkDeleteResponseApi>(getDashboardsBulkDeleteCreateUrl(projectId), {
+        ...options,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...options?.headers },
+        body: JSON.stringify(dashboardBulkDeleteRequestApi),
+    })
 }
 
 export const getDashboardsBulkUpdateTagsCreateUrl = (

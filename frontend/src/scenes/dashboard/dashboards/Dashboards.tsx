@@ -22,9 +22,10 @@ import { Scene, SceneExport } from 'scenes/sceneTypes'
 
 import { SceneContent } from '~/layout/scenes/components/SceneContent'
 import { SceneTitleSection } from '~/layout/scenes/components/SceneTitleSection'
-import { dashboardsModel } from '~/models/dashboardsModel'
 import { ProductKey } from '~/queries/schema/schema-general'
 import { AccessControlLevel, AccessControlResourceType } from '~/types'
+
+import { BulkDeleteDashboardsModal } from 'products/dashboards/frontend/BulkDeleteDashboardsModal'
 
 import { DashboardsTableContainer } from './DashboardsTable'
 import { FeaturedTemplatesChooser } from './templates/FeaturedTemplatesChooser'
@@ -40,9 +41,8 @@ export const scene: SceneExport = {
 }
 
 export function Dashboards(): JSX.Element {
-    const { dashboardsLoading } = useValues(dashboardsModel)
     const { setCurrentTab } = useActions(dashboardsLogic)
-    const { dashboards, currentTab, isFiltering } = useValues(dashboardsLogic)
+    const { currentTab, showEmptyState } = useValues(dashboardsLogic)
     const { showNewDashboardModal } = useActions(newDashboardLogic)
 
     const enabledTabs: LemonTab<DashboardsTab>[] = [
@@ -63,6 +63,7 @@ export function Dashboards(): JSX.Element {
             <NewDashboardModal />
             <DuplicateDashboardModal />
             <DeleteDashboardModal />
+            <BulkDeleteDashboardsModal />
             <DashboardTemplateEditor />
             <DashboardTemplateModal />
 
@@ -108,7 +109,7 @@ export function Dashboards(): JSX.Element {
             <div>
                 {currentTab === DashboardsTab.Templates ? (
                     <DashboardTemplatesTable />
-                ) : dashboardsLoading || dashboards.length > 0 || isFiltering ? (
+                ) : !showEmptyState ? (
                     <DashboardsTableContainer />
                 ) : (
                     <ProductIntroduction

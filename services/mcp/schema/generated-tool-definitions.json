@@ -2355,6 +2355,20 @@
         },
         "feature_flag": "dashboard-widgets"
     },
+    "dashboards-bulk-delete": {
+        "description": "Soft-delete up to 100 dashboards. Returns deleted IDs and skipped IDs with reasons. Optionally delete insights, keeping those on dashboards outside the deleted batch.",
+        "category": "Dashboards",
+        "feature": "dashboards",
+        "summary": "Delete dashboards",
+        "title": "Delete dashboards",
+        "required_scopes": ["dashboard:write"],
+        "annotations": {
+            "destructiveHint": true,
+            "idempotentHint": true,
+            "openWorldHint": true,
+            "readOnlyHint": false
+        }
+    },
     "dashboards-get-all": {
         "description": "List dashboards in the project. The optional `search` parameter runs a fuzzy match against name and description using Postgres trigram word similarity (handles typos, transpositions, and prefix-as-you-type) and returns results ranked by relevance — use it to find a specific dashboard by name rather than paging through every dashboard. `search` is capped at 200 characters; longer queries return a 400 error. Optional filters by tag and pinned status are also supported. Returns name, description, pinned status, tags, and creation metadata. Tiles and insights are not included — use dashboard-get to fetch a dashboard's tiles, then dashboard-insights-run to fetch the actual data for each insight.",
         "category": "Dashboards",

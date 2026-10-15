@@ -5,6 +5,7 @@ import type { Schemas } from '@/api/generated'
 import {
     DashboardTemplatesListQueryParams,
     DashboardTemplatesRetrieveParams,
+    DashboardsBulkDeleteCreateBody,
     DashboardsCopyTileCreateBody,
     DashboardsCopyTileCreateParams,
     DashboardsCreateBody,
@@ -44,6 +45,29 @@ import {
     type WithInformationalResponse,
 } from '@/tools/tool-utils'
 import type { Context, ToolBase, ZodObjectAny } from '@/tools/types'
+
+const DashboardsBulkDeleteSchema = DashboardsBulkDeleteCreateBody
+
+const dashboardsBulkDelete = (): ToolBase<typeof DashboardsBulkDeleteSchema, Schemas.DashboardBulkDeleteResponse> => ({
+    name: 'dashboards-bulk-delete',
+    schema: DashboardsBulkDeleteSchema,
+    handler: async (context: Context, params: z.infer<typeof DashboardsBulkDeleteSchema>) => {
+        const projectId = await context.stateManager.getProjectId()
+        const body: Record<string, unknown> = {}
+        if (params.ids !== undefined) {
+            body['ids'] = params.ids
+        }
+        if (params.delete_insights !== undefined) {
+            body['delete_insights'] = params.delete_insights
+        }
+        const result = await context.api.request<Schemas.DashboardBulkDeleteResponse>({
+            method: 'POST',
+            path: `/api/projects/${encodeURIComponent(String(projectId))}/dashboards/bulk_delete/`,
+            body,
+        })
+        return result
+    },
+})
 
 const DashboardCreateSchema = DashboardsCreateQueryParams.omit({ format: true }).extend(DashboardsCreateBody.shape)
 
@@ -731,6 +755,7 @@ const dashboardsMoveTilePartialUpdate = (): ToolBase<
 })
 
 export const GENERATED_TOOLS: Record<string, () => ToolBase<ZodObjectAny>> = {
+    'dashboards-bulk-delete': dashboardsBulkDelete,
     'dashboard-create': dashboardCreate,
     'dashboard-create-text-tile': dashboardCreateTextTile,
     'dashboard-delete': dashboardDelete,
