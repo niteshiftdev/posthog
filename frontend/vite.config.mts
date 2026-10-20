@@ -2,7 +2,7 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { dirname, resolve } from 'node:path'
 import { URL, fileURLToPath } from 'node:url'
-import { defineConfig } from 'vite'
+import { type Plugin, defineConfig } from 'vite'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -10,6 +10,54 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 import { htmlGenerationPlugin } from './plugins/vite-html-plugin'
 import { posthogJsPlugin } from './plugins/vite-posthog-js-plugin'
 import { publicAssetsPlugin } from './plugins/vite-public-assets-plugin'
+
+// Bundled dev's own watcher misses source edits in this setup, and it only regenerates stale output
+// when Vite serves the HTML page, which Django does here. Rebuild from Vite's watcher instead, so
+// an edit reaches open previews without restarting the frontend.
+function bundledDevRebuildOnChangePlugin(): Plugin {
+    return {
+        name: 'bundled-dev-rebuild-on-change',
+        apply: 'serve',
+        configureServer(server) {
+            const sourceRoots = [
+                resolve(__dirname, 'src'),
+                resolve(__dirname, '../products'),
+                resolve(__dirname, '../common'),
+            ]
+            server.watcher.add(sourceRoots)
+            let timer: ReturnType<typeof setTimeout> | undefined
+            const rebuild = async (): Promise<void> => {
+                const started = Date.now()
+                // devEngine is private on BundledDev; it is the only handle that can force a rebuild.
+                const devEngine = (
+                    server.environments.client.bundledDev as unknown as
+                        | { devEngine?: { triggerFullBuild(): void; ensureLatestBuildOutput(): Promise<void> } }
+                        | undefined
+                )?.devEngine
+                if (!devEngine) {
+                    return
+                }
+                devEngine.triggerFullBuild()
+                await devEngine.ensureLatestBuildOutput()
+                server.environments.client.hot.send({ type: 'full-reload', path: '*' })
+                server.config.logger.info(`bundled dev rebuilt after a source change in ${Date.now() - started}ms`, {
+                    timestamp: true,
+                })
+            }
+            const onSourceChange = (file: string): void => {
+                // products/ and common/ also hold backend code, which the frontend bundle never imports.
+                if (!/\.(tsx?|jsx?|mjs|s?css|json)$/.test(file) || !sourceRoots.some((root) => file.startsWith(root))) {
+                    return
+                }
+                clearTimeout(timer)
+                timer = setTimeout(() => void rebuild().catch((e) => server.config.logger.error(String(e))), 200)
+            }
+            server.watcher.on('change', onSourceChange)
+            server.watcher.on('add', onSourceChange)
+            server.watcher.on('unlink', onSourceChange)
+        },
+    }
+}
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -43,6 +91,7 @@ export default defineConfig(({ mode }) => {
                     })
                 },
             },
+            ...(useBundledDev ? [bundledDevRebuildOnChangePlugin()] : []),
         ],
         resolve: {
             dedupe: ['@base-ui/react'],

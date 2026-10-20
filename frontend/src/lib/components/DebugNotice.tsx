@@ -106,7 +106,8 @@ export function DebugNotice({ isCollapsed }: DebugNoticeProps): JSX.Element | nu
                     <span className="min-w-0 flex-1 truncate font-bold">{debugInfo.revision}</span>
                 </div>
             </Tooltip>
-            {window.location.port !== '8010' && (
+            {/* Default-port origins (e.g. an HTTPS preview proxy) have no port to rewrite. */}
+            {window.location.port && window.location.port !== '8010' && (
                 <Tooltip
                     title={
                         <>
