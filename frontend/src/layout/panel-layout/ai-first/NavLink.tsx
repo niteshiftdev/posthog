@@ -124,7 +124,11 @@ export function NavLink({
     }
     return (
         <Tooltip
-            title={<span className="compact-nav-label">{label}</span>}
+            title={
+                <span className="compact-nav-label block -mx-2 -my-1.5 px-3 py-1.5 rounded bg-[#f54e00] text-white font-semibold text-[13px]">
+                    {label}
+                </span>
+            }
             placement="right"
             delayMs={0}
             offset={10}
