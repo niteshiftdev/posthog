@@ -2667,6 +2667,8 @@ export interface DashboardBasicType extends WithAccessControl {
     deleted: boolean
     creation_mode: 'default' | 'template' | 'duplicate' | 'unlisted'
     tags?: string[]
+    /** Only returned by the list endpoint; excludes deleted tiles and deleted insights. */
+    insight_tile_count?: number
     /** Project-tree folder the dashboard is filed under, e.g. 'Unfiled/Dashboards'. Empty string is the project root; null means no file system entry. */
     folder?: string | null
     /** Null when the dashboard was never filed, which is the case that cannot be moved. */
