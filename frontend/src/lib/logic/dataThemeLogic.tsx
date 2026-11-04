@@ -92,6 +92,11 @@ export type dataThemeLogicType = MakeLogicType<
     dataThemeLogicMeta
 >
 
+const TERMINAL_PALETTE = [
+    '#39ff6a', '#22aa4f', '#a0ffba', '#00cc4d', '#6bff8f', '#178f3a', '#b8ffcb', '#2ee65c',
+    '#11702e', '#85ffa3', '#39ff6a', '#22aa4f', '#a0ffba', '#00cc4d', '#6bff8f',
+]
+
 export const dataThemeLogic = kea<dataThemeLogicType>([
     props({} as DataThemeLogicProps),
     path(['scenes', 'dataThemeLogic']),
@@ -143,6 +148,12 @@ export const dataThemeLogic = kea<dataThemeLogicType>([
             (s) => [s.themes, s.defaultTheme],
             (themes: DataColorThemeModel[] | null, defaultTheme: DataColorThemeModel | null) =>
                 (themeId: string | number | null | undefined): DataColorTheme | null => {
+                    // Terminal theme variant: every series is phosphor green
+                    return TERMINAL_PALETTE.reduce((theme, color, index) => {
+                        theme[`preset-${index + 1}`] = color
+                        return theme
+                    }, {} as DataColorTheme)
+                    // eslint-disable-next-line no-unreachable
                     let customTheme
 
                     if (Number.isInteger(themeId) && themes != null) {

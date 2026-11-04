@@ -1,6 +1,6 @@
 // Retro terminal theme: black background, phosphor-green monospace, square corners.
-$phosphor: #33ff66;
-$phosphor-dim: #1fa84a;
+$phosphor: #39ff6a;
+$phosphor-dim: #22aa4f;
 $phosphor-faint: #0d3d1c;
 
 :root,
@@ -51,21 +51,26 @@ body,
     --color-graph-axis: #{$phosphor-faint} !important;
     --color-graph-crosshair: #{$phosphor} !important;
 
-    --data-color-1: #33ff66 !important;
-    --data-color-2: #1fa84a !important;
-    --data-color-3: #99ffb3 !important;
-    --data-color-4: #00cc44 !important;
-    --data-color-5: #66ff8c !important;
-    --data-color-6: #148a36 !important;
-    --data-color-7: #b3ffc6 !important;
+    --color-lifecycle-new: #39ff6a !important;
+    --color-lifecycle-returning: #178f3a !important;
+    --color-lifecycle-resurrecting: #a0ffba !important;
+    --color-lifecycle-dormant: #0b4d20 !important;
+
+    --data-color-1: #39ff6a !important;
+    --data-color-2: #22aa4f !important;
+    --data-color-3: #a0ffba !important;
+    --data-color-4: #00cc4d !important;
+    --data-color-5: #6bff8f !important;
+    --data-color-6: #178f3a !important;
+    --data-color-7: #b8ffcb !important;
     --data-color-8: #2ee65c !important;
-    --data-color-9: #0f6e2b !important;
-    --data-color-10: #80ff9f !important;
-    --data-color-11: #33ff66 !important;
-    --data-color-12: #1fa84a !important;
-    --data-color-13: #99ffb3 !important;
-    --data-color-14: #00cc44 !important;
-    --data-color-15: #66ff8c !important;
+    --data-color-9: #11702e !important;
+    --data-color-10: #85ffa3 !important;
+    --data-color-11: #39ff6a !important;
+    --data-color-12: #22aa4f !important;
+    --data-color-13: #a0ffba !important;
+    --data-color-14: #00cc4d !important;
+    --data-color-15: #6bff8f !important;
 }
 
 html,
@@ -121,4 +126,26 @@ body::after {
     inset: 0;
     z-index: 99999;
     background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 2px, rgba(0, 0, 0, 0.18) 3px);
+}
+
+// Hide the dev-only debug badge and recolor icons
+div.font-mono.text-xs:has(> .border-brand-blue) {
+    display: none !important;
+}
+
+body svg {
+    color: $phosphor-dim !important;
+}
+
+body .LemonButton--primary,
+body .LemonButton--primary * {
+    background: #000 !important;
+    color: $phosphor !important;
+    border-color: $phosphor !important;
+}
+
+body .RetentionTable td .RetentionTable__Tab,
+body .RetentionTable td .RetentionTable__Tab * {
+    color: #000 !important;
+    font-weight: 700;
 }
