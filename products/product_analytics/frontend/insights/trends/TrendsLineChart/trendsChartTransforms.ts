@@ -73,7 +73,7 @@ export function buildMainTrendsSeries<R extends TrendsResultLike, M = unknown>(
         color: opts.getColor(r, index),
         yAxisId,
         meta,
-        fill: opts.isArea ? {} : undefined,
+        fill: opts.isArea ? { gradient: true, opacity: 0.7 } : { gradient: true, opacity: 0.45, unstacked: true },
         stroke: dashedFromIndex !== undefined ? { partial: { fromIndex: dashedFromIndex } } : undefined,
         visibility: excluded ? { excluded: true } : undefined,
     }

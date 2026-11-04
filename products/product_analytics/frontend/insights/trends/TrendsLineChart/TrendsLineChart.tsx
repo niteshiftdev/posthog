@@ -298,7 +298,7 @@ export function TrendsLineChart({
                 movingAverageIntervals: movingAverageIntervals ?? undefined,
                 showTrendLines: showTrendLines ?? undefined,
                 valueLabels: showValuesOnSeries && valueLabelFormatter ? { formatter: valueLabelFormatter } : false,
-                curve: chartStyleCurve(trendsFilter?.chartStyle),
+                curve: chartStyleCurve(trendsFilter?.chartStyle) ?? 'monotone',
                 showCrosshair: true,
                 tooltip: INSIGHT_TOOLTIP_CONFIG,
                 legend: legendConfig,

@@ -99,7 +99,7 @@ function LineChartInner<Meta = unknown>({
     const { visibleSeries, legendProps } = useChartLegend(series, theme, config?.legend)
 
     const hasMultipleFilledSeries = useMemo(() => {
-        const filledSeries = visibleSeries.filter((s) => s.fill && !s.fill.lowerData)
+        const filledSeries = visibleSeries.filter((s) => s.fill && !s.fill.lowerData && !s.fill.unstacked)
         return filledSeries.length >= 2
     }, [visibleSeries])
 

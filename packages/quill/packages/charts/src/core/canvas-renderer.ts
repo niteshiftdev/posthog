@@ -29,7 +29,7 @@ export interface DrawContext {
 
 /** Stroke width of series lines. Half of it is the stroke's overhang past a point, which the
  *  `yFloor`/left-clip callers use to keep strokes flush against drawn axis lines. */
-export const LINE_STROKE_WIDTH = 2
+export const LINE_STROKE_WIDTH = 3.5
 
 export function drawLine(drawCtx: DrawContext, series: ResolvedSeries, yValues?: number[]): void {
     const data = yValues ?? series.data
@@ -42,9 +42,14 @@ export function drawLine(drawCtx: DrawContext, series: ResolvedSeries, yValues?:
     ctx.lineWidth = LINE_STROKE_WIDTH
     ctx.lineJoin = 'round'
     ctx.lineCap = 'round'
+    ctx.save()
+    ctx.shadowColor = series.color
+    ctx.shadowBlur = 10
 
     if (drawFractionalTailDash(drawCtx, series, data)) {
         ctx.setLineDash([])
+        ctx.restore()
+        drawGlowingEndPoint(drawCtx, series, data)
         return
     }
 
@@ -55,6 +60,45 @@ export function drawLine(drawCtx: DrawContext, series: ResolvedSeries, yValues?:
         ctx.stroke()
     }
     ctx.setLineDash([])
+    ctx.restore()
+    drawGlowingEndPoint(drawCtx, series, data)
+}
+
+function drawGlowingEndPoint(drawCtx: DrawContext, series: ResolvedSeries, data: number[]): void {
+    if (series.overlay) {
+        return
+    }
+    const { ctx, xScale, yScale, labels } = drawCtx
+    for (let i = data.length - 1; i >= 0; i--) {
+        const x = xScale(labels[i])
+        const y = yScale(data[i])
+        if (x == null || !isFinite(y)) {
+            continue
+        }
+        ctx.save()
+        const halo = ctx.createRadialGradient(x, y, 0, x, y, 18)
+        halo.addColorStop(0, series.color)
+        halo.addColorStop(1, 'transparent')
+        ctx.globalAlpha = 0.55
+        ctx.fillStyle = halo
+        ctx.beginPath()
+        ctx.arc(x, y, 18, 0, Math.PI * 2)
+        ctx.fill()
+        ctx.globalAlpha = 1
+        ctx.shadowColor = series.color
+        ctx.shadowBlur = 16
+        ctx.fillStyle = series.color
+        ctx.beginPath()
+        ctx.arc(x, y, 6, 0, Math.PI * 2)
+        ctx.fill()
+        ctx.shadowBlur = 0
+        ctx.fillStyle = '#fff'
+        ctx.beginPath()
+        ctx.arc(x, y, 2.5, 0, Math.PI * 2)
+        ctx.fill()
+        ctx.restore()
+        return
+    }
 }
 
 /** Dashes only the tail of the final segment, split at `stroke.partial.fromFraction`. Draws the line
@@ -487,7 +531,7 @@ export function drawArea(
     // A gradient fill always paints the whole area; partial dashing then only affects the stroke
     // (drawLine), so the fade stays intact under an in-progress dashed tail instead of flipping to
     // the solid + hatch treatment below (which non-gradient area charts still use).
-    const useGradient = series.fill?.gradient && !bottomValues
+    const useGradient = !!series.fill?.gradient
     let gradient: CanvasGradient | null = null
     if (useGradient) {
         gradient = ctx.createLinearGradient(0, dimensions.plotTop, 0, baseline)

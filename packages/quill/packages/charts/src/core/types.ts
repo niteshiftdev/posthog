@@ -108,6 +108,8 @@ export interface Series<Meta = unknown> {
          *  When set, the area is drawn between `data` (top) and this (bottom) instead of
          *  filling down to the x-axis baseline. */
         lowerData?: number[]
+        /** Keep this filled series out of automatic stacking (decorative fill under a plain line). */
+        unstacked?: boolean
         /** Fade the fill vertically from the series color at the top of the plot to transparent
          *  at the baseline. Ignored when the area has a bottom edge — stacking or `lowerData`
          *  (those need a solid fill). With a dashed `stroke.partial` the gradient is kept and only
