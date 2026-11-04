@@ -1,0 +1,77 @@
+// Spring pastel variant: warm off-white canvas, mint/peach/lavender cards, soft chart palette.
+:root,
+body,
+[theme='light'] {
+    --pastel-cream: #fbf7f0;
+    --pastel-mint: #e3f5ec;
+    --pastel-peach: #fde9dd;
+    --pastel-lavender: #ece6fa;
+    --pastel-mint-border: #b8e2cc;
+    --pastel-peach-border: #f6c9ae;
+    --pastel-lavender-border: #cfc3f0;
+
+    --color-bg-primary: var(--pastel-cream) !important;
+    --color-bg-3000: var(--pastel-cream) !important;
+    --color-bg-3000-light: var(--pastel-cream) !important;
+    --color-bg-surface-secondary: #f6efe4 !important;
+    --color-bg-surface-tertiary: #f1e8da !important;
+    --color-border-primary: #eadfce !important;
+
+    --data-color-1: #7cc9a3 !important;
+    --data-color-1-hover: #69b892 !important;
+    --data-color-2: #b39ce8 !important;
+    --data-color-3: #f4a988 !important;
+    --data-color-4: #8fc3ea !important;
+    --data-color-5: #f3b5c8 !important;
+    --data-color-6: #e9cf7f !important;
+    --data-color-7: #9ad8c9 !important;
+    --data-color-8: #c6b3f0 !important;
+    --data-color-9: #f8c2a4 !important;
+    --data-color-10: #a8d5a2 !important;
+    --data-color-11: #9fd9e6 !important;
+    --data-color-12: #e7a9d8 !important;
+    --data-color-13: #f2d49b !important;
+    --data-color-14: #b4c7f2 !important;
+    --data-color-15: #c2e8c0 !important;
+}
+
+body,
+.Navigation3000,
+.Navigation3000__scene,
+main {
+    background-color: var(--pastel-cream) !important;
+}
+
+.react-grid-item:nth-child(3n + 1) .InsightCard,
+.react-grid-item:nth-child(3n + 1) .CardMeta {
+    background: var(--pastel-mint) !important;
+    border-color: var(--pastel-mint-border) !important;
+}
+
+.react-grid-item:nth-child(3n + 2) .InsightCard,
+.react-grid-item:nth-child(3n + 2) .CardMeta {
+    background: var(--pastel-peach) !important;
+    border-color: var(--pastel-peach-border) !important;
+}
+
+.react-grid-item:nth-child(3n + 3) .InsightCard,
+.react-grid-item:nth-child(3n + 3) .CardMeta {
+    background: var(--pastel-lavender) !important;
+    border-color: var(--pastel-lavender-border) !important;
+}
+
+.InsightCard {
+    border-radius: 18px !important;
+    box-shadow: 0 6px 18px rgb(180 160 140 / 18%);
+}
+
+.CardMeta {
+    border-radius: 18px 18px 0 0 !important;
+}
+
+.InsightCard__viz,
+.InsightCard__viz table,
+.InsightCard__viz .LemonTable,
+.InsightCard__viz .LemonTable__content > table > thead {
+    background: transparent !important;
+}
