@@ -203,6 +203,16 @@ export function DashboardsTable({
                 )
             },
         } as LemonTableColumn<DashboardType, keyof DashboardType | undefined>,
+        {
+            title: 'Insights',
+            dataIndex: 'insight_tile_count' as keyof DashboardType,
+            width: 96,
+            align: 'right',
+            render: function Render(count: DashboardType['insight_tile_count']) {
+                return count === undefined ? <span className="text-secondary">—</span> : count
+            },
+            sorter: (a, b) => (a.insight_tile_count ?? 0) - (b.insight_tile_count ?? 0),
+        } as LemonTableColumn<DashboardType, keyof DashboardType | undefined>,
         createdByColumn<DashboardType>() as LemonTableColumn<DashboardType, keyof DashboardType | undefined>,
         createdAtColumn<DashboardType>() as LemonTableColumn<DashboardType, keyof DashboardType | undefined>,
         atColumn<DashboardType>('last_accessed_at', 'Last accessed at') as LemonTableColumn<

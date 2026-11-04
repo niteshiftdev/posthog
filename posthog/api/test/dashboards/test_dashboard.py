@@ -472,6 +472,22 @@ class TestDashboard(APIBaseTest, QueryMatchingTest):
         # Dashboards created without an explicit folder land in the default unfiled folder
         assert results_by_id[unfiled_id]["folder"] == "Unfiled/Dashboards"
 
+    @parameterized.expand([("unfiltered", {}), ("tag_filtered", {"tags": ["a", "b"]})])
+    def test_list_includes_insight_tile_count(self, _name, query_params):
+        dashboard_id, _ = self.dashboard_api.create_dashboard({"name": "Counted", "tags": ["a", "b"]})
+        empty_id, _ = self.dashboard_api.create_dashboard({"name": "Empty", "tags": ["a"]})
+        self.dashboard_api.create_insight({"dashboards": [dashboard_id]})
+        self.dashboard_api.create_insight({"dashboards": [dashboard_id]})
+        deleted_insight_id, _ = self.dashboard_api.create_insight({"dashboards": [dashboard_id]})
+        self.dashboard_api.update_insight(deleted_insight_id, {"deleted": True})
+        self.dashboard_api.create_text_tile(dashboard_id)
+
+        response = self.client.get(f"/api/projects/{self.team.id}/dashboards/", query_params)
+        assert response.status_code == status.HTTP_200_OK
+        counts = {dashboard["id"]: dashboard["insight_tile_count"] for dashboard in response.json()["results"]}
+
+        assert counts == {dashboard_id: 2, empty_id: 0}
+
     def test_list_includes_the_file_system_entry_needed_to_move_a_dashboard(self):
         filed_id, _ = self.dashboard_api.create_dashboard(
             {"name": "Filed dashboard", "_create_in_folder": "Marketing/Website"}

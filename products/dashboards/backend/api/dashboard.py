@@ -21,6 +21,7 @@ from django.db.models import (
     Exists,
     F,
     FilteredRelation,
+    IntegerField,
     OuterRef,
     Prefetch,
     Q,
@@ -29,7 +30,7 @@ from django.db.models import (
     UUIDField,
     Value,
 )
-from django.db.models.functions import Cast
+from django.db.models.functions import Cast, Coalesce
 from django.http.response import HttpResponseBase
 from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
@@ -1072,6 +1073,11 @@ class DashboardBasicSerializer(
     access_control_version = serializers.SerializerMethodField()
     is_shared = serializers.BooleanField(source="is_sharing_enabled", read_only=True, required=False)
     last_viewed_at = serializers.DateTimeField(read_only=True, required=False, allow_null=True)
+    insight_tile_count = serializers.IntegerField(
+        read_only=True,
+        required=False,
+        help_text="Number of insight tiles on the dashboard, excluding deleted tiles and deleted insights.",
+    )
     folder = serializers.SerializerMethodField(
         help_text=(
             "Path of the project-tree folder this dashboard is filed under in the file system, "
@@ -1112,6 +1118,7 @@ class DashboardBasicSerializer(
             "deleted",
             "creation_mode",
             "tags",
+            "insight_tile_count",
             "restriction_level",
             "effective_restriction_level",
             "effective_privilege_level",
@@ -2507,6 +2514,19 @@ class DashboardsViewSet(
                 output_field=UUIDField(),
             ),
         )
+
+        if self.action == "list":
+            # A correlated subquery rather than a join, so the tags filter's join can't multiply the count.
+            insight_tile_counts = (
+                DashboardTile.objects.filter(dashboard_id=OuterRef("id"), insight__isnull=False, insight__deleted=False)
+                .order_by()
+                .values("dashboard_id")
+                .annotate(count=Count("id"))
+                .values("count")
+            )
+            queryset = queryset.annotate(
+                insight_tile_count=Coalesce(Subquery(insight_tile_counts, output_field=IntegerField()), 0)
+            )
 
         include_deleted = False
         if self.action in ("partial_update", "update") and hasattr(self, "request"):

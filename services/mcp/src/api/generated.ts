@@ -20059,6 +20059,8 @@ export namespace Schemas {
       readonly deleted: boolean;
       readonly creation_mode: CreationModeEnum;
       tags?: unknown[];
+      /** Number of insight tiles on the dashboard, excluding deleted tiles and deleted insights. */
+      readonly insight_tile_count: number;
       /** Controls who can edit the dashboard.
        *
        * * `21` - Everyone in the project can edit
