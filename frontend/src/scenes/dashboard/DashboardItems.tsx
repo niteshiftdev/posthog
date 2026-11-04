@@ -269,7 +269,7 @@ export function DashboardItems({ showCreateAnomalyAlertButton }: DashboardItemsP
     const isLayoutZoomToggled = layoutEditMode && layoutZoom !== 1
 
     const effectiveZoom = layoutEditMode ? layoutZoom : 1
-    const rowHeight = BASE_ROW_HEIGHT * effectiveZoom
+    const rowHeight = layoutEditMode ? BASE_ROW_HEIGHT * effectiveZoom : 64
     const spacingFactor = effectiveZoom < 1 ? 0.9 : 1
     const gridGap = getDashboardTileSpacingGap(dashboard?.customization?.tile_spacing)
     const margin = useMemo(

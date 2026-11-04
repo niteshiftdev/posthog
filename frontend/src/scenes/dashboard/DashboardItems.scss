@@ -257,20 +257,19 @@
 }
 
 .bento-grid > .react-grid-item {
-    > .InsightCard,
-    > .CardMeta,
-    > div {
-        overflow: hidden;
-        border-radius: 1.5rem;
-    }
+    overflow: hidden;
+    border-radius: 1.75rem !important;
+    box-shadow:
+        0 1px 2px rgb(0 0 0 / 4%),
+        0 12px 32px -16px rgb(0 0 0 / 22%);
 
-    .InsightCard {
-        border-radius: 1.5rem;
-        box-shadow: 0 1px 2px rgb(0 0 0 / 4%), 0 8px 24px -12px rgb(0 0 0 / 18%);
+    > .CardMeta {
+        padding-left: 0.5rem;
+        border-radius: 1.75rem 1.75rem 0 0;
     }
 
     .InsightCard__viz,
     .InsightDetails {
-        border-radius: 0 0 1.5rem 1.5rem;
+        border-radius: 0 0 1.75rem 1.75rem;
     }
 }
