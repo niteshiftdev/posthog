@@ -33,6 +33,15 @@ body,
     --data-color-13: #f2d49b !important;
     --data-color-14: #b4c7f2 !important;
     --data-color-15: #c2e8c0 !important;
+
+    --color-lifecycle-new: #a98ee6 !important;
+    --color-lifecycle-returning: #6cc49a !important;
+    --color-lifecycle-resurrecting: #7fb8e6 !important;
+    --color-lifecycle-dormant: #f29a76 !important;
+    --color-lifecycle-new-hover: #9479d9 !important;
+    --color-lifecycle-returning-hover: #57b087 !important;
+    --color-lifecycle-resurrecting-hover: #69a5d8 !important;
+    --color-lifecycle-dormant-hover: #e5845e !important;
 }
 
 body,
@@ -42,20 +51,20 @@ main {
     background-color: var(--pastel-cream) !important;
 }
 
-.react-grid-item:nth-child(3n + 1) .InsightCard,
-.react-grid-item:nth-child(3n + 1) .CardMeta {
+.react-grid-layout > :nth-child(3n + 1),
+.react-grid-layout > :nth-child(3n + 1) .CardMeta {
     background: var(--pastel-mint) !important;
     border-color: var(--pastel-mint-border) !important;
 }
 
-.react-grid-item:nth-child(3n + 2) .InsightCard,
-.react-grid-item:nth-child(3n + 2) .CardMeta {
+.react-grid-layout > :nth-child(3n + 2),
+.react-grid-layout > :nth-child(3n + 2) .CardMeta {
     background: var(--pastel-peach) !important;
     border-color: var(--pastel-peach-border) !important;
 }
 
-.react-grid-item:nth-child(3n + 3) .InsightCard,
-.react-grid-item:nth-child(3n + 3) .CardMeta {
+.react-grid-layout > :nth-child(3n + 3),
+.react-grid-layout > :nth-child(3n + 3) .CardMeta {
     background: var(--pastel-lavender) !important;
     border-color: var(--pastel-lavender-border) !important;
 }
@@ -74,4 +83,17 @@ main {
 .InsightCard__viz .LemonTable,
 .InsightCard__viz .LemonTable__content > table > thead {
     background: transparent !important;
+}
+
+.react-grid-layout .InsightCard *:not(svg, path, canvas, .RetentionTable__Tab, button, [class*='LemonButton']) {
+    background-color: transparent;
+}
+
+.react-grid-layout .InsightCard .CardMeta__controls,
+.react-grid-layout .InsightCard .CardMeta__controls * {
+    background: transparent !important;
+}
+
+.react-grid-layout .InsightCard .CardMeta__ribbon {
+    display: none;
 }

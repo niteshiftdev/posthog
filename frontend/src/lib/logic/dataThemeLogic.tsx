@@ -25,6 +25,29 @@ export const ThemeName = ({ id }: { id: number }): JSX.Element => {
     return theme ? <span>{theme.name}</span> : <span className="italic">No theme found for id: {id}</span>
 }
 
+// Spring pastel variant: every insight uses this palette regardless of the configured theme.
+const PASTEL_COLORS = [
+    '#6cc49a',
+    '#a98ee6',
+    '#f29a76',
+    '#7fb8e6',
+    '#ef9fbb',
+    '#e3c46a',
+    '#86d1c0',
+    '#bda6ef',
+    '#f6b591',
+    '#9ccf95',
+    '#8fd0e0',
+    '#e39ccf',
+    '#efcb88',
+    '#a6bcee',
+    '#b5e3b2',
+]
+const PASTEL_THEME: DataColorTheme = PASTEL_COLORS.reduce((theme, color, index) => {
+    theme[`preset-${index + 1}`] = color
+    return theme
+}, {} as DataColorTheme)
+
 export type DataThemeLogicProps = {
     themes?: DataColorThemeModel[]
 }
@@ -143,6 +166,9 @@ export const dataThemeLogic = kea<dataThemeLogicType>([
             (s) => [s.themes, s.defaultTheme],
             (themes: DataColorThemeModel[] | null, defaultTheme: DataColorThemeModel | null) =>
                 (themeId: string | number | null | undefined): DataColorTheme | null => {
+                    if (themeId !== 'original') {
+                        return PASTEL_THEME
+                    }
                     let customTheme
 
                     if (Number.isInteger(themeId) && themes != null) {
