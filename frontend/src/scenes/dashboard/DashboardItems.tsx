@@ -48,6 +48,31 @@ const DRAG_AUTO_SCROLL_THRESHOLD = 100
 const DRAG_AUTO_SCROLL_SPEED = 50
 
 const BASE_ROW_HEIGHT = 80
+const BENTO_GAP = 20
+
+// Bento cycle: big tile flanked by two small ones, mirrored, then a row of three
+const BENTO_PATTERN: { x: number; y: number; w: number; h: number }[] = [
+    { x: 0, y: 0, w: 8, h: 6 },
+    { x: 8, y: 0, w: 4, h: 3 },
+    { x: 8, y: 3, w: 4, h: 3 },
+    { x: 0, y: 6, w: 4, h: 3 },
+    { x: 0, y: 9, w: 4, h: 3 },
+    { x: 4, y: 6, w: 8, h: 6 },
+    { x: 0, y: 12, w: 4, h: 4 },
+    { x: 4, y: 12, w: 4, h: 4 },
+    { x: 8, y: 12, w: 4, h: 4 },
+]
+const BENTO_CYCLE_HEIGHT = 16
+
+function bentoLayouts(layouts: Partial<Record<DashboardLayoutSize, Layout>>): Partial<Record<DashboardLayoutSize, Layout>> {
+    const sm = [...(layouts.sm ?? [])].sort((a, b) => a.y - b.y || a.x - b.x)
+    const bento = sm.map((item, index) => {
+        const slot = BENTO_PATTERN[index % BENTO_PATTERN.length]
+        const cycle = Math.floor(index / BENTO_PATTERN.length)
+        return { ...item, x: slot.x, y: slot.y + cycle * BENTO_CYCLE_HEIGHT, w: slot.w, h: slot.h, minW: 1, minH: 1 }
+    })
+    return { ...layouts, sm: bento }
+}
 const BASE_MARGIN: [number, number] = [16, 16]
 const CONTAINER_PADDING: [number, number] = [0, 0]
 
@@ -248,8 +273,12 @@ export function DashboardItems({ showCreateAnomalyAlertButton }: DashboardItemsP
     const spacingFactor = effectiveZoom < 1 ? 0.9 : 1
     const gridGap = getDashboardTileSpacingGap(dashboard?.customization?.tile_spacing)
     const margin = useMemo(
-        () => BASE_MARGIN.map(() => gridGap * spacingFactor) as [number, number],
-        [gridGap, spacingFactor]
+        () => BASE_MARGIN.map(() => (layoutEditMode ? gridGap * spacingFactor : BENTO_GAP)) as [number, number],
+        [gridGap, spacingFactor, layoutEditMode]
+    )
+    const displayLayouts = useMemo(
+        () => (layoutEditMode ? layouts : bentoLayouts(layouts as Partial<Record<DashboardLayoutSize, Layout>>)),
+        [layouts, layoutEditMode]
     )
 
     const getInsertMenuItems = useCallback(
@@ -496,10 +525,10 @@ export function DashboardItems({ showCreateAnomalyAlertButton }: DashboardItemsP
 
                     <ReactGridLayout
                         width={gridWidth}
-                        className={className}
+                        className={clsx(className, !layoutEditMode && 'bento-grid')}
                         dragConfig={dragConfig}
                         resizeConfig={resizeConfig}
-                        layouts={layouts as Partial<Record<DashboardLayoutSize, Layout>>}
+                        layouts={displayLayouts as Partial<Record<DashboardLayoutSize, Layout>>}
                         compactor={gridCompactor}
                         rowHeight={rowHeight}
                         margin={margin}
