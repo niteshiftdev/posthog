@@ -14,3 +14,87 @@
 @import '../../node_modules/@posthog/quill/dist/primitives.css';
 @import 'quill-bridge';
 @import 'lemon-skin';
+
+// Large-type, high-contrast mode (demo variant)
+html {
+    font-size: 20px !important;
+}
+
+body,
+body[theme='light'] {
+    --color-text-primary: #000 !important;
+    --color-text-secondary: #111 !important;
+    --color-text-tertiary: #222 !important;
+    --text-3000: #000 !important;
+    --muted: #111 !important;
+    --muted-3000: #1a1a1a !important;
+    --color-border-primary: #222 !important;
+    --color-border-secondary: #000 !important;
+    --color-bg-primary: #fff !important;
+    --color-bg-surface-primary: #fff !important;
+    --foreground: #000 !important;
+    --muted-foreground: #111 !important;
+
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+.CardMeta h4,
+.CardMeta h5,
+.scene-title,
+[class*='SceneTitle'] {
+    font-weight: 900 !important;
+    color: #000 !important;
+    letter-spacing: -0.01em;
+}
+
+.CardMeta h4 {
+    font-size: 1.5rem !important;
+    line-height: 1.2 !important;
+}
+
+.CardMeta h5,
+.CardMeta__heading {
+    font-size: 0.9rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.InsightCard,
+.TextCard,
+.CardMeta {
+    border-width: 2px !important;
+    border-color: #000 !important;
+}
+
+.InsightCard {
+    box-shadow: 4px 4px 0 #000 !important;
+}
+
+.LemonButton,
+.LemonTable td,
+.LemonTable th,
+.text-secondary,
+.text-tertiary,
+.text-muted {
+    color: #000 !important;
+    font-weight: 600 !important;
+}
+
+
+[data-attr='hog-chart-axis-tick-y'],
+[data-attr='hog-chart-axis-tick-x'] {
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    color: #000 !important;
+}
+
+.WorldMap {
+    color: #c9c9c9 !important;
+}

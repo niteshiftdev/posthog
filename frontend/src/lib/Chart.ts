@@ -14,6 +14,9 @@ if (registerables) {
 RawChart.register(CrosshairPlugin)
 RawChart.register(ZoomPlugin)
 RawChart.defaults.animation = false
+RawChart.defaults.font.size = 16
+RawChart.defaults.font.weight = 'bold'
+RawChart.defaults.color = '#000'
 
 // Create positioner to put tooltip at cursor position
 Tooltip.positioners.cursor = function (_, coordinates) {
