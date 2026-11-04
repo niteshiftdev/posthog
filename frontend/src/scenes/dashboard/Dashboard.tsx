@@ -32,6 +32,7 @@ import { DashboardPublicAccessBanner } from './DashboardPublicAccessBanner'
 import { dashboardSubscribeNudgeLogic } from './dashboardSubscribeNudgeLogic'
 import { DashboardZoomControl } from './DashboardZoomControl'
 import { EmptyDashboardComponent } from './EmptyDashboardComponent'
+import { HedgehogConfetti } from './HedgehogConfetti'
 
 // Mount-only: runs the subscribe-nudge eligibility machinery for this dashboard; renders nothing.
 function DashboardSubscribeNudgeTrigger({ dashboardId }: { dashboardId: number }): null {
@@ -142,6 +143,7 @@ function DashboardScene({
 
     return (
         <SceneContent className={cn('dashboard')}>
+            {placement == DashboardPlacement.Dashboard && <HedgehogConfetti />}
             {placement == DashboardPlacement.Dashboard && (
                 <DashboardHeader loading={!dashboard && !dashboardFailedToLoad} />
             )}

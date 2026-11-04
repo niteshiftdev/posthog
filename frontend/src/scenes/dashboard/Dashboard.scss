@@ -1,3 +1,38 @@
 .dashboard .page-caption {
     margin-bottom: 0;
 }
+
+.HedgehogConfetti {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.HedgehogConfetti__piece {
+    position: absolute;
+    top: -80px;
+    line-height: 1;
+    filter: drop-shadow(0 4px 6px rgb(0 0 0 / 20%));
+    opacity: 0;
+    animation-name: HedgehogConfetti__fall;
+    animation-timing-function: cubic-bezier(0.3, 0.1, 0.6, 1);
+    animation-fill-mode: forwards;
+}
+
+@keyframes HedgehogConfetti__fall {
+    0% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate3d(var(--drift), calc(100vh + 160px), 0) rotate(var(--spin));
+    }
+}
