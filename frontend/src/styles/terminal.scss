@@ -1,0 +1,124 @@
+// Retro terminal theme: black background, phosphor-green monospace, square corners.
+$phosphor: #33ff66;
+$phosphor-dim: #1fa84a;
+$phosphor-faint: #0d3d1c;
+
+:root,
+body,
+[theme='light'],
+[theme='dark'] {
+    --font-sans: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace !important;
+    --font-title: var(--font-sans) !important;
+    --font-mono: var(--font-sans) !important;
+    --radius: 0 !important;
+    --radius-sm: 0 !important;
+    --radius-base: 0 !important;
+    --radius-lg: 0 !important;
+    --radius-full: 0 !important;
+
+    --color-bg-primary: #000 !important;
+    --color-bg-3000: #000 !important;
+    --color-bg-surface-primary: #000 !important;
+    --color-bg-surface-secondary: #000 !important;
+    --color-bg-surface-tertiary: #000 !important;
+    --color-bg-surface-popover: #000 !important;
+    --color-bg-fill-primary: #000 !important;
+    --color-bg-fill-secondary: #031a0a !important;
+    --color-bg-fill-tertiary: #052810 !important;
+    --color-bg-fill-input: #000 !important;
+    --color-bg-fill-button-tertiary: #000 !important;
+    --color-bg-fill-button-tertiary-hover: #052810 !important;
+    --color-bg-fill-button-tertiary-active: #052810 !important;
+    --color-bg-fill-highlight-50: rgba(51, 255, 102, 0.06) !important;
+    --color-bg-fill-highlight-100: rgba(51, 255, 102, 0.1) !important;
+    --color-bg-fill-highlight-150: rgba(51, 255, 102, 0.15) !important;
+
+    --color-text-primary: #{$phosphor} !important;
+    --color-text-secondary: #{$phosphor-dim} !important;
+    --color-text-tertiary: #{$phosphor-dim} !important;
+    --text-3000: #{$phosphor} !important;
+    --text-secondary-3000: #{$phosphor-dim} !important;
+    --muted: #{$phosphor-dim} !important;
+    --color-accent: #{$phosphor} !important;
+    --primary-3000: #{$phosphor} !important;
+    --color-border-primary: #{$phosphor-faint} !important;
+    --color-border-secondary: #{$phosphor-faint} !important;
+    --border: #{$phosphor-faint} !important;
+    --border-primary: #{$phosphor-faint} !important;
+
+    --color-graph-axis-label: #{$phosphor-dim} !important;
+    --color-graph-axis-line: #{$phosphor-faint} !important;
+    --color-graph-axis: #{$phosphor-faint} !important;
+    --color-graph-crosshair: #{$phosphor} !important;
+
+    --data-color-1: #33ff66 !important;
+    --data-color-2: #1fa84a !important;
+    --data-color-3: #99ffb3 !important;
+    --data-color-4: #00cc44 !important;
+    --data-color-5: #66ff8c !important;
+    --data-color-6: #148a36 !important;
+    --data-color-7: #b3ffc6 !important;
+    --data-color-8: #2ee65c !important;
+    --data-color-9: #0f6e2b !important;
+    --data-color-10: #80ff9f !important;
+    --data-color-11: #33ff66 !important;
+    --data-color-12: #1fa84a !important;
+    --data-color-13: #99ffb3 !important;
+    --data-color-14: #00cc44 !important;
+    --data-color-15: #66ff8c !important;
+}
+
+html,
+body {
+    background: #000 !important;
+    color: $phosphor !important;
+}
+
+*,
+*::before,
+*::after {
+    border-radius: 0 !important;
+    font-family: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace !important;
+    box-shadow: none !important;
+}
+
+body * {
+    color: inherit;
+    border-color: $phosphor-faint !important;
+}
+
+body :is(h1, h2, h3, h4, h5, a, span, p, div, button, label, td, th, li) {
+    color: $phosphor !important;
+}
+
+body :is(h1, h2, h3, .CardMeta__title, .InsightCard h4) {
+    text-shadow: 0 0 6px rgba(51, 255, 102, 0.6);
+}
+
+body :is(.CardMeta, .InsightCard, .DashboardItem, .LemonCard, .LemonButton, .LemonInput, .LemonTable, .Navigation3000,
+    .Navigation3000__navbar, .TopBar3000, .SceneLayout, main, nav, aside) {
+    background-color: #000 !important;
+}
+
+body .InsightCard,
+body .TextCard {
+    border: 1px solid $phosphor-dim !important;
+}
+
+body svg:not(canvas) path[fill]:not([fill='none']) {
+    fill: currentColor;
+}
+
+body img {
+    filter: grayscale(1) sepia(1) hue-rotate(70deg) saturate(4);
+}
+
+// Faint CRT scanlines
+body::after {
+    content: '';
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 2px, rgba(0, 0, 0, 0.18) 3px);
+}
