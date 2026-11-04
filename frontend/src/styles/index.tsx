@@ -4,3 +4,5 @@ import '@posthog/tailwind/tailwind.css'
 import './global.scss'
 
 /* Contains PostHog's main styling configurations */
+
+import './midnight.scss'

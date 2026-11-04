@@ -1,0 +1,44 @@
+// Midnight theme: deep navy + indigo dark palette layered over the dark theme
+body[theme='dark'],
+[theme='dark'] {
+    --color-neutral-cool-700: hsl(228deg 40% 30%);
+    --color-neutral-cool-750: hsl(228deg 42% 24%);
+    --color-neutral-cool-800: hsl(229deg 45% 19%);
+    --color-neutral-cool-850: hsl(230deg 50% 14%);
+    --color-neutral-cool-900: hsl(231deg 55% 10%);
+    --color-neutral-cool-950: hsl(232deg 60% 7%);
+
+    --color-bg-primary: hsl(232deg 60% 7%);
+    --color-bg-surface-primary: hsl(230deg 50% 13%);
+    --color-bg-surface-secondary: hsl(231deg 55% 10%);
+    --color-bg-surface-tertiary: hsl(232deg 60% 7%);
+    --color-bg-surface-popover: hsl(230deg 50% 14%);
+    --color-bg-3000: hsl(232deg 60% 7%);
+    --color-bg-3000-dark: hsl(232deg 60% 7%);
+    --color-bg-light: hsl(230deg 50% 13%);
+    --color-bg-fill-primary: hsl(231deg 55% 11%);
+    --color-bg-fill-secondary: hsl(230deg 50% 15%);
+    --color-bg-fill-tertiary: hsl(229deg 45% 20%);
+
+    --color-text-primary: hsl(226deg 100% 97%);
+    --color-text-secondary: hsl(228deg 45% 78%);
+    --color-text-tertiary: hsl(230deg 30% 65%);
+    --color-text-3000: hsl(226deg 100% 97%);
+    --color-text-secondary-3000: hsl(228deg 45% 78%);
+
+    --color-border-primary: hsl(235deg 50% 26%);
+    --color-border-secondary: hsl(235deg 50% 22%);
+    --color-border-3000: hsl(235deg 50% 26%);
+
+    // Indigo accent
+    --color-brand-primary-hue: 239;
+    --color-brand-primary-saturation: 84%;
+    --color-brand-primary-lightness: 67%;
+    --color-accent-3000: hsl(239deg 84% 67%);
+    --color-graph-axis-label: hsl(228deg 45% 78%);
+    --color-graph-axis: hsl(235deg 40% 35%);
+}
+
+body[theme='dark'] {
+    background: hsl(232deg 60% 7%);
+}

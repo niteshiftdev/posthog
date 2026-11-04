@@ -147,6 +147,10 @@ export const themeLogic = kea<themeLogicType>([
                 sceneConfig: null | import('../../scenes/sceneTypes').SceneConfig,
                 theme: Theme | null
             ) => {
+                // Midnight variant: always dark
+                if (themeMode || !themeMode) {
+                    return true
+                }
                 if (
                     typeof window !== 'undefined' &&
                     window.document &&
