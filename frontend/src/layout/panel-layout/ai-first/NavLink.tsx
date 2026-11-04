@@ -4,6 +4,7 @@ import { IconGear } from '@posthog/icons'
 import { LemonTag } from '@posthog/lemon-ui'
 
 import { Link } from 'lib/lemon-ui/Link'
+import { Tooltip } from 'lib/lemon-ui/Tooltip'
 import { ButtonGroupPrimitive, ButtonPrimitive } from 'lib/ui/Button/ButtonPrimitives'
 import { cn } from 'lib/utils/css-classes'
 import { removeProjectIdIfPresent } from 'lib/utils/kea-router'
@@ -48,7 +49,7 @@ export function NavLink({
         (isInbox && currentPath.startsWith(`${to}/`))
     const hasSideActionRight = !!sideAction && !isCollapsed
 
-    return (
+    const link = (
         <ButtonGroupPrimitive
             fullWidth
             className="group/nav-link flex justify-center [&>span]:w-full [&>span]:flex [&>span]:justify-center"
@@ -68,7 +69,7 @@ export function NavLink({
                 to={to}
                 data-attr={dataAttr}
                 onClick={onClick}
-                tooltip={label}
+                tooltip={isCollapsed ? undefined : label}
                 tooltipPlacement="right"
             >
                 <span
@@ -116,5 +117,20 @@ export function NavLink({
                 </ButtonPrimitive>
             )}
         </ButtonGroupPrimitive>
+    )
+
+    if (!isCollapsed) {
+        return link
+    }
+    return (
+        <Tooltip
+            title={<span className="compact-nav-label">{label}</span>}
+            placement="right"
+            delayMs={0}
+            offset={10}
+            className="compact-nav-tooltip"
+        >
+            <span className="w-full flex justify-center">{link}</span>
+        </Tooltip>
     )
 }

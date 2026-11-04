@@ -235,7 +235,7 @@ export const panelLayoutLogic = kea<panelLayoutLogicType>([
             },
         ],
         isLayoutNavCollapsedDesktop: [
-            false,
+            true,
             { persist: true },
             {
                 toggleLayoutNavCollapsed: (state, { override }) => override ?? !state,
