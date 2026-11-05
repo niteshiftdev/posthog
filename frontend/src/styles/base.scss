@@ -838,23 +838,23 @@
     --primary-3000-hover-dark: #9bb8d4;
     --primary-3000-active-dark: #6d8fb0;
     --primary-alt-highlight-light: #e6ebf0;
-    --secondary-3000-dark: #1e2630;
+    --secondary-3000-dark: #232c38;
     --secondary-3000-hover-dark: #4a5768;
-    --color-accent-3000-dark: #222b37;
-    --color-bg-3000-dark: #1a212b;
-    --border-3000-dark: #303b49;
-    --border-bold-3000-dark: #3b4757;
-    --glass-bg-3000-dark: #222b3799;
+    --color-accent-3000-dark: #27313e;
+    --color-bg-3000-dark: #1f2833;
+    --border-3000-dark: #36424f;
+    --border-bold-3000-dark: #414e5f;
+    --glass-bg-3000-dark: #27313e99;
     --glass-border-3000-dark: var(--border-3000-dark);
     --link-3000-dark: #8fb0d0;
     --primary-3000-frame-bg-dark: #3c536b;
     --primary-3000-button-bg-dark: var(--color-accent);
     --primary-3000-button-border-dark: #6d8fb0;
     --primary-3000-button-border-hover-dark: #9bb8d4;
-    --primary-alt-highlight-dark: #26303d;
-    --secondary-3000-frame-bg-dark: #2c3644;
-    --secondary-3000-button-bg-dark: #1e2630;
-    --secondary-3000-button-border-dark: #3b4757;
+    --primary-alt-highlight-dark: #2c3744;
+    --secondary-3000-frame-bg-dark: #313c4a;
+    --secondary-3000-button-bg-dark: #232c38;
+    --secondary-3000-button-border-dark: #414e5f;
     --secondary-3000-button-border-hover-dark: #536175;
     --danger-3000-frame-bg-dark: #e0857c40;
     --danger-3000-button-border-dark: #9c514b;
@@ -973,21 +973,21 @@
 
     // Backgrounds (dark mode)
     // //////////////////////////////////////////////////////////
-    --color-bg-primary: #1a212b;
-    --color-bg-surface-primary: #222b37;
-    --color-bg-surface-secondary: #1e2630;
-    --color-bg-surface-tertiary: #181f28;
+    --color-bg-primary: #1f2833;
+    --color-bg-surface-primary: #27313e;
+    --color-bg-surface-secondary: #232c38;
+    --color-bg-surface-tertiary: #1c242e;
     --color-bg-surface-tooltip: #e2e8f0;
     --color-bg-surface-tooltip-inverse: #15202b;
-    --color-bg-surface-popover: #252f3c;
+    --color-bg-surface-popover: #2a3542;
     --color-bg-surface-popover-inverse: #15202b;
 
     // Fills (dark mode)
     // Small colourful areas: banners, pills, buttons, etc.
     // //////////////////////////////////////////////////////////
-    --color-bg-fill-primary: #1e2630;
-    --color-bg-fill-secondary: #222b37;
-    --color-bg-fill-tertiary: #2a3442;
+    --color-bg-fill-primary: #232c38;
+    --color-bg-fill-secondary: #27313e;
+    --color-bg-fill-tertiary: #2f3a48;
     --color-bg-fill-highlight-25: color-mix(in oklab, var(--color-white) 2.5%, transparent);
     --color-bg-fill-highlight-50: color-mix(in oklab, var(--color-white) 5%, transparent);
     --color-bg-fill-highlight-75: color-mix(in oklab, var(--color-white) 7.5%, transparent);
@@ -1020,11 +1020,11 @@
     --color-bg-fill-button-panel: var(--color-bg-fill-highlight-100);
     --color-bg-fill-button-panel-hover: var(--color-bg-fill-highlight-150);
     --color-bg-fill-button-panel-active: var(--color-bg-fill-highlight-100);
-    --color-bg-fill-input: #1e2630;
+    --color-bg-fill-input: #232c38;
     --color-bg-fill-switch: #4a5768;
     --color-bg-fill-slider-rail: color-mix(in oklab, var(--color-white) 15%, transparent);
     --color-bg-fill-scroll-thumb: color-mix(in oklab, var(--color-white) 20%, transparent);
-    --color-bg-border-primary: #303b49;
+    --color-bg-border-primary: #36424f;
     --color-bg-border-secondary: #475569;
 
     // Content (text, icons) (dark mode)
@@ -1041,7 +1041,7 @@
     // Borders (dark mode)
     // Borders for surfaces/fills
     // //////////////////////////////////////////////////////////
-    --color-border-primary: #303b49;
+    --color-border-primary: #36424f;
     --color-border-secondary: #475569;
     --color-border-info: #35506b;
     --color-border-warning: var(--color-yellow-900);
@@ -1057,7 +1057,7 @@
     // Graph colors (dark mode)
     // //////////////////////////////////////////////////////////
     --color-graph-axis-label: var(--color-text-secondary);
-    --color-graph-axis-line: #2c3644;
+    --color-graph-axis-line: #313c4a;
     --color-graph-axis: var(--color-text-secondary);
     --color-graph-crosshair: #556375;
 
@@ -1075,12 +1075,12 @@
     --color-accent-3000: var(--color-accent-3000-dark);
     --color-bg-3000: var(--color-bg-3000-dark);
     --border-3000: var(--border-3000-dark);
-    --border-light-opaque: #262f3b;
+    --border-light-opaque: #2a3441;
     --border-bold-3000: var(--border-bold-3000-dark);
     --glass-bg-3000: var(--glass-bg-3000-dark);
     --glass-border-3000: var(--glass-border-3000-dark);
     --color-bg-light: var(--color-accent-3000);
-    --color-bg-table: #1e2630;
+    --color-bg-table: #232c38;
     --brand-key: #fff; // In dark mode the black in PostHog's logo is replaced with white for proper contrast
     --link: var(--link-3000-dark);
     --shadow-elevation-3000: var(--shadow-elevation-3000-dark);
