@@ -248,14 +248,14 @@
     --color-paper-ink-tertiary: #73675b;
     --color-paper-cream-secondary: #c6b8a7;
     --color-paper-cream-tertiary: #a69685;
-    --color-espresso-950: #1a1512;
-    --color-espresso-900: #201a16;
-    --color-espresso-850: #26201b;
-    --color-espresso-800: #2b241e;
-    --color-espresso-750: #2f2822;
-    --color-espresso-700: #3a3029;
-    --color-espresso-600: #57493e;
-    --color-espresso-500: #6b5a4c;
+    --color-espresso-950: #1f1813;
+    --color-espresso-900: #261e18;
+    --color-espresso-850: #2d241e;
+    --color-espresso-800: #332921;
+    --color-espresso-750: #382d25;
+    --color-espresso-700: #45382e;
+    --color-espresso-600: #604f42;
+    --color-espresso-500: #776350;
     --color-white: #fff;
 
     // Primitive neutral cool colors
@@ -628,22 +628,22 @@
     --black: var(--text-3000);
 
     // Data colors (e.g. insight series). Note: colors.ts relies on these values being hexadecimal
-    --data-color-1: #c0502b;
-    --data-color-1-hover: #a8431f;
-    --data-color-2: #2f6690;
-    --data-color-3: #5e8c61;
-    --data-color-4: #a23b72;
-    --data-color-5: #d99a2b;
-    --data-color-6: #6b4f3a;
-    --data-color-7: #3e8a86;
-    --data-color-8: #8e6bb0;
-    --data-color-9: #7a8c3a;
-    --data-color-10: #34495e;
-    --data-color-11: #c96f8c;
-    --data-color-12: #9c6b2f;
-    --data-color-13: #4f7cac;
-    --data-color-14: #5b7f95;
-    --data-color-15: #c9a66b;
+    --data-color-1: #1d4aff;
+    --data-color-1-hover: #1a3cf6;
+    --data-color-2: #621da6;
+    --data-color-3: #42827e;
+    --data-color-4: #ce0e74;
+    --data-color-5: #f14f58;
+    --data-color-6: #7c440e;
+    --data-color-7: #529a0a;
+    --data-color-8: #0476fb;
+    --data-color-9: #fe729e;
+    --data-color-10: #35416b;
+    --data-color-11: #41cbc4;
+    --data-color-12: #b64b02;
+    --data-color-13: #e4a604;
+    --data-color-14: #a56eff;
+    --data-color-15: #30d5c8;
 
     // Lifecycle series (compiled)
     --color-lifecycle-new: #1d4aff;
@@ -1106,14 +1106,12 @@
     --danger-3000-button-border: var(--danger-3000-button-border-dark);
     --danger-3000-button-border-hover: var(--danger-3000-button-border-hover-dark);
     --tooltip-bg: var(--tooltip-bg-dark);
-    --data-color-2: #5e92bf;
-    --data-color-3: #7aa87d;
-    --data-color-4: #c2558e;
-    --data-color-5: #e0a944;
-    --data-color-6: #a57e5e;
-    --data-color-10: #7f95ad;
-    --data-color-1: #e0764f;
-    --data-color-1-hover: #ea8c68;
+    --data-color-2: #7f26d9;
+    --data-color-3: #3e7a76;
+    --data-color-4: #bf0d6c;
+    --data-color-5: #f0474f;
+    --data-color-6: #b36114;
+    --data-color-10: #6576b3;
 
     // Rainbow brand gradient (dark mode) — lighter shades so the gradient stays
     // readable inside toasts and command blocks. See light-mode definition below.
