@@ -871,6 +871,72 @@ export const ExperimentSavedMetricsPartialUpdateBody = /* @__PURE__ */ zod
     .describe('Mixin for serializers to add user access control fields')
 
 /**
+ * Create an author-attributed annotation for a variant of an experiment.
+ */
+
+export const experimentVariantAnnotationsCreateBodyVariantKeyMax = 400
+
+export const experimentVariantAnnotationsCreateBodyContentMax = 2000
+
+export const ExperimentVariantAnnotationsCreateBody = /* @__PURE__ */ zod.object({
+    experiment: zod.number().min(1).describe('Experiment that owns the annotation. Cannot change after creation.'),
+    variant_key: zod
+        .string()
+        .max(experimentVariantAnnotationsCreateBodyVariantKeyMax)
+        .describe('Key of a variant belonging to this experiment.'),
+    content: zod
+        .string()
+        .max(experimentVariantAnnotationsCreateBodyContentMax)
+        .describe('Plain-text annotation content, up to 2000 characters.'),
+})
+
+/**
+ * Edit an annotation authored by the current user.
+ */
+
+export const experimentVariantAnnotationsUpdateBodyVariantKeyMax = 400
+
+export const experimentVariantAnnotationsUpdateBodyContentMax = 2000
+
+export const ExperimentVariantAnnotationsUpdateBody = /* @__PURE__ */ zod.object({
+    experiment: zod.number().min(1).describe('Experiment that owns the annotation. Cannot change after creation.'),
+    variant_key: zod
+        .string()
+        .max(experimentVariantAnnotationsUpdateBodyVariantKeyMax)
+        .describe('Key of a variant belonging to this experiment.'),
+    content: zod
+        .string()
+        .max(experimentVariantAnnotationsUpdateBodyContentMax)
+        .describe('Plain-text annotation content, up to 2000 characters.'),
+})
+
+/**
+ * Edit an annotation authored by the current user.
+ */
+
+export const experimentVariantAnnotationsPartialUpdateBodyVariantKeyMax = 400
+
+export const experimentVariantAnnotationsPartialUpdateBodyContentMax = 2000
+
+export const ExperimentVariantAnnotationsPartialUpdateBody = /* @__PURE__ */ zod.object({
+    experiment: zod
+        .number()
+        .min(1)
+        .optional()
+        .describe('Experiment that owns the annotation. Cannot change after creation.'),
+    variant_key: zod
+        .string()
+        .max(experimentVariantAnnotationsPartialUpdateBodyVariantKeyMax)
+        .optional()
+        .describe('Key of a variant belonging to this experiment.'),
+    content: zod
+        .string()
+        .max(experimentVariantAnnotationsPartialUpdateBodyContentMax)
+        .optional()
+        .describe('Plain-text annotation content, up to 2000 characters.'),
+})
+
+/**
  * Create a new experiment in draft status with optional metrics.
  */
 export const ExperimentsCreateBody = /* @__PURE__ */ zod
