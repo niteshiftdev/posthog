@@ -17,6 +17,7 @@ import { More } from 'lib/lemon-ui/LemonButton/More'
 import { LemonDivider } from 'lib/lemon-ui/LemonDivider'
 import { LemonMarkdown } from 'lib/lemon-ui/LemonMarkdown'
 import { LemonProgress } from 'lib/lemon-ui/LemonProgress'
+import { LemonSegmentedButton } from 'lib/lemon-ui/LemonSegmentedButton'
 import { LemonTable, LemonTableColumn, LemonTableColumns } from 'lib/lemon-ui/LemonTable'
 import { atColumn, createdAtColumn, createdByColumn } from 'lib/lemon-ui/LemonTable/columnUtils'
 import { LemonTableLink } from 'lib/lemon-ui/LemonTable/LemonTableLink'
@@ -47,6 +48,7 @@ import {
 } from '~/types'
 
 import { experimentsEmptyState } from 'products/experiments/frontend/emptyState/experimentsEmptyState'
+import { ExperimentPortfolio } from 'products/experiments/frontend/portfolio/ExperimentPortfolio'
 
 import { CONCLUSION_DISPLAY_CONFIG } from './constants'
 import { CopyExperimentToProjectModal } from './CopyExperimentToProjectModal'
@@ -201,9 +203,9 @@ const ExperimentsTable = ({
     openSurveyModal: (experiment: Experiment) => void
     openCopyToProjectModal: (experiment: Experiment) => void
 }): JSX.Element => {
-    const { currentProjectId, experiments, experimentsLoading, filters, count, pagination } =
+    const { currentProjectId, experiments, experimentsLoading, experimentsError, view, filters, count, pagination } =
         useValues(experimentsLogic)
-    const { loadExperiments, archiveExperiment, unarchiveExperiment, setExperimentsFilters } =
+    const { loadExperiments, archiveExperiment, unarchiveExperiment, setExperimentsFilters, setExperimentsView } =
         useActions(experimentsLogic)
     const { currentOrganization } = useValues(organizationLogic)
     const hasMultipleProjects = (currentOrganization?.projects?.length ?? 0) > 1
@@ -496,6 +498,17 @@ const ExperimentsTable = ({
 
     return (
         <SceneContent>
+            <div className="flex justify-end">
+                <LemonSegmentedButton
+                    value={view}
+                    onChange={setExperimentsView}
+                    options={[
+                        { value: 'list', label: 'List', 'data-attr': 'experiments-list-view' },
+                        { value: 'portfolio', label: 'Portfolio', 'data-attr': 'experiments-portfolio-view' },
+                    ]}
+                    size="small"
+                />
+            </div>
             <ExperimentsTableFilters filters={filters} onFiltersChange={setExperimentsFilters} />
             <LemonDivider className="my-0" />
             {count ? (
@@ -506,31 +519,61 @@ const ExperimentsTable = ({
                 </div>
             ) : null}
 
-            <div data-attr="experiments-table-container">
-                <LemonTable
-                    dataSource={experiments.results}
-                    columns={columns}
-                    rowKey="id"
-                    loading={experimentsLoading}
-                    defaultSorting={{
-                        columnKey: 'created_at',
-                        order: -1,
-                    }}
-                    noSortingCancellation
-                    pagination={pagination}
-                    nouns={['experiment', 'experiments']}
-                    data-attr="experiment-table"
-                    emptyState="No results for this filter, change filter or create a new experiment."
-                    onSort={(newSorting) =>
-                        setExperimentsFilters({
-                            order: newSorting
-                                ? `${newSorting.order === -1 ? '-' : ''}${newSorting.columnKey}`
-                                : undefined,
-                            page: 1,
-                        })
-                    }
-                />
-            </div>
+            {view === 'portfolio' ? (
+                <>
+                    <ExperimentPortfolio
+                        experiments={experiments.results}
+                        loading={experimentsLoading}
+                        error={experimentsError}
+                    />
+                    {count > EXPERIMENTS_PER_PAGE && (
+                        <div className="flex justify-end gap-2">
+                            <LemonButton
+                                onClick={() => setExperimentsFilters({ page: page - 1 })}
+                                disabledReason={page <= 1 ? 'No previous page' : undefined}
+                                loading={experimentsLoading}
+                                data-attr="experiments-portfolio-previous"
+                            >
+                                Previous
+                            </LemonButton>
+                            <LemonButton
+                                onClick={() => setExperimentsFilters({ page: page + 1 })}
+                                disabledReason={endCount >= count ? 'No next page' : undefined}
+                                loading={experimentsLoading}
+                                data-attr="experiments-portfolio-next"
+                            >
+                                Next
+                            </LemonButton>
+                        </div>
+                    )}
+                </>
+            ) : (
+                <div data-attr="experiments-table-container">
+                    <LemonTable
+                        dataSource={experiments.results}
+                        columns={columns}
+                        rowKey="id"
+                        loading={experimentsLoading}
+                        defaultSorting={{
+                            columnKey: 'created_at',
+                            order: -1,
+                        }}
+                        noSortingCancellation
+                        pagination={pagination}
+                        nouns={['experiment', 'experiments']}
+                        data-attr="experiment-table"
+                        emptyState="No results for this filter, change filter or create a new experiment."
+                        onSort={(newSorting) =>
+                            setExperimentsFilters({
+                                order: newSorting
+                                    ? `${newSorting.order === -1 ? '-' : ''}${newSorting.columnKey}`
+                                    : undefined,
+                                page: 1,
+                            })
+                        }
+                    />
+                </div>
+            )}
         </SceneContent>
     )
 }
