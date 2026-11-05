@@ -22,19 +22,19 @@
     );
     --lemon-skin-border: var(--color-posthog-3000-200);
     --lemon-skin-border-hover: var(--color-posthog-3000-400);
-    --lemon-skin-surface: var(--color-white);
+    --lemon-skin-surface: var(--color-paper-surface);
     --lemon-skin-bg-page: var(--color-posthog-3000-50);
-    --lemon-skin-text-secondary: var(--color-neutral-750);
+    --lemon-skin-text-secondary: var(--color-paper-ink-secondary);
     --lemon-skin-radius: 0.375rem;
     --lemon-skin-radius-lg: 0.625rem;
 }
 
 [theme='dark'] [data-lemon-skin] {
-    --lemon-skin-border: var(--color-neutral-cool-800);
-    --lemon-skin-border-hover: var(--color-neutral-cool-600);
-    --lemon-skin-surface: var(--color-neutral-cool-850);
-    --lemon-skin-bg-page: var(--color-neutral-cool-950);
-    --lemon-skin-text-secondary: var(--color-neutral-350);
+    --lemon-skin-border: var(--color-espresso-700);
+    --lemon-skin-border-hover: var(--color-espresso-600);
+    --lemon-skin-surface: var(--color-espresso-850);
+    --lemon-skin-bg-page: var(--color-espresso-950);
+    --lemon-skin-text-secondary: var(--color-paper-cream-secondary);
 }
 
 /* Core quill tokens → Lemon values: recolors primitive CSS and bespoke Tailwind in one

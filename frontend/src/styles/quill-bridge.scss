@@ -236,11 +236,11 @@
 [data-quill] [data-not-quill] {
     --muted-3000: var(--muted-3000-light);
     --color-bg-primary: var(--color-posthog-3000-50);
-    --color-bg-surface-primary: var(--color-white);
+    --color-bg-surface-primary: var(--color-paper-surface);
     --color-bg-surface-secondary: var(--color-posthog-3000-100);
     --color-bg-surface-tertiary: var(--color-posthog-3000-150);
-    --color-text-primary: var(--color-neutral-950);
-    --color-text-secondary: var(--color-neutral-750);
+    --color-text-primary: var(--color-paper-ink);
+    --color-text-secondary: var(--color-paper-ink-secondary);
     --color-border-primary: var(--color-posthog-3000-200);
     --color-border-secondary: var(--color-posthog-3000-400);
     --color-accent: hsl(
@@ -262,12 +262,12 @@
 
 [theme='dark'] [data-quill] [data-not-quill] {
     --muted-3000: var(--muted-3000-dark);
-    --color-bg-primary: var(--color-neutral-cool-950);
-    --color-bg-surface-primary: var(--color-neutral-cool-850);
-    --color-bg-surface-secondary: var(--color-neutral-cool-900);
-    --color-bg-surface-tertiary: var(--color-neutral-cool-950);
-    --color-text-primary: var(--color-neutral-100);
-    --color-text-secondary: var(--color-neutral-350);
-    --color-border-primary: var(--color-neutral-cool-800);
-    --color-border-secondary: var(--color-neutral-cool-600);
+    --color-bg-primary: var(--color-espresso-950);
+    --color-bg-surface-primary: var(--color-espresso-850);
+    --color-bg-surface-secondary: var(--color-espresso-900);
+    --color-bg-surface-tertiary: var(--color-espresso-950);
+    --color-text-primary: var(--color-paper-cream-text);
+    --color-text-secondary: var(--color-paper-cream-secondary);
+    --color-border-primary: var(--color-espresso-700);
+    --color-border-secondary: var(--color-espresso-600);
 }
