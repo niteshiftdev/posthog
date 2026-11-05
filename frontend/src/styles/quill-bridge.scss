@@ -236,11 +236,11 @@
 [data-quill] [data-not-quill] {
     --muted-3000: var(--muted-3000-light);
     --color-bg-primary: var(--color-posthog-3000-50);
-    --color-bg-surface-primary: var(--color-white);
+    --color-bg-surface-primary: hsl(90deg 25% 99%);
     --color-bg-surface-secondary: var(--color-posthog-3000-100);
     --color-bg-surface-tertiary: var(--color-posthog-3000-150);
-    --color-text-primary: var(--color-neutral-950);
-    --color-text-secondary: var(--color-neutral-750);
+    --color-text-primary: hsl(152deg 30% 10%);
+    --color-text-secondary: hsl(150deg 14% 27%);
     --color-border-primary: var(--color-posthog-3000-200);
     --color-border-secondary: var(--color-posthog-3000-400);
     --color-accent: hsl(
@@ -266,8 +266,8 @@
     --color-bg-surface-primary: var(--color-neutral-cool-850);
     --color-bg-surface-secondary: var(--color-neutral-cool-900);
     --color-bg-surface-tertiary: var(--color-neutral-cool-950);
-    --color-text-primary: var(--color-neutral-100);
-    --color-text-secondary: var(--color-neutral-350);
+    --color-text-primary: hsl(120deg 16% 91%);
+    --color-text-secondary: hsl(130deg 10% 72%);
     --color-border-primary: var(--color-neutral-cool-800);
     --color-border-secondary: var(--color-neutral-cool-600);
 }
