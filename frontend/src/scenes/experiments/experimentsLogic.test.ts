@@ -471,6 +471,50 @@ describe('experimentsLogic', () => {
         })
     })
 
+    describe('portfolio deep-link', () => {
+        it('preserves portfolio view and filters across URL changes and remounting', async () => {
+            await expectLogic(logic, () => {
+                router.actions.push(urls.experiments(), { view: 'portfolio', search: 'signup' })
+            }).toFinishAllListeners()
+
+            expect(logic.values.view).toEqual('portfolio')
+            expect(logic.values.filters.search).toEqual('signup')
+
+            await expectLogic(logic, () => {
+                logic.actions.setExperimentsFilters({ status: ExperimentStatus.Running, page: 2 })
+            }).toFinishAllListeners()
+
+            expect(router.values.searchParams).toEqual(
+                expect.objectContaining({
+                    view: 'portfolio',
+                    search: 'signup',
+                    status: ExperimentStatus.Running,
+                    page: 2,
+                })
+            )
+
+            logic.unmount()
+            logic = experimentsLogic()
+            await expectLogic(logic, () => logic.mount()).toFinishAllListeners()
+
+            expect(logic.values.view).toEqual('portfolio')
+            expect(logic.values.filters).toEqual(
+                expect.objectContaining({ search: 'signup', status: ExperimentStatus.Running, page: 2 })
+            )
+        })
+
+        it.each([undefined, 'unknown'])('falls back to list for URL view %s', async (view) => {
+            logic.actions.setExperimentsView('portfolio')
+
+            await expectLogic(logic, () => {
+                router.actions.push(urls.experiments(), { view })
+            }).toFinishAllListeners()
+
+            expect(logic.values.view).toEqual('list')
+            expect(router.values.searchParams.view).toBeUndefined()
+        })
+    })
+
     describe('activity deep-link', () => {
         it('preserves the activity deep-link param when staying on the history tab', async () => {
             router.actions.push(urls.experiments(), { tab: 'history', activity: 'some-uuid' })
