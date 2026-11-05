@@ -241,26 +241,26 @@
     --color-white: #fff;
 
     // Primitive neutral cool colors
-    --color-neutral-cool-50: hsl(240deg 8% 95%);
-    --color-neutral-cool-75: hsl(236deg 8% 92.5%);
-    --color-neutral-cool-100: hsl(232deg 8% 90%);
-    --color-neutral-cool-150: hsl(232.5deg 8% 85%);
-    --color-neutral-cool-200: hsl(233deg 8% 80%);
-    --color-neutral-cool-250: hsl(231.5deg 8% 75%);
-    --color-neutral-cool-300: hsl(230deg 8% 70%);
-    --color-neutral-cool-350: hsl(230.5deg 8% 65%);
-    --color-neutral-cool-400: hsl(231deg 8% 60%);
-    --color-neutral-cool-450: hsl(231deg 8% 55%);
-    --color-neutral-cool-500: hsl(231deg 8% 50%);
-    --color-neutral-cool-550: hsl(230.5deg 8% 45%);
-    --color-neutral-cool-600: hsl(230deg 8% 40%);
-    --color-neutral-cool-650: hsl(230deg 8% 35%);
-    --color-neutral-cool-700: hsl(230deg 8% 30%);
-    --color-neutral-cool-750: hsl(235deg 8% 25%);
-    --color-neutral-cool-800: hsl(230deg 8% 20%);
-    --color-neutral-cool-850: hsl(235deg 8% 15%);
-    --color-neutral-cool-900: hsl(240deg 8% 10%);
-    --color-neutral-cool-950: hsl(240deg 8% 8%);
+    --color-neutral-cool-50: hsl(213deg 14% 95%);
+    --color-neutral-cool-75: hsl(213deg 14% 92.5%);
+    --color-neutral-cool-100: hsl(213deg 14% 90%);
+    --color-neutral-cool-150: hsl(213deg 14% 85%);
+    --color-neutral-cool-200: hsl(213deg 14% 80%);
+    --color-neutral-cool-250: hsl(213deg 14% 75%);
+    --color-neutral-cool-300: hsl(213deg 14% 70%);
+    --color-neutral-cool-350: hsl(213deg 14% 65%);
+    --color-neutral-cool-400: hsl(213deg 14% 60%);
+    --color-neutral-cool-450: hsl(213deg 14% 55%);
+    --color-neutral-cool-500: hsl(213deg 14% 50%);
+    --color-neutral-cool-550: hsl(213deg 14% 45%);
+    --color-neutral-cool-600: hsl(213deg 14% 40%);
+    --color-neutral-cool-650: hsl(213deg 14% 35%);
+    --color-neutral-cool-700: hsl(213deg 14% 30%);
+    --color-neutral-cool-750: hsl(213deg 14% 25%);
+    --color-neutral-cool-800: hsl(213deg 14% 20%);
+    --color-neutral-cool-850: hsl(213deg 14% 15%);
+    --color-neutral-cool-900: hsl(213deg 14% 10%);
+    --color-neutral-cool-950: hsl(213deg 14% 8%);
 
     // Primitive neutral colors
     --color-neutral-50: hsl(0deg 0% 95%);
@@ -284,17 +284,17 @@
     --color-neutral-950: hsl(0deg 0% 5%);
 
     // Posthog 3000 (yellow-greys) colors
-    --color-posthog-3000-25: hsl(75deg 14% 96.5%);
-    --color-posthog-3000-50: hsl(75deg 14% 95%);
-    --color-posthog-3000-100: hsl(70deg 16% 93%);
-    --color-posthog-3000-150: hsl(77deg 13% 89%);
-    --color-posthog-3000-200: hsl(78deg 13% 85%);
-    --color-posthog-3000-250: hsl(67deg 8% 80%);
-    --color-posthog-3000-300: hsl(72deg 8% 76%);
-    --color-posthog-3000-350: hsl(70deg 8% 71%);
-    --color-posthog-3000-400: hsl(69deg 8% 65%);
-    --color-posthog-3000-450: hsl(67deg 8% 60%);
-    --color-posthog-3000-500: hsl(67deg 8% 55%);
+    --color-posthog-3000-25: hsl(210deg 25% 98.5%);
+    --color-posthog-3000-50: hsl(210deg 22% 96.5%);
+    --color-posthog-3000-100: hsl(210deg 20% 94.5%);
+    --color-posthog-3000-150: hsl(210deg 18% 92%);
+    --color-posthog-3000-200: hsl(210deg 20% 90%);
+    --color-posthog-3000-250: hsl(210deg 15% 84%);
+    --color-posthog-3000-300: hsl(210deg 13% 79%);
+    --color-posthog-3000-350: hsl(210deg 12% 74%);
+    --color-posthog-3000-400: hsl(210deg 11% 68%);
+    --color-posthog-3000-450: hsl(210deg 10% 62%);
+    --color-posthog-3000-500: hsl(210deg 9% 56%);
 
     // PostHog brand colors
     // Split into hue, saturation, lightness to make it easier to change the brand colors
@@ -369,9 +369,17 @@
     // Generic brand color assignments
     // Change these to change the brand colors
     // //////////////////////////////////////////////////////////
-    --color-brand-primary-hue: var(--color-posthog-brand-orange-hue);
-    --color-brand-primary-saturation: var(--color-posthog-brand-orange-saturation);
-    --color-brand-primary-lightness: var(--color-posthog-brand-orange-lightness);
+    // Nordic theme: muted steel blue accent (light #4d6e8e, dark #80a1c2)
+    --color-nordic-steel-light-hue: 210;
+    --color-nordic-steel-light-saturation: 30%;
+    --color-nordic-steel-light-lightness: 43%;
+    --color-nordic-steel-dark-hue: 210;
+    --color-nordic-steel-dark-saturation: 35%;
+    --color-nordic-steel-dark-lightness: 63%;
+    --color-nordic-on-accent: #fff;
+    --color-brand-primary-hue: var(--color-nordic-steel-light-hue);
+    --color-brand-primary-saturation: var(--color-nordic-steel-light-saturation);
+    --color-brand-primary-lightness: var(--color-nordic-steel-light-lightness);
     --color-brand-secondary-hue: var(--color-posthog-brand-blue-hue);
     --color-brand-secondary-saturation: var(--color-posthog-brand-blue-saturation);
     --color-brand-secondary-lightness: var(--color-posthog-brand-blue-lightness);
@@ -388,9 +396,9 @@
         var(--color-brand-primary-lightness)
     );
     --color-accent-inverted: hsl(
-        var(--color-posthog-brand-yellow-hue),
-        var(--color-posthog-brand-yellow-saturation),
-        var(--color-posthog-brand-yellow-lightness)
+        var(--color-nordic-steel-dark-hue),
+        var(--color-nordic-steel-dark-saturation),
+        var(--color-nordic-steel-dark-lightness)
     );
     --color-accent-hover: hsl(
         var(--color-brand-primary-hue),
@@ -398,9 +406,9 @@
         calc(var(--color-brand-primary-lightness) + 10%)
     );
     --color-accent-hover-inverted: hsl(
-        var(--color-posthog-brand-yellow-hue),
-        var(--color-posthog-brand-yellow-saturation),
-        calc(var(--color-posthog-brand-yellow-lightness) + 10%)
+        var(--color-nordic-steel-dark-hue),
+        var(--color-nordic-steel-dark-saturation),
+        calc(var(--color-nordic-steel-dark-lightness) + 10%)
     );
     --color-accent-active: hsl(
         var(--color-brand-primary-hue),
@@ -408,9 +416,9 @@
         calc(var(--color-brand-primary-lightness) + 15%)
     );
     --color-accent-active-inverted: hsl(
-        var(--color-posthog-brand-yellow-hue),
-        var(--color-posthog-brand-yellow-saturation),
-        calc(var(--color-posthog-brand-yellow-lightness) + 15%)
+        var(--color-nordic-steel-dark-hue),
+        var(--color-nordic-steel-dark-saturation),
+        calc(var(--color-nordic-steel-dark-lightness) + 15%)
     );
     --color-accent-highlight-primary: hsla(
         var(--color-brand-primary-hue),
@@ -452,7 +460,7 @@
     --color-bg-surface-tertiary: var(--color-posthog-3000-150);
 
     /* Most prominent surface (Cards, tables, etc.) */
-    --color-bg-surface-tooltip: var(--color-neutral-cool-850);
+    --color-bg-surface-tooltip: #2b3542;
     --color-bg-surface-tooltip-inverse: var(--color-neutral-cool-250);
     --color-bg-surface-popover: var(--color-white);
     --color-bg-surface-popover-inverse: var(--color-neutral-cool-950);
@@ -480,8 +488,8 @@
     --color-bg-fill-primary-highlight: color-mix(in oklab, var(--color-primary-500) 10%, transparent);
 
     // Info fills
-    --color-bg-fill-info-secondary: var(--color-blue-100);
-    --color-bg-fill-info-tertiary: var(--color-blue-50);
+    --color-bg-fill-info-secondary: var(--color-sky-100);
+    --color-bg-fill-info-tertiary: var(--color-sky-50);
     --color-bg-fill-warning-secondary: var(--color-yellow-100);
     --color-bg-fill-warning-tertiary: var(--color-yellow-50);
     --color-bg-fill-warning-highlight: color-mix(in oklab, var(--color-yellow-500) 15%, transparent);
@@ -513,16 +521,16 @@
     // Borders (Useful for single pixel backgrounds to mimic borders)
     // //////////////////////////////////////////////////////////
     --color-bg-border-primary: var(--color-posthog-3000-200);
-    --color-bg-border-secondary: var(--color-posthog-3000-400);
+    --color-bg-border-secondary: hsl(210deg 16% 80%);
 
     // Content (text, icons)
     // //////////////////////////////////////////////////////////
-    --color-text-primary: var(--color-neutral-950);
-    --color-text-primary-inverse: var(--color-neutral-100);
-    --color-text-secondary-inverse: var(--color-neutral-400);
-    --color-text-secondary: var(--color-neutral-750);
-    --color-text-tertiary: var(--color-neutral-600);
-    --color-text-success: var(--color-green-600);
+    --color-text-primary: #1e293b;
+    --color-text-primary-inverse: #edf1f5;
+    --color-text-secondary-inverse: #9aa7b6;
+    --color-text-secondary: #475569;
+    --color-text-tertiary: #5e6b7c;
+    --color-text-success: var(--color-green-700);
     --color-text-warning: var(--color-yellow-700);
     --color-text-error: var(--color-red-600);
 
@@ -530,8 +538,8 @@
     // Borders for surfaces/fills (TODO: perhaps we need to do border-fill-primary, border-fill-warning, etc.)
     // //////////////////////////////////////////////////////////
     --color-border-primary: var(--color-posthog-3000-200);
-    --color-border-secondary: var(--color-posthog-3000-400);
-    --color-border-info: var(--color-blue-400);
+    --color-border-secondary: hsl(210deg 16% 80%);
+    --color-border-info: var(--color-sky-300);
     --color-border-warning: var(--color-yellow-400);
     --color-border-error: var(--color-red-400);
     --color-border-success: var(--color-green-400);
@@ -541,14 +549,14 @@
     --color-graph-axis-label: var(--color-text-secondary);
 
     /* Labels around graph */
-    --color-graph-axis-line: var(--color-neutral-cool-100);
+    --color-graph-axis-line: hsl(210deg 20% 92%);
 
     /* Background lines in a graph, horizontal and vertical */
 
     --color-graph-axis: var(--color-text-secondary);
 
     /* Line around a graph */
-    --color-graph-crosshair: var(--color-neutral-cool-450);
+    --color-graph-crosshair: hsl(210deg 12% 66%);
 
     /* Crosshair line, horizontal or vertical */
 
@@ -578,26 +586,26 @@
 
     // Shadows
     // //////////////////////////////////////////////////////////
-    --shadow-elevation-3000: 0 3px 0 var(--border-3000-light);
+    --shadow-elevation-3000: 0 1px 2px rgb(15 23 42 / 4%);
 
     // Non-color vars
-    --radius: 0.375rem; // Increased from Tailwind's default of 0.25rem
-    --radius-sm: 0.25rem; // Increased from Tailwind's default of 0.125rem
-    --radius-base: var(--radius); // Increased from Tailwind's default of 0.25rem
-    --radius-lg: 0.625rem; // Increased from Tailwind's default of 0.5rem
+    --radius: 0.5rem; // Nordic: softer corners than Tailwind's 0.25rem default
+    --radius-sm: 0.375rem;
+    --radius-base: var(--radius);
+    --radius-lg: 0.875rem;
     --radius-full: 9999px;
-    --modal-shadow-elevation: 0px 16px 16px -16px rgb(0 0 0 / 35%);
+    --modal-shadow-elevation: 0 12px 32px -12px rgb(15 23 42 / 16%);
     --opacity-disabled: 0.65;
     --font-medium: 500;
     --font-semibold: 600;
     --font-sans:
-        'Emoji Flags Polyfill', 'RoundHog', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto',
+        'Emoji Flags Polyfill', 'Inter', -apple-system, BlinkMacSystemFont, 'RoundHog', 'Segoe UI', 'Roboto',
         'Helvetica Neue', helvetica, arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     --font-title:
-        'Emoji Flags Polyfill', 'RoundHog', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto',
+        'Emoji Flags Polyfill', 'Inter', -apple-system, BlinkMacSystemFont, 'RoundHog', 'Segoe UI', 'Roboto',
         'Helvetica Neue', helvetica, arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     --font-button:
-        'Emoji Flags Polyfill', 'RoundHog', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto',
+        'Emoji Flags Polyfill', 'Inter', -apple-system, BlinkMacSystemFont, 'RoundHog', 'Segoe UI', 'Roboto',
         'Helvetica Neue', helvetica, arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     --font-mono:
         'Emoji Flags Polyfill', ui-monospace, 'SFMono-Regular', 'SF Mono', 'Menlo', 'Consolas', 'Liberation Mono',
@@ -610,42 +618,42 @@
     --black: var(--text-3000);
 
     // Data colors (e.g. insight series). Note: colors.ts relies on these values being hexadecimal
-    --data-color-1: #1d4aff;
-    --data-color-1-hover: #1a3cf6;
-    --data-color-2: #621da6;
-    --data-color-3: #42827e;
-    --data-color-4: #ce0e74;
-    --data-color-5: #f14f58;
-    --data-color-6: #7c440e;
-    --data-color-7: #529a0a;
-    --data-color-8: #0476fb;
-    --data-color-9: #fe729e;
-    --data-color-10: #35416b;
-    --data-color-11: #41cbc4;
-    --data-color-12: #b64b02;
-    --data-color-13: #e4a604;
-    --data-color-14: #a56eff;
-    --data-color-15: #30d5c8;
+    --data-color-1: #5b7fa6;
+    --data-color-1-hover: #4c6f96;
+    --data-color-2: #8a6fa8;
+    --data-color-3: #4e9488;
+    --data-color-4: #c0697a;
+    --data-color-5: #d08b5b;
+    --data-color-6: #7a8b5a;
+    --data-color-7: #6ba3c2;
+    --data-color-8: #a3798f;
+    --data-color-9: #3f5872;
+    --data-color-10: #c9a65a;
+    --data-color-11: #5fa5a0;
+    --data-color-12: #b5735a;
+    --data-color-13: #8f9db0;
+    --data-color-14: #7466a8;
+    --data-color-15: #6e9f72;
 
     // Lifecycle series (compiled)
-    --color-lifecycle-new: #1d4aff;
-    --color-lifecycle-returning: #388600;
-    --color-lifecycle-resurrecting: #a56eff;
-    --color-lifecycle-dormant: #db3707;
-    --color-lifecycle-new-hover: #0024b6;
-    --color-lifecycle-returning-hover: #254d08;
-    --color-lifecycle-resurrecting-hover: #6608ff;
-    --color-lifecycle-dormant-hover: #781e04;
+    --color-lifecycle-new: #5b7fa6;
+    --color-lifecycle-returning: #6e9f72;
+    --color-lifecycle-resurrecting: #8a6fa8;
+    --color-lifecycle-dormant: #c0697a;
+    --color-lifecycle-new-hover: #3f5d80;
+    --color-lifecycle-returning-hover: #4f7a53;
+    --color-lifecycle-resurrecting-hover: #6a4f88;
+    --color-lifecycle-dormant-hover: #9b4a5a;
 
     // Revenue analytics MRR series (compiled)
-    --color-revenue-analytics-new: #388600;
-    --color-revenue-analytics-expansion: #1d4aff;
-    --color-revenue-analytics-contraction: #ffa500;
-    --color-revenue-analytics-churn: #db3707;
-    --color-revenue-analytics-new-hover: #254d08;
-    --color-revenue-analytics-expansion-hover: #0024b6;
-    --color-revenue-analytics-contraction-hover: #a26c07;
-    --color-revenue-analytics-churn-hover: #781e04;
+    --color-revenue-analytics-new: #6e9f72;
+    --color-revenue-analytics-expansion: #5b7fa6;
+    --color-revenue-analytics-contraction: #d0a05b;
+    --color-revenue-analytics-churn: #c0697a;
+    --color-revenue-analytics-new-hover: #4f7a53;
+    --color-revenue-analytics-expansion-hover: #3f5d80;
+    --color-revenue-analytics-contraction-hover: #a87c3c;
+    --color-revenue-analytics-churn-hover: #9b4a5a;
 
     // Z-indexes
     --z-bottom-notice: 1450;
@@ -768,89 +776,89 @@
 
     // Deprecated colors
     // Vars
-    --danger-highlight: rgb(219 55 7 / 10%);
-    --danger-lighter: #ffa599;
-    --danger-light: #df4b20;
-    --danger: #db3707;
-    --danger-dark: #992705;
-    --warning-highlight: rgb(247 165 1 / 10%);
-    --warning: #f7a501;
-    --warning-dark: #e09423;
-    --highlight: #e49f2c;
-    --success-highlight: rgb(56 134 0 / 10%);
-    --success-light: #5f9d32;
-    --success: #388600;
-    --success-dark: #245700;
-    --muted: #5f5f5f;
-    --muted-alt: #747ea1;
-    --mark: hsl(42deg 93% 86% / 80%);
+    --danger-highlight: rgb(192 72 64 / 10%);
+    --danger-lighter: #f0aaa4;
+    --danger-light: #d05a51;
+    --danger: #c04840;
+    --danger-dark: #8c2f29;
+    --warning-highlight: rgb(214 158 58 / 12%);
+    --warning: #d69e3a;
+    --warning-dark: #b8842a;
+    --highlight: #d6a24a;
+    --success-highlight: rgb(66 130 90 / 10%);
+    --success-light: #5f9a74;
+    --success: #42825a;
+    --success-dark: #2c5b3e;
+    --muted: #5e6b7c;
+    --muted-alt: #7487a0;
+    --mark: hsl(205deg 55% 86% / 80%);
     --white: #fff;
-    --side: #fafaf9;
-    --mid: #f2f2f2;
-    --border: rgb(0 0 0 / 15%);
-    --border-light: rgb(0 0 0 / 8%);
-    --border-bold: rgb(0 0 0 / 24%);
+    --side: #f8fafb;
+    --mid: #f0f3f6;
+    --border: rgb(30 41 59 / 12%);
+    --border-light: rgb(30 41 59 / 6%);
+    --border-bold: rgb(30 41 59 / 20%);
     --transparent: transparent;
-    --text-3000-light: #111;
-    --color-text-secondary-3000-light: rgb(17 17 17 / 70%);
-    --muted-3000-light: rgb(17 17 17 / 60%);
-    --trace-3000-light: rgb(17 17 17 / 25%);
-    --primary-3000-light: #f54e01;
-    --primary-highlight-light: rgb(245 78 1 / 10%);
-    --primary-3000-hover-light: #f54e01;
-    --primary-3000-active-light: #f54e01;
-    --secondary-3000-light: rgb(207 209 194 / 60%);
-    --secondary-3000-hover-light: #cfd1c2;
-    --color-accent-3000-light: #eeefe9;
-    --color-bg-3000-light: #f3f4ef;
-    --border-3000-light: #dadbd2;
-    --border-bold-3000-light: #c1c2b9;
-    --glass-bg-3000-light: #e4e5deb3;
-    --glass-border-3000-light: #e4e5de;
-    --link-3000-light: #f54e00;
-    --primary-3000-frame-bg-light: #eb9d2a;
-    --primary-3000-button-bg-light: #fff;
-    --primary-3000-button-border-light: #b17816;
-    --primary-3000-button-border-hover-light: #8e5b03;
-    --secondary-3000-frame-bg-light: #e1dddd;
-    --secondary-3000-button-bg-light: #f3f4ef;
-    --secondary-3000-button-border-light: #ccc;
-    --secondary-3000-button-border-hover-light: #aaa;
-    --danger-3000-frame-bg-light: #f54e0080;
-    --danger-3000-button-border-light: #e96b30;
-    --danger-3000-button-border-hover-light: #f54e00;
-    --shadow-elevation-3000-light: 0 3px 0 var(--border-3000-light);
-    --shadow-elevation-3000-dark: 0 3px 0 var(--border-3000-dark);
-    --text-3000-dark: #fff;
-    --color-text-secondary-3000-dark: rgb(255 255 255 / 70%);
-    --muted-3000-dark: rgb(255 255 255 / 50%);
-    --trace-3000-dark: rgb(255 255 255 / 25%);
-    --primary-3000-dark: #f7a503;
-    --primary-highlight-dark: rgb(247 165 3 / 10%);
-    --primary-3000-hover-dark: #f7a503;
-    --primary-3000-active-dark: #f7a503;
-    --primary-alt-highlight-light: #e5e7e0;
-    --secondary-3000-dark: #1d1f27;
-    --secondary-3000-hover-dark: #575d77;
-    --color-accent-3000-dark: #21242b;
-    --color-bg-3000-dark: #1d1f27;
-    --border-3000-dark: #35373e;
-    --border-bold-3000-dark: #3f4046;
-    --glass-bg-3000-dark: #24262a99;
+    --text-3000-light: #1e293b;
+    --color-text-secondary-3000-light: rgb(30 41 59 / 72%);
+    --muted-3000-light: rgb(30 41 59 / 62%);
+    --trace-3000-light: rgb(30 41 59 / 22%);
+    --primary-3000-light: #4d6e8e;
+    --primary-highlight-light: rgb(77 110 142 / 10%);
+    --primary-3000-hover-light: #5d80a2;
+    --primary-3000-active-light: #43617e;
+    --secondary-3000-light: rgb(201 209 217 / 60%);
+    --secondary-3000-hover-light: #d5dce3;
+    --color-accent-3000-light: #eef1f4;
+    --color-bg-3000-light: #f4f6f8;
+    --border-3000-light: #e1e6eb;
+    --border-bold-3000-light: #c9d1d9;
+    --glass-bg-3000-light: #e8ecf0b3;
+    --glass-border-3000-light: #e8ecf0;
+    --link-3000-light: #4d6e8e;
+    --primary-3000-frame-bg-light: #d5dfe9;
+    --primary-3000-button-bg-light: #4d6e8e;
+    --primary-3000-button-border-light: #46647f;
+    --primary-3000-button-border-hover-light: #364f68;
+    --secondary-3000-frame-bg-light: #e1e6eb;
+    --secondary-3000-button-bg-light: #f4f6f8;
+    --secondary-3000-button-border-light: #d5dce3;
+    --secondary-3000-button-border-hover-light: #b4bfca;
+    --danger-3000-frame-bg-light: #c0484040;
+    --danger-3000-button-border-light: #d9918b;
+    --danger-3000-button-border-hover-light: #c04840;
+    --shadow-elevation-3000-light: 0 1px 2px rgb(15 23 42 / 4%);
+    --shadow-elevation-3000-dark: 0 1px 2px rgb(0 0 0 / 20%);
+    --text-3000-dark: #e2e8f0;
+    --color-text-secondary-3000-dark: rgb(226 232 240 / 72%);
+    --muted-3000-dark: rgb(226 232 240 / 55%);
+    --trace-3000-dark: rgb(226 232 240 / 22%);
+    --primary-3000-dark: #80a1c2;
+    --primary-highlight-dark: rgb(128 161 194 / 12%);
+    --primary-3000-hover-dark: #9bb8d4;
+    --primary-3000-active-dark: #6d8fb0;
+    --primary-alt-highlight-light: #e6ebf0;
+    --secondary-3000-dark: #1e2630;
+    --secondary-3000-hover-dark: #4a5768;
+    --color-accent-3000-dark: #222b37;
+    --color-bg-3000-dark: #1a212b;
+    --border-3000-dark: #303b49;
+    --border-bold-3000-dark: #3b4757;
+    --glass-bg-3000-dark: #222b3799;
     --glass-border-3000-dark: var(--border-3000-dark);
-    --link-3000-dark: #f1a82c;
-    --primary-3000-frame-bg-dark: #926826;
+    --link-3000-dark: #8fb0d0;
+    --primary-3000-frame-bg-dark: #3c536b;
     --primary-3000-button-bg-dark: var(--color-accent);
-    --primary-3000-button-border-dark: #b17816;
-    --primary-3000-button-border-hover-dark: #8e5b03;
-    --primary-alt-highlight-dark: #232429;
-    --secondary-3000-frame-bg-dark: #323232;
-    --secondary-3000-button-bg-dark: #1d1f27;
-    --secondary-3000-button-border-dark: #4a4c52;
-    --secondary-3000-button-border-hover-dark: #5e6064;
-    --danger-3000-frame-bg-dark: #f54e0080;
-    --danger-3000-button-border-dark: #c44003;
-    --danger-3000-button-border-hover-dark: #f54e00;
+    --primary-3000-button-border-dark: #6d8fb0;
+    --primary-3000-button-border-hover-dark: #9bb8d4;
+    --primary-alt-highlight-dark: #26303d;
+    --secondary-3000-frame-bg-dark: #2c3644;
+    --secondary-3000-button-bg-dark: #1e2630;
+    --secondary-3000-button-border-dark: #3b4757;
+    --secondary-3000-button-border-hover-dark: #536175;
+    --danger-3000-frame-bg-dark: #e0857c40;
+    --danger-3000-button-border-dark: #9c514b;
+    --danger-3000-button-border-hover-dark: #e0857c;
 
     // Light mode
     --text-3000: var(--text-3000-light);
@@ -866,15 +874,15 @@
     --color-accent-3000: var(--color-accent-3000-light);
     --color-bg-3000: var(--color-bg-3000-light);
     --border-3000: var(--border-3000-light);
-    --border-light-opaque: #eee;
+    --border-light-opaque: #edf0f3;
     --border-bold-3000: var(--border-bold-3000-light);
     --glass-bg-3000: var(--glass-bg-3000-light);
     --glass-border-3000: var(--glass-border-3000-light);
     --color-bg-light: #fff;
-    --color-bg-table: #f9faf7;
+    --color-bg-table: #f8fafb;
     --link: var(--link-3000-light);
     --primary-3000-frame-bg: var(--primary-3000-frame-bg-light);
-    --primary-3000-button-bg: var(--color-white);
+    --primary-3000-button-bg: var(--color-accent);
     --primary-3000-button-border: var(--primary-3000-button-border-light);
     --primary-3000-button-border-hover: var(--primary-3000-button-border-hover-light);
     --primary-alt-highlight: var(--primary-alt-highlight-light);
@@ -885,7 +893,7 @@
     --danger-3000-frame-bg: var(--danger-3000-frame-bg-light);
     --danger-3000-button-border: var(--danger-3000-button-border-light);
     --danger-3000-button-border-hover: var(--danger-3000-button-border-hover-light);
-    --tooltip-bg: #2d2d2d;
+    --tooltip-bg: #2b3542;
 }
 
 // We specifically override the brand colors for dark mode here
@@ -893,9 +901,10 @@
 [theme='dark'] {
     // Brand colors (dark mode)
     // //////////////////////////////////////////////////////////
-    --color-brand-primary-hue: var(--color-posthog-brand-yellow-hue);
-    --color-brand-primary-saturation: var(--color-posthog-brand-yellow-saturation);
-    --color-brand-primary-lightness: var(--color-posthog-brand-yellow-lightness);
+    --color-brand-primary-hue: var(--color-nordic-steel-dark-hue);
+    --color-brand-primary-saturation: var(--color-nordic-steel-dark-saturation);
+    --color-brand-primary-lightness: var(--color-nordic-steel-dark-lightness);
+    --color-nordic-on-accent: #15202b;
 
     // AI colors (dark mode)
     --color-ai: oklch(0.69 0.29 341.57deg);
@@ -908,9 +917,9 @@
         var(--color-brand-primary-lightness)
     );
     --color-accent-inverted: hsl(
-        var(--color-posthog-brand-orange-hue),
-        var(--color-posthog-brand-orange-saturation),
-        var(--color-posthog-brand-orange-lightness)
+        var(--color-nordic-steel-light-hue),
+        var(--color-nordic-steel-light-saturation),
+        var(--color-nordic-steel-light-lightness)
     );
     --color-accent-hover: hsl(
         var(--color-brand-primary-hue),
@@ -918,9 +927,9 @@
         calc(var(--color-brand-primary-lightness) + 10%)
     );
     --color-accent-hover-inverted: hsl(
-        var(--color-posthog-brand-orange-hue),
-        var(--color-posthog-brand-orange-saturation),
-        calc(var(--color-posthog-brand-orange-lightness) + 10%)
+        var(--color-nordic-steel-light-hue),
+        var(--color-nordic-steel-light-saturation),
+        calc(var(--color-nordic-steel-light-lightness) + 10%)
     );
     --color-accent-active: hsl(
         var(--color-brand-primary-hue),
@@ -928,9 +937,9 @@
         calc(var(--color-brand-primary-lightness) + 15%)
     );
     --color-accent-active-inverted: hsl(
-        var(--color-posthog-brand-orange-hue),
-        var(--color-posthog-brand-orange-saturation),
-        calc(var(--color-posthog-brand-orange-lightness) + 15%)
+        var(--color-nordic-steel-light-hue),
+        var(--color-nordic-steel-light-saturation),
+        calc(var(--color-nordic-steel-light-lightness) + 15%)
     );
 
     // Used for highlighting search results, and other subtle accent sitations
@@ -964,21 +973,21 @@
 
     // Backgrounds (dark mode)
     // //////////////////////////////////////////////////////////
-    --color-bg-primary: var(--color-neutral-cool-950);
-    --color-bg-surface-primary: var(--color-neutral-cool-850);
-    --color-bg-surface-secondary: var(--color-neutral-cool-900);
-    --color-bg-surface-tertiary: var(--color-neutral-cool-950);
-    --color-bg-surface-tooltip: var(--color-neutral-100);
-    --color-bg-surface-tooltip-inverse: var(--color-neutral-950);
-    --color-bg-surface-popover: var(--color-neutral-cool-850);
-    --color-bg-surface-popover-inverse: var(--color-neutral-cool-950);
+    --color-bg-primary: #1a212b;
+    --color-bg-surface-primary: #222b37;
+    --color-bg-surface-secondary: #1e2630;
+    --color-bg-surface-tertiary: #181f28;
+    --color-bg-surface-tooltip: #e2e8f0;
+    --color-bg-surface-tooltip-inverse: #15202b;
+    --color-bg-surface-popover: #252f3c;
+    --color-bg-surface-popover-inverse: #15202b;
 
     // Fills (dark mode)
     // Small colourful areas: banners, pills, buttons, etc.
     // //////////////////////////////////////////////////////////
-    --color-bg-fill-primary: var(--color-neutral-cool-900);
-    --color-bg-fill-secondary: var(--color-neutral-cool-850);
-    --color-bg-fill-tertiary: var(--color-neutral-cool-800);
+    --color-bg-fill-primary: #1e2630;
+    --color-bg-fill-secondary: #222b37;
+    --color-bg-fill-tertiary: #2a3442;
     --color-bg-fill-highlight-25: color-mix(in oklab, var(--color-white) 2.5%, transparent);
     --color-bg-fill-highlight-50: color-mix(in oklab, var(--color-white) 5%, transparent);
     --color-bg-fill-highlight-75: color-mix(in oklab, var(--color-white) 7.5%, transparent);
@@ -991,8 +1000,8 @@
     --color-bg-fill-highlight-inverse-100: color-mix(in oklab, var(--color-black) 10%, transparent);
     --color-bg-fill-highlight-inverse-150: color-mix(in oklab, var(--color-black) 15%, transparent);
     --color-bg-fill-highlight-inverse-200: color-mix(in oklab, var(--color-black) 20%, transparent);
-    --color-bg-fill-info-secondary: var(--color-blue-950);
-    --color-bg-fill-info-tertiary: var(--color-blue-950);
+    --color-bg-fill-info-secondary: #23384d;
+    --color-bg-fill-info-tertiary: #1f3042;
     --color-bg-fill-warning-secondary: var(--color-yellow-950);
     --color-bg-fill-warning-tertiary: color-mix(in oklab, var(--color-yellow-950) 10%, transparent);
     --color-bg-fill-warning-highlight: color-mix(in oklab, var(--color-yellow-950) 50%, transparent);
@@ -1011,20 +1020,20 @@
     --color-bg-fill-button-panel: var(--color-bg-fill-highlight-100);
     --color-bg-fill-button-panel-hover: var(--color-bg-fill-highlight-150);
     --color-bg-fill-button-panel-active: var(--color-bg-fill-highlight-100);
-    --color-bg-fill-input: var(--color-neutral-cool-850);
-    --color-bg-fill-switch: var(--color-neutral-cool-600);
+    --color-bg-fill-input: #1e2630;
+    --color-bg-fill-switch: #4a5768;
     --color-bg-fill-slider-rail: color-mix(in oklab, var(--color-white) 15%, transparent);
     --color-bg-fill-scroll-thumb: color-mix(in oklab, var(--color-white) 20%, transparent);
-    --color-bg-border-primary: var(--color-neutral-cool-800);
-    --color-bg-border-secondary: var(--color-neutral-cool-600);
+    --color-bg-border-primary: #303b49;
+    --color-bg-border-secondary: #475569;
 
     // Content (text, icons) (dark mode)
     // //////////////////////////////////////////////////////////
-    --color-text-primary: var(--color-neutral-100);
-    --color-text-primary-inverse: var(--color-neutral-950);
-    --color-text-secondary-inverse: var(--color-neutral-650);
-    --color-text-secondary: var(--color-neutral-350);
-    --color-text-tertiary: var(--color-neutral-400);
+    --color-text-primary: #e2e8f0;
+    --color-text-primary-inverse: #15202b;
+    --color-text-secondary-inverse: #475569;
+    --color-text-secondary: #aab6c3;
+    --color-text-tertiary: #8b98a8;
     --color-text-success: var(--color-green-400);
     --color-text-warning: var(--color-yellow-400);
     --color-text-error: var(--color-red-400);
@@ -1032,9 +1041,9 @@
     // Borders (dark mode)
     // Borders for surfaces/fills
     // //////////////////////////////////////////////////////////
-    --color-border-primary: var(--color-neutral-cool-800);
-    --color-border-secondary: var(--color-neutral-cool-600);
-    --color-border-info: var(--color-blue-900);
+    --color-border-primary: #303b49;
+    --color-border-secondary: #475569;
+    --color-border-info: #35506b;
     --color-border-warning: var(--color-yellow-900);
 
     /* Border for warning */
@@ -1048,9 +1057,9 @@
     // Graph colors (dark mode)
     // //////////////////////////////////////////////////////////
     --color-graph-axis-label: var(--color-text-secondary);
-    --color-graph-axis-line: var(--color-neutral-cool-750);
+    --color-graph-axis-line: #2c3644;
     --color-graph-axis: var(--color-text-secondary);
-    --color-graph-crosshair: var(--color-neutral-cool-650);
+    --color-graph-crosshair: #556375;
 
     // Deprecated colors (Dark mode)
     --text-3000: var(--text-3000-dark);
@@ -1066,12 +1075,12 @@
     --color-accent-3000: var(--color-accent-3000-dark);
     --color-bg-3000: var(--color-bg-3000-dark);
     --border-3000: var(--border-3000-dark);
-    --border-light-opaque: #1e2028;
+    --border-light-opaque: #262f3b;
     --border-bold-3000: var(--border-bold-3000-dark);
     --glass-bg-3000: var(--glass-bg-3000-dark);
     --glass-border-3000: var(--glass-border-3000-dark);
     --color-bg-light: var(--color-accent-3000);
-    --color-bg-table: #232429;
+    --color-bg-table: #1e2630;
     --brand-key: #fff; // In dark mode the black in PostHog's logo is replaced with white for proper contrast
     --link: var(--link-3000-dark);
     --shadow-elevation-3000: var(--shadow-elevation-3000-dark);
@@ -1087,13 +1096,15 @@
     --danger-3000-frame-bg: var(--danger-3000-frame-bg-dark);
     --danger-3000-button-border: var(--danger-3000-button-border-dark);
     --danger-3000-button-border-hover: var(--danger-3000-button-border-hover-dark);
-    --tooltip-bg: var(--tooltip-bg-dark);
-    --data-color-2: #7f26d9;
-    --data-color-3: #3e7a76;
-    --data-color-4: #bf0d6c;
-    --data-color-5: #f0474f;
-    --data-color-6: #b36114;
-    --data-color-10: #6576b3;
+    --tooltip-bg: #2b3542;
+    --modal-shadow-elevation: 0 12px 32px -12px rgb(0 0 0 / 45%);
+    --modal-backdrop-color: rgb(10 15 22 / 45%);
+    --data-color-2: #a08bc0;
+    --data-color-3: #62aa9e;
+    --data-color-4: #d47f8f;
+    --data-color-5: #dda078;
+    --data-color-6: #92a36f;
+    --data-color-9: #7f9bba;
 
     // Rainbow brand gradient (dark mode) — lighter shades so the gradient stays
     // readable inside toasts and command blocks. See light-mode definition below.
@@ -2144,5 +2155,23 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+// Nordic theme: flat buttons. LemonButton draws a 3D frame below its chrome;
+// zeroing the depth keeps the layout but removes the raised look.
+body .LemonButton,
+body .Link.LemonButton {
+    --lemon-button-chrome-depth: 0rem;
+    --lemon-button-hover-depth: 0rem;
+    --lemon-button-press-depth: 0rem;
+}
+
+// Primary buttons are filled with the steel accent, so they need on-accent text
+body .LemonButton.LemonButton--primary:not(.LemonButton--status-alt, .LemonButton--status-danger) {
+    --lemon-button-color: var(--color-nordic-on-accent);
+
+    &:hover:not([aria-disabled='true']) {
+        --lemon-button-bg-color: color-mix(in oklab, var(--color-accent) 86%, var(--color-text-primary));
     }
 }
