@@ -1108,6 +1108,381 @@
     );
 }
 
+// ////////////////////////////////////////////////////////////////////////////
+// Midnight theme
+// Dark-first ink/navy surfaces with one electric indigo accent. The primitive
+// scales are retinted cool so every semantic token, the quill bridge, and the
+// Lemon skin pick up the palette without per-component overrides.
+// ////////////////////////////////////////////////////////////////////////////
+// `html:root` outranks the base `:root` block above without repeating its selector
+html:root,
+:host {
+    // Cool-tinted neutrals (used for text and dark-mode surfaces)
+    --color-neutral-50: hsl(225deg 30% 96%);
+    --color-neutral-100: hsl(225deg 28% 92%);
+    --color-neutral-150: hsl(225deg 24% 86%);
+    --color-neutral-200: hsl(225deg 20% 80%);
+    --color-neutral-250: hsl(225deg 18% 75%);
+    --color-neutral-300: hsl(225deg 16% 70%);
+    --color-neutral-350: hsl(225deg 16% 68%);
+    --color-neutral-400: hsl(225deg 14% 60%);
+    --color-neutral-450: hsl(225deg 13% 55%);
+    --color-neutral-500: hsl(225deg 12% 50%);
+    --color-neutral-550: hsl(225deg 13% 44%);
+    --color-neutral-600: hsl(225deg 15% 38%);
+    --color-neutral-650: hsl(225deg 17% 33%);
+    --color-neutral-700: hsl(225deg 20% 28%);
+    --color-neutral-750: hsl(225deg 24% 24%);
+    --color-neutral-800: hsl(225deg 28% 19%);
+    --color-neutral-850: hsl(225deg 32% 14%);
+    --color-neutral-900: hsl(225deg 38% 10%);
+    --color-neutral-950: hsl(225deg 45% 8%);
+
+    // Navy/ink ramp for dark surfaces, borders, tooltips
+    --color-neutral-cool-50: hsl(226deg 32% 96%);
+    --color-neutral-cool-75: hsl(226deg 30% 93.5%);
+    --color-neutral-cool-100: hsl(226deg 28% 91%);
+    --color-neutral-cool-150: hsl(226deg 24% 86%);
+    --color-neutral-cool-200: hsl(226deg 20% 80%);
+    --color-neutral-cool-250: hsl(226deg 18% 74%);
+    --color-neutral-cool-300: hsl(226deg 16% 68%);
+    --color-neutral-cool-350: hsl(226deg 15% 62%);
+    --color-neutral-cool-400: hsl(226deg 14% 56%);
+    --color-neutral-cool-450: hsl(226deg 14% 50%);
+    --color-neutral-cool-500: hsl(226deg 15% 44%);
+    --color-neutral-cool-550: hsl(226deg 17% 38%);
+    --color-neutral-cool-600: hsl(226deg 20% 31%);
+    --color-neutral-cool-650: hsl(226deg 22% 26%);
+    --color-neutral-cool-700: hsl(226deg 25% 22%);
+    --color-neutral-cool-750: hsl(226deg 28% 19%);
+    --color-neutral-cool-800: hsl(226deg 31% 17%); // #1F273D soft borders
+    --color-neutral-cool-850: hsl(226deg 38% 13%); // #151C2E raised panels
+    --color-neutral-cool-900: hsl(226deg 42% 10%); // #0F1524 recessed panels
+    --color-neutral-cool-950: hsl(226deg 48% 7.5%); // #0A0F1C page ink
+
+    // Light-mode surfaces: the yellow-grey "3000" ramp becomes a cool slate ramp
+    --color-posthog-3000-25: hsl(225deg 33% 98.5%);
+    --color-posthog-3000-50: hsl(225deg 30% 96.5%); // #F4F6FB page
+    --color-posthog-3000-100: hsl(225deg 30% 94.5%);
+    --color-posthog-3000-150: hsl(225deg 26% 91%);
+    --color-posthog-3000-200: hsl(225deg 26% 89%); // #DDE2EE borders
+    --color-posthog-3000-250: hsl(225deg 20% 82%);
+    --color-posthog-3000-300: hsl(225deg 18% 78%);
+    --color-posthog-3000-350: hsl(225deg 17% 74%);
+    --color-posthog-3000-400: hsl(225deg 18% 78%); // #C3CADB bold borders
+    --color-posthog-3000-450: hsl(225deg 14% 62%);
+    --color-posthog-3000-500: hsl(225deg 12% 55%);
+
+    // Electric indigo accent (#505EF1 light, #7A8CFF dark)
+    --color-midnight-indigo-hue: 235;
+    --color-midnight-indigo-saturation: 85%;
+    --color-midnight-indigo-lightness: 63%;
+    --color-midnight-periwinkle-hue: 232;
+    --color-midnight-periwinkle-saturation: 100%;
+    --color-midnight-periwinkle-lightness: 74%;
+    --color-brand-primary-hue: var(--color-midnight-indigo-hue);
+    --color-brand-primary-saturation: var(--color-midnight-indigo-saturation);
+    --color-brand-primary-lightness: var(--color-midnight-indigo-lightness);
+    --color-brand-secondary-hue: 190;
+    --color-brand-secondary-saturation: 90%;
+    --color-brand-secondary-lightness: 50%;
+    --color-accent: hsl(
+        var(--color-brand-primary-hue),
+        var(--color-brand-primary-saturation),
+        var(--color-brand-primary-lightness)
+    );
+    --color-accent-inverted: hsl(
+        var(--color-midnight-periwinkle-hue),
+        var(--color-midnight-periwinkle-saturation),
+        var(--color-midnight-periwinkle-lightness)
+    );
+    --color-accent-hover: hsl(
+        var(--color-brand-primary-hue),
+        var(--color-brand-primary-saturation),
+        calc(var(--color-brand-primary-lightness) - 6%)
+    );
+    --color-accent-active: hsl(
+        var(--color-brand-primary-hue),
+        var(--color-brand-primary-saturation),
+        calc(var(--color-brand-primary-lightness) - 10%)
+    );
+    --color-accent-hover-inverted: hsl(
+        var(--color-midnight-periwinkle-hue),
+        var(--color-midnight-periwinkle-saturation),
+        calc(var(--color-midnight-periwinkle-lightness) + 6%)
+    );
+    --color-accent-active-inverted: hsl(
+        var(--color-midnight-periwinkle-hue),
+        var(--color-midnight-periwinkle-saturation),
+        calc(var(--color-midnight-periwinkle-lightness) + 10%)
+    );
+    --color-accent-highlight-primary: hsla(
+        var(--color-brand-primary-hue),
+        var(--color-brand-primary-saturation),
+        var(--color-brand-primary-lightness),
+        18%
+    );
+    --color-accent-highlight-secondary: hsla(
+        var(--color-brand-primary-hue),
+        var(--color-brand-primary-saturation),
+        var(--color-brand-primary-lightness),
+        9%
+    );
+    --color-accent-highlight-secondary-border: hsla(
+        var(--color-brand-primary-hue),
+        var(--color-brand-primary-saturation),
+        var(--color-brand-primary-lightness),
+        16%
+    );
+    --color-accent-highlight-secondary-hover-border: hsla(
+        var(--color-brand-primary-hue),
+        var(--color-brand-primary-saturation),
+        var(--color-brand-primary-lightness),
+        40%
+    );
+    --color-on-accent: #fff;
+    --color-bg-fill-primary-highlight: color-mix(in oklab, var(--color-accent) 10%, transparent);
+    --color-ai: oklch(0.6 0.24 293deg);
+
+    // Semantic surfaces (light)
+    --color-bg-primary: var(--color-posthog-3000-50);
+    --color-bg-surface-primary: var(--color-white);
+    --color-bg-surface-tooltip: var(--color-neutral-cool-900);
+    --color-bg-surface-popover-inverse: var(--color-neutral-cool-950);
+    --color-bg-fill-switch: var(--color-neutral-cool-250);
+    --color-bg-fill-slider-rail: color-mix(in oklab, var(--color-neutral-cool-900) 10%, transparent);
+    --color-bg-fill-scroll-thumb: color-mix(in oklab, var(--color-neutral-cool-900) 20%, transparent);
+    --color-text-primary: hsl(226deg 45% 10%); // #0E1426
+    --color-text-secondary: hsl(225deg 22% 30%); // #3C4562
+    --color-text-tertiary: hsl(225deg 14% 44%); // #616B84
+    --color-graph-axis-line: var(--color-neutral-cool-100);
+    --color-graph-crosshair: var(--color-neutral-cool-400);
+
+    // Legacy 3000 tokens (still read by Lemon components)
+    --text-3000-light: hsl(226deg 45% 10%);
+    --color-text-secondary-3000-light: hsl(226deg 45% 10% / 70%);
+    --muted-3000-light: hsl(226deg 30% 18% / 62%);
+    --trace-3000-light: hsl(226deg 30% 18% / 25%);
+    --text-3000-dark: hsl(225deg 40% 94%); // #E8ECF7
+    --color-text-secondary-3000-dark: hsl(225deg 40% 94% / 72%);
+    --muted-3000-dark: hsl(225deg 40% 94% / 52%);
+    --trace-3000-dark: hsl(225deg 40% 94% / 25%);
+    --primary-3000-light: #505ef1;
+    --primary-highlight-light: rgb(80 94 241 / 10%);
+    --primary-3000-hover-light: #3e4ce6;
+    --primary-3000-active-light: #3442d6;
+    --primary-3000-dark: #7a8cff;
+    --primary-highlight-dark: rgb(122 140 255 / 12%);
+    --primary-3000-hover-dark: #94a3ff;
+    --primary-3000-active-dark: #a5b2ff;
+    --secondary-3000-light: rgb(195 202 219 / 45%);
+    --secondary-3000-hover-light: #c3cadb;
+    --secondary-3000-dark: #151c2e;
+    --secondary-3000-hover-dark: #2a3452;
+    --color-accent-3000-light: #eef1f8;
+    --color-accent-3000-dark: #151c2e;
+    --color-bg-3000-light: #f4f6fb;
+    --color-bg-3000-dark: #0a0f1c;
+    --border-3000-light: #dde2ee;
+    --border-3000-dark: #1f273d;
+    --border-bold-3000-light: #c3cadb;
+    --border-bold-3000-dark: #2c3654;
+    --glass-bg-3000-light: #eef1f8b3;
+    --glass-border-3000-light: #e3e7f1;
+    --glass-bg-3000-dark: #151c2e99;
+    --link-3000-light: #4553e8;
+    --link-3000-dark: #8f9fff;
+    --primary-alt-highlight-light: #e8ebf7;
+    --primary-alt-highlight-dark: #18203a;
+    --color-bg-table: #f8f9fc;
+    --border-light-opaque: #e8ebf3;
+    --tooltip-bg: #151c2e;
+    --tooltip-bg-dark: #e8ecf7;
+
+    // Primary buttons: solid accent fill with a deeper accent "chrome" edge
+    --primary-3000-frame-bg-light: #2e39b0;
+    --primary-3000-button-bg: var(--color-accent);
+    --primary-3000-button-border-light: #3a46cf;
+    --primary-3000-button-border-hover-light: #2a35a8;
+    --primary-3000-frame-bg-dark: #3b48b8;
+    --primary-3000-button-border-dark: #5a6cf2;
+    --primary-3000-button-border-hover-dark: #a5b2ff;
+
+    // Secondary buttons: quiet, low-contrast outlines
+    --secondary-3000-frame-bg-light: #dfe4ef;
+    --secondary-3000-button-bg-light: #f8f9fc;
+    --secondary-3000-button-border-light: #cfd5e3;
+    --secondary-3000-button-border-hover-light: #a9b2c9;
+    --secondary-3000-frame-bg-dark: #1a2238;
+    --secondary-3000-button-bg-dark: #121929;
+    --secondary-3000-button-border-dark: #2a3452;
+    --secondary-3000-button-border-hover-dark: #3d4a70;
+
+    // Type: Inter everywhere for a crisper, denser developer-tool feel
+    --font-sans:
+        'Emoji Flags Polyfill', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue',
+        helvetica, arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    --font-title: var(--font-sans);
+    --font-button: var(--font-sans);
+    --font-mono:
+        'Emoji Flags Polyfill', ui-monospace, 'SFMono-Regular', 'SF Mono', 'Menlo', 'Consolas', 'Liberation Mono',
+        monospace;
+    --midnight-letter-spacing: -0.006em;
+    --midnight-heading-letter-spacing: -0.018em;
+
+    // Series colors tuned to sit on ink and white: indigo, cyan, violet lead
+    --data-color-1: #505ef1;
+    --data-color-1-hover: #3e4ce6;
+    --data-color-2: #0ea5c6;
+    --data-color-3: #9b5cf6;
+    --data-color-4: #e2468f;
+    --data-color-5: #f0743e;
+    --data-color-6: #13a37f;
+    --data-color-7: #d69e12;
+    --data-color-8: #3b82f6;
+    --data-color-9: #f472b6;
+    --data-color-10: #64748b;
+    --data-color-11: #2dd4bf;
+    --data-color-12: #c2410c;
+    --data-color-13: #84cc16;
+    --data-color-14: #a78bfa;
+    --data-color-15: #22d3ee;
+    --rainbow-gradient: linear-gradient(90deg, #22d3ee 0%, #505ef1 50%, #9b5cf6 100%);
+}
+
+// `:where(*)` keeps the base dark block's specificity, so source order lets this win
+[theme='dark']:where(*) {
+    --color-brand-primary-hue: var(--color-midnight-periwinkle-hue);
+    --color-brand-primary-saturation: var(--color-midnight-periwinkle-saturation);
+    --color-brand-primary-lightness: var(--color-midnight-periwinkle-lightness);
+    --color-accent: hsl(
+        var(--color-brand-primary-hue),
+        var(--color-brand-primary-saturation),
+        var(--color-brand-primary-lightness)
+    );
+    --color-accent-inverted: hsl(
+        var(--color-midnight-indigo-hue),
+        var(--color-midnight-indigo-saturation),
+        var(--color-midnight-indigo-lightness)
+    );
+    --color-accent-hover: hsl(
+        var(--color-brand-primary-hue),
+        var(--color-brand-primary-saturation),
+        calc(var(--color-brand-primary-lightness) + 6%)
+    );
+    --color-accent-active: hsl(
+        var(--color-brand-primary-hue),
+        var(--color-brand-primary-saturation),
+        calc(var(--color-brand-primary-lightness) + 10%)
+    );
+    --color-accent-hover-inverted: hsl(
+        var(--color-midnight-indigo-hue),
+        var(--color-midnight-indigo-saturation),
+        calc(var(--color-midnight-indigo-lightness) - 6%)
+    );
+    --color-accent-active-inverted: hsl(
+        var(--color-midnight-indigo-hue),
+        var(--color-midnight-indigo-saturation),
+        calc(var(--color-midnight-indigo-lightness) - 10%)
+    );
+    --color-accent-highlight-primary: hsla(
+        var(--color-brand-primary-hue),
+        var(--color-brand-primary-saturation),
+        var(--color-brand-primary-lightness),
+        20%
+    );
+    --color-accent-highlight-secondary: hsla(
+        var(--color-brand-primary-hue),
+        var(--color-brand-primary-saturation),
+        var(--color-brand-primary-lightness),
+        10%
+    );
+    --color-accent-highlight-secondary-border: hsla(
+        var(--color-brand-primary-hue),
+        var(--color-brand-primary-saturation),
+        var(--color-brand-primary-lightness),
+        18%
+    );
+    --color-accent-highlight-secondary-hover-border: hsla(
+        var(--color-brand-primary-hue),
+        var(--color-brand-primary-saturation),
+        var(--color-brand-primary-lightness),
+        40%
+    );
+    --color-on-accent: #0a0f1c;
+    --color-bg-fill-primary-highlight: color-mix(in oklab, var(--color-accent) 14%, transparent);
+    --color-ai: oklch(0.74 0.17 300deg);
+
+    // Layered ink surfaces: nav chrome < canvas < toolbars < cards < popovers
+    --color-bg-primary: hsl(226deg 44% 9.5%); // #0D1322 canvas
+    --color-bg-surface-primary: var(--color-neutral-cool-850);
+    --color-bg-surface-secondary: hsl(226deg 40% 11.5%); // #111829
+    --color-bg-surface-tertiary: var(--color-neutral-cool-950);
+    --color-bg-surface-tooltip: var(--color-neutral-cool-100);
+    --color-bg-surface-tooltip-inverse: var(--color-neutral-cool-950);
+    --color-bg-surface-popover: hsl(226deg 36% 15%); // #182037
+    --color-bg-fill-input: var(--color-neutral-cool-900);
+    --color-bg-fill-switch: var(--color-neutral-cool-600);
+    --color-bg-fill-slider-rail: color-mix(in oklab, var(--color-white) 12%, transparent);
+    --color-bg-fill-scroll-thumb: color-mix(in oklab, var(--color-white) 16%, transparent);
+    --color-bg-border-primary: var(--color-neutral-cool-800);
+    --color-bg-border-secondary: var(--color-neutral-cool-650);
+    --color-border-primary: var(--color-neutral-cool-800);
+    --color-border-secondary: var(--color-neutral-cool-650);
+    --color-text-primary: hsl(225deg 40% 94%); // #E8ECF7
+    --color-text-primary-inverse: hsl(226deg 45% 10%);
+    --color-text-secondary: hsl(225deg 22% 72%); // #A9B2CC
+    --color-text-tertiary: hsl(225deg 15% 58%); // #8890A6
+    --color-graph-axis-line: var(--color-neutral-cool-750);
+    --color-graph-crosshair: var(--color-neutral-cool-500);
+    --color-bg-table: #111829;
+    --border-light-opaque: #1a2236;
+    --primary-3000-button-bg: var(--color-accent);
+    --data-color-1: #7a8cff;
+    --data-color-1-hover: #94a3ff;
+    --data-color-2: #22d3ee;
+    --data-color-3: #b48cff;
+    --data-color-4: #f472b6;
+    --data-color-5: #fb8f5c;
+    --data-color-6: #34d399;
+    --data-color-7: #facc15;
+    --data-color-8: #60a5fa;
+    --data-color-9: #f9a8d4;
+    --data-color-10: #94a3b8;
+    --rainbow-gradient: linear-gradient(90deg, #22d3ee 0%, #7a8cff 50%, #b48cff 100%);
+}
+
+// Midnight: accent-filled primary buttons need on-accent text in both modes
+.LemonButton.LemonButton--primary:not(.LemonButton--status-danger, .LemonButton--status-alt) {
+    --lemon-button-color: var(--color-on-accent);
+}
+
+// The alt primary is filled with the deep chrome shade, so it takes light text
+.LemonButton.LemonButton--primary.LemonButton--status-alt {
+    --lemon-button-color: var(--color-white);
+}
+
+// Tailwind's config bakes the RoundHog stack into html and the font utilities,
+// so the Midnight type stack is re-applied here (unlayered beats Tailwind's layers)
+html,
+:host,
+.font-sans,
+.font-title {
+    font-family: var(--font-sans);
+}
+
+body {
+    font-feature-settings: 'cv11', 'ss01', 'ss03';
+    letter-spacing: var(--midnight-letter-spacing);
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        letter-spacing: var(--midnight-heading-letter-spacing);
+    }
+}
+
 // Restore a real default border color (Tailwind v4 preflight resets it to currentColor).
 // Kept in @layer components — one layer above preflight's @layer base — so it wins by layer
 // order rather than source order. Source order is unreliable: vite 8's rolldown CSS pipeline
