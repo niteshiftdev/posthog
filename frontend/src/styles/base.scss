@@ -1452,14 +1452,20 @@ html:root,
     --rainbow-gradient: linear-gradient(90deg, #22d3ee 0%, #7a8cff 50%, #b48cff 100%);
 }
 
-// Midnight: accent-filled primary buttons need on-accent text in both modes
-.LemonButton.LemonButton--primary:not(.LemonButton--status-danger, .LemonButton--status-alt) {
+// Midnight: accent-filled primary buttons need on-accent text in both modes.
+// The `body` prefix and `:not()` outrank the `.Link.LemonButton` variants in LemonButton.scss.
+body .LemonButton.LemonButton--primary:not(.LemonButton--status-danger, .LemonButton--status-alt) {
     --lemon-button-color: var(--color-on-accent);
 }
 
 // The alt primary is filled with the deep chrome shade, so it takes light text
-.LemonButton.LemonButton--primary.LemonButton--status-alt {
+body .LemonButton.LemonButton--primary.LemonButton--status-alt:not(.LemonButton--status-danger) {
     --lemon-button-color: var(--color-white);
+}
+
+// Auth screens recolor the primary fill to amber; keep it on the accent so on-accent text stays readable
+body .AuthScene {
+    --primary-3000-button-bg: var(--color-accent);
 }
 
 // Tailwind's config bakes the RoundHog stack into html and the font utilities,
