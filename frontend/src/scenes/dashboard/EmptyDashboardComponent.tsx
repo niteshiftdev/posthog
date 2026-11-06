@@ -67,6 +67,7 @@ function DashboardEmptyActions({
                         <LemonButton
                             data-attr="dashboard-add-graph-header"
                             type="primary"
+                            className="!bg-success !border-success !text-white hover:!brightness-95"
                             icon={<IconPlus />}
                             onClick={onAddInsight}
                             disabledReason={canEdit ? null : DASHBOARD_CANNOT_EDIT_MESSAGE}
