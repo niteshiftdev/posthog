@@ -2175,3 +2175,12 @@ body .LemonButton.LemonButton--primary:not(.LemonButton--status-alt, .LemonButto
         --lemon-button-bg-color: color-mix(in oklab, var(--color-accent) 86%, var(--color-text-primary));
     }
 }
+
+// LemonBanner swaps button fills to the surface color, so keep regular text there
+body :is(.LemonBanner--warning, .LemonBanner--success, .LemonBanner--error) .LemonButton.LemonButton--primary {
+    --lemon-button-color: var(--text-3000);
+
+    &:hover:not([aria-disabled='true']) {
+        --lemon-button-bg-color: var(--color-bg-surface-primary);
+    }
+}
