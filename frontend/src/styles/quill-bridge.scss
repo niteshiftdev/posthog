@@ -239,10 +239,10 @@
     --color-bg-surface-primary: var(--color-white);
     --color-bg-surface-secondary: var(--color-posthog-3000-100);
     --color-bg-surface-tertiary: var(--color-posthog-3000-150);
-    --color-text-primary: var(--color-neutral-950);
-    --color-text-secondary: var(--color-neutral-750);
+    --color-text-primary: #1e293b;
+    --color-text-secondary: #475569;
     --color-border-primary: var(--color-posthog-3000-200);
-    --color-border-secondary: var(--color-posthog-3000-400);
+    --color-border-secondary: hsl(210deg 16% 80%);
     --color-accent: hsl(
         var(--color-brand-primary-hue),
         var(--color-brand-primary-saturation),
@@ -262,12 +262,12 @@
 
 [theme='dark'] [data-quill] [data-not-quill] {
     --muted-3000: var(--muted-3000-dark);
-    --color-bg-primary: var(--color-neutral-cool-950);
-    --color-bg-surface-primary: var(--color-neutral-cool-850);
-    --color-bg-surface-secondary: var(--color-neutral-cool-900);
-    --color-bg-surface-tertiary: var(--color-neutral-cool-950);
-    --color-text-primary: var(--color-neutral-100);
-    --color-text-secondary: var(--color-neutral-350);
-    --color-border-primary: var(--color-neutral-cool-800);
-    --color-border-secondary: var(--color-neutral-cool-600);
+    --color-bg-primary: #1f2833;
+    --color-bg-surface-primary: #27313e;
+    --color-bg-surface-secondary: #232c38;
+    --color-bg-surface-tertiary: #1c242e;
+    --color-text-primary: #e2e8f0;
+    --color-text-secondary: #aab6c3;
+    --color-border-primary: #36424f;
+    --color-border-secondary: #475569;
 }
