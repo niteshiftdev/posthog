@@ -359,27 +359,20 @@ export const QuestionInput = React.forwardRef<HTMLDivElement, QuestionInputProps
                                             id="textarea-hint"
                                             className="text-secondary absolute top-4 left-4 text-sm pointer-events-none"
                                         >
-                                            {conversation && isSharedThread ? (
-                                                `This thread was shared with you by ${conversation.user.first_name} ${conversation.user.last_name}`
-                                            ) : threadLoading ? (
-                                                'Thinking…'
-                                            ) : isThreadVisible ? (
-                                                placeholder || (
-                                                    <>
-                                                        Ask follow-up{' '}
-                                                        <span className="text-tertiary opacity-80 contrast-more:opacity-100">
-                                                            or / for commands
-                                                        </span>
-                                                    </>
-                                                )
-                                            ) : (
-                                                <>
-                                                    Ask a question{' '}
-                                                    <span className="text-tertiary opacity-80 contrast-more:opacity-100">
-                                                        or / for commands
-                                                    </span>
-                                                </>
-                                            )}
+                                            {conversation && isSharedThread
+                                                ? `This thread was shared with you by ${conversation.user.first_name} ${conversation.user.last_name}`
+                                                : threadLoading
+                                                  ? 'Thinking…'
+                                                  : isThreadVisible
+                                                    ? placeholder || (
+                                                          <>
+                                                              Ask follow-up{' '}
+                                                              <span className="text-tertiary opacity-80 contrast-more:opacity-100">
+                                                                  or / for commands
+                                                              </span>
+                                                          </>
+                                                      )
+                                                    : 'How can I help you?'}
                                         </div>
                                     )}
                                     {/* Postfix cue after a fill-in suggestion's typed-in prefix. */}
