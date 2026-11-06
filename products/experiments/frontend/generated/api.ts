@@ -28,6 +28,8 @@ import type {
     ExperimentSessionContextsRequestApi,
     ExperimentSessionContextsResponseApi,
     ExperimentSessionEventDeltaResponseApi,
+    ExperimentVariantAnnotationApi,
+    ExperimentVariantAnnotationsListParams,
     ExperimentWriteApi,
     ExperimentsActivityRetrieveParams,
     ExperimentsListParams,
@@ -37,8 +39,10 @@ import type {
     PaginatedExperimentBasicListApi,
     PaginatedExperimentHoldoutListApi,
     PaginatedExperimentSavedMetricListApi,
+    PaginatedExperimentVariantAnnotationListApi,
     PatchedExperimentHoldoutApi,
     PatchedExperimentSavedMetricApi,
+    PatchedExperimentVariantAnnotationApi,
     PatchedExperimentWriteApi,
     RecalculateMetricsRequestApi,
     RunningTimeCalculationInputApi,
@@ -278,6 +282,140 @@ export const experimentSavedMetricsDestroy = async (
     options?: RequestInit
 ): Promise<void> => {
     return apiMutator<void>(getExperimentSavedMetricsDestroyUrl(projectId, id), {
+        ...options,
+        method: 'DELETE',
+    })
+}
+
+export const getExperimentVariantAnnotationsListUrl = (
+    projectId: string,
+    params?: ExperimentVariantAnnotationsListParams
+) => {
+    const normalizedParams = new URLSearchParams()
+
+    Object.entries(params || {}).forEach(([key, value]) => {
+        if (value !== undefined) {
+            normalizedParams.append(key, value === null ? 'null' : String(value))
+        }
+    })
+
+    const stringifiedParams = normalizedParams.toString()
+
+    return stringifiedParams.length > 0
+        ? `/api/projects/${projectId}/experiment_variant_annotations/?${stringifiedParams}`
+        : `/api/projects/${projectId}/experiment_variant_annotations/`
+}
+
+/**
+ * List variant annotations for experiments the user can access in this project.
+ */
+export const experimentVariantAnnotationsList = async (
+    projectId: string,
+    params?: ExperimentVariantAnnotationsListParams,
+    options?: RequestInit
+): Promise<PaginatedExperimentVariantAnnotationListApi> => {
+    return apiMutator<PaginatedExperimentVariantAnnotationListApi>(
+        getExperimentVariantAnnotationsListUrl(projectId, params),
+        {
+            ...options,
+            method: 'GET',
+        }
+    )
+}
+
+export const getExperimentVariantAnnotationsCreateUrl = (projectId: string) => {
+    return `/api/projects/${projectId}/experiment_variant_annotations/`
+}
+
+/**
+ * Create an author-attributed annotation for a variant of an experiment.
+ */
+export const experimentVariantAnnotationsCreate = async (
+    projectId: string,
+    experimentVariantAnnotationApi: NonReadonly<ExperimentVariantAnnotationApi>,
+    options?: RequestInit
+): Promise<ExperimentVariantAnnotationApi> => {
+    return apiMutator<ExperimentVariantAnnotationApi>(getExperimentVariantAnnotationsCreateUrl(projectId), {
+        ...options,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...options?.headers },
+        body: JSON.stringify(experimentVariantAnnotationApi),
+    })
+}
+
+export const getExperimentVariantAnnotationsRetrieveUrl = (projectId: string, id: number) => {
+    return `/api/projects/${projectId}/experiment_variant_annotations/${id}/`
+}
+
+/**
+ * Retrieve a variant annotation from an accessible experiment.
+ */
+export const experimentVariantAnnotationsRetrieve = async (
+    projectId: string,
+    id: number,
+    options?: RequestInit
+): Promise<ExperimentVariantAnnotationApi> => {
+    return apiMutator<ExperimentVariantAnnotationApi>(getExperimentVariantAnnotationsRetrieveUrl(projectId, id), {
+        ...options,
+        method: 'GET',
+    })
+}
+
+export const getExperimentVariantAnnotationsUpdateUrl = (projectId: string, id: number) => {
+    return `/api/projects/${projectId}/experiment_variant_annotations/${id}/`
+}
+
+/**
+ * Edit an annotation authored by the current user.
+ */
+export const experimentVariantAnnotationsUpdate = async (
+    projectId: string,
+    id: number,
+    experimentVariantAnnotationApi: NonReadonly<ExperimentVariantAnnotationApi>,
+    options?: RequestInit
+): Promise<ExperimentVariantAnnotationApi> => {
+    return apiMutator<ExperimentVariantAnnotationApi>(getExperimentVariantAnnotationsUpdateUrl(projectId, id), {
+        ...options,
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', ...options?.headers },
+        body: JSON.stringify(experimentVariantAnnotationApi),
+    })
+}
+
+export const getExperimentVariantAnnotationsPartialUpdateUrl = (projectId: string, id: number) => {
+    return `/api/projects/${projectId}/experiment_variant_annotations/${id}/`
+}
+
+/**
+ * Edit an annotation authored by the current user.
+ */
+export const experimentVariantAnnotationsPartialUpdate = async (
+    projectId: string,
+    id: number,
+    patchedExperimentVariantAnnotationApi?: NonReadonly<PatchedExperimentVariantAnnotationApi>,
+    options?: RequestInit
+): Promise<ExperimentVariantAnnotationApi> => {
+    return apiMutator<ExperimentVariantAnnotationApi>(getExperimentVariantAnnotationsPartialUpdateUrl(projectId, id), {
+        ...options,
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', ...options?.headers },
+        body: JSON.stringify(patchedExperimentVariantAnnotationApi),
+    })
+}
+
+export const getExperimentVariantAnnotationsDestroyUrl = (projectId: string, id: number) => {
+    return `/api/projects/${projectId}/experiment_variant_annotations/${id}/`
+}
+
+/**
+ * Delete an annotation authored by the current user.
+ */
+export const experimentVariantAnnotationsDestroy = async (
+    projectId: string,
+    id: number,
+    options?: RequestInit
+): Promise<void> => {
+    return apiMutator<void>(getExperimentVariantAnnotationsDestroyUrl(projectId, id), {
         ...options,
         method: 'DELETE',
     })

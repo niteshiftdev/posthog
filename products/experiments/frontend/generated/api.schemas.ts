@@ -586,6 +586,67 @@ export interface PatchedExperimentSavedMetricApi {
     readonly user_access_level?: string | null
 }
 
+export interface ExperimentVariantAnnotationApi {
+    /** Unique annotation identifier. */
+    readonly id: number
+    /**
+     * Experiment that owns the annotation. Cannot change after creation.
+     * @minimum 1
+     */
+    experiment: number
+    /**
+     * Key of a variant belonging to this experiment.
+     * @maxLength 400
+     */
+    variant_key: string
+    /**
+     * Plain-text annotation content, up to 2000 characters.
+     * @maxLength 2000
+     */
+    content: string
+    /** User who wrote the annotation. */
+    readonly created_by: UserBasicApi | null
+    /** Time the annotation was created. */
+    readonly created_at: string
+    /** Time the annotation was last edited. */
+    readonly updated_at: string
+}
+
+export interface PaginatedExperimentVariantAnnotationListApi {
+    count: number
+    /** @nullable */
+    next?: string | null
+    /** @nullable */
+    previous?: string | null
+    results: ExperimentVariantAnnotationApi[]
+}
+
+export interface PatchedExperimentVariantAnnotationApi {
+    /** Unique annotation identifier. */
+    readonly id?: number
+    /**
+     * Experiment that owns the annotation. Cannot change after creation.
+     * @minimum 1
+     */
+    experiment?: number
+    /**
+     * Key of a variant belonging to this experiment.
+     * @maxLength 400
+     */
+    variant_key?: string
+    /**
+     * Plain-text annotation content, up to 2000 characters.
+     * @maxLength 2000
+     */
+    content?: string
+    /** User who wrote the annotation. */
+    readonly created_by?: UserBasicApi | null
+    /** Time the annotation was created. */
+    readonly created_at?: string
+    /** Time the annotation was last edited. */
+    readonly updated_at?: string
+}
+
 /**
  * * `server` - Server
  * * `client` - Client
@@ -2747,6 +2808,22 @@ export type ExperimentSavedMetricsListParams = {
      * A search term.
      */
     search?: string
+}
+
+export type ExperimentVariantAnnotationsListParams = {
+    /**
+     * Restrict annotations to this experiment in the current project.
+     * @minimum 1
+     */
+    experiment_id?: number
+    /**
+     * Number of results to return per page.
+     */
+    limit?: number
+    /**
+     * The initial index from which to return the results.
+     */
+    offset?: number
 }
 
 export type ExperimentsListParams = {

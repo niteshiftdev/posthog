@@ -33755,6 +33755,32 @@ export namespace Schemas {
       too_early: boolean;
     }
 
+    export interface ExperimentVariantAnnotation {
+      /** Unique annotation identifier. */
+      readonly id: number;
+      /**
+         * Experiment that owns the annotation. Cannot change after creation.
+         * @minimum 1
+         */
+      experiment: number;
+      /**
+         * Key of a variant belonging to this experiment.
+         * @maxLength 400
+         */
+      variant_key: string;
+      /**
+         * Plain-text annotation content, up to 2000 characters.
+         * @maxLength 2000
+         */
+      content: string;
+      /** User who wrote the annotation. */
+      readonly created_by: UserBasic | null;
+      /** Time the annotation was created. */
+      readonly created_at: string;
+      /** Time the annotation was last edited. */
+      readonly updated_at: string;
+    }
+
     /**
      * The experiment state as the client last read it, used together with `version` to resolve concurrent edits: metric collections merge per metric uuid, and any other field the update carries merges per field against its base value here (only a same-field double edit fails). Relevant keys are metrics, metrics_secondary, saved_metrics_ids, plus the last-read values of whichever scalar fields the update writes; unknown keys are ignored. Changed fields without a base value — and, without this object, any version mismatch — fail with HTTP 409.
      * @nullable
@@ -51235,6 +51261,15 @@ export namespace Schemas {
       results: ExperimentSavedMetric[];
     }
 
+    export interface PaginatedExperimentVariantAnnotationList {
+      count: number;
+      /** @nullable */
+      next?: string | null;
+      /** @nullable */
+      previous?: string | null;
+      results: ExperimentVariantAnnotation[];
+    }
+
     export interface PaginatedExportedAssetList {
       count: number;
       /** @nullable */
@@ -58774,6 +58809,32 @@ export namespace Schemas {
          * @nullable
          */
       readonly user_access_level?: string | null;
+    }
+
+    export interface PatchedExperimentVariantAnnotation {
+      /** Unique annotation identifier. */
+      readonly id?: number;
+      /**
+         * Experiment that owns the annotation. Cannot change after creation.
+         * @minimum 1
+         */
+      experiment?: number;
+      /**
+         * Key of a variant belonging to this experiment.
+         * @maxLength 400
+         */
+      variant_key?: string;
+      /**
+         * Plain-text annotation content, up to 2000 characters.
+         * @maxLength 2000
+         */
+      content?: string;
+      /** User who wrote the annotation. */
+      readonly created_by?: UserBasic | null;
+      /** Time the annotation was created. */
+      readonly created_at?: string;
+      /** Time the annotation was last edited. */
+      readonly updated_at?: string;
     }
 
     /**
@@ -88292,6 +88353,22 @@ export namespace Schemas {
      * A search term.
      */
     search?: string;
+    };
+
+    export type ExperimentVariantAnnotationsListParams = {
+    /**
+     * Restrict annotations to this experiment in the current project.
+     * @minimum 1
+     */
+    experiment_id?: number;
+    /**
+     * Number of results to return per page.
+     */
+    limit?: number;
+    /**
+     * The initial index from which to return the results.
+     */
+    offset?: number;
     };
 
     export type ExperimentsListParams = {
