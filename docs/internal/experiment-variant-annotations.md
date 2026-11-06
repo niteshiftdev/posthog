@@ -4,6 +4,8 @@ Open an existing experiment's **Metrics** tab and use **Variant annotations** be
 
 Annotations show their author, creation time, and last edit time. An author with edit access to the experiment can edit or delete their annotations. Users with read access can view annotations for that experiment. Project and experiment access checks apply to every API request.
 
+Edit access to the selected experiment allows annotation creation even when the user cannot create experiments. Authors can edit historical annotations after a variant is removed or renamed, keeping the original variant key. Selecting a different key requires a variant that still belongs to the experiment.
+
 Annotations are separate from the experiment's recorded conclusion and from the existing variant description notes on the **Variants** tab. Adding an annotation does not ship a variant or change the experiment's feature flag.
 
 ## API

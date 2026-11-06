@@ -1,4 +1,4 @@
-from typing import Any, Literal
+from typing import Any, Literal, cast
 
 from django.db.models import QuerySet
 
@@ -6,10 +6,15 @@ from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import serializers, viewsets
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import BasePermission, IsAuthenticated
+from rest_framework.request import Request
+from rest_framework.views import APIView
+from rest_framework.viewsets import GenericViewSet
 
 from posthog.api.routing import TeamAndOrgViewSetMixin
 from posthog.api.shared import UserBasicSerializer
 from posthog.models.user import User
+from posthog.permissions import AccessControlPermission, APIScopePermission, TeamMemberAccessPermission
 
 from products.experiments.backend.models.experiment import Experiment
 from products.experiments.backend.models.experiment_variant_annotation import ExperimentVariantAnnotation
@@ -19,6 +24,20 @@ class ExperimentVariantAnnotationListQuerySerializer(serializers.Serializer):
     experiment_id = serializers.IntegerField(
         required=False, min_value=1, help_text="Restrict annotations to this experiment in the current project."
     )
+
+
+class ExperimentVariantAnnotationParentAccessControlPermission(AccessControlPermission):
+    def has_permission(self, request: Request, view: APIView) -> bool:
+        annotation_view = cast(GenericViewSet, view)
+        if annotation_view.action != "create":
+            return super().has_permission(request, view)
+
+        # Annotation creation edits an existing experiment, so specific parent grants apply.
+        annotation_view.action = "partial_update"
+        try:
+            return super().has_permission(request, view)
+        finally:
+            annotation_view.action = "create"
 
 
 class ExperimentVariantAnnotationSerializer(serializers.ModelSerializer):
@@ -76,6 +95,16 @@ class ExperimentVariantAnnotationViewSet(TeamAndOrgViewSetMixin, viewsets.ModelV
     scope_object: Literal["experiment"] = "experiment"
     serializer_class = ExperimentVariantAnnotationSerializer
     queryset = ExperimentVariantAnnotation.objects.unscoped().none()
+
+    def dangerously_get_permissions(self) -> list[BasePermission]:
+        if self.action != "create":
+            raise NotImplementedError()
+        return [
+            IsAuthenticated(),
+            APIScopePermission(),
+            ExperimentVariantAnnotationParentAccessControlPermission(),
+            TeamMemberAccessPermission(),
+        ]
 
     def safely_get_queryset(
         self, queryset: QuerySet[ExperimentVariantAnnotation]

@@ -45,6 +45,7 @@ export interface variantAnnotationsLogicValues {
     canSubmit: boolean
     content: string
     editingId: number | null
+    editingOriginalVariantKey: string | null
     loadFailed: boolean
     mutation: ExperimentVariantAnnotationApi | null
     mutationError: string | null
@@ -137,7 +138,11 @@ export interface variantAnnotationsLogicActions {
 export interface variantAnnotationsLogicMeta {
     key: ExperimentIdType
     __keaTypeGenInternalSelectorTypes: {
-        variantOptions: (arg: Experiment) => {
+        variantOptions: (
+            arg: Experiment,
+            editingId: number | null,
+            editingOriginalVariantKey: string | null
+        ) => {
             label: string
             value: string
         }[]
@@ -202,6 +207,10 @@ export const variantAnnotationsLogic: LogicWrapper<variantAnnotationsLogicType> 
         editingId: [
             null as number | null,
             { editAnnotation: (_, { annotation }) => annotation.id, resetEditor: () => null },
+        ],
+        editingOriginalVariantKey: [
+            null as string | null,
+            { editAnnotation: (_, { annotation }) => annotation.variant_key, resetEditor: () => null },
         ],
         annotationToDelete: [
             null as ExperimentVariantAnnotationApi | null,
@@ -280,9 +289,22 @@ export const variantAnnotationsLogic: LogicWrapper<variantAnnotationsLogicType> 
     })),
     selectors({
         variantOptions: [
-            () => [(_, props: VariantAnnotationsLogicProps) => props.experiment],
-            (experiment: Experiment) =>
-                getExperimentVariants(experiment).map(({ key }) => ({ value: key, label: key })),
+            (s) => [
+                (_, props: VariantAnnotationsLogicProps) => props.experiment,
+                s.editingId,
+                s.editingOriginalVariantKey,
+            ],
+            (experiment: Experiment, editingId: number | null, originalVariantKey: string | null) => {
+                const options = getExperimentVariants(experiment).map(({ key }) => ({ value: key, label: key }))
+                if (
+                    editingId !== null &&
+                    originalVariantKey !== null &&
+                    !options.some(({ value }) => value === originalVariantKey)
+                ) {
+                    options.push({ value: originalVariantKey, label: originalVariantKey })
+                }
+                return options
+            },
         ],
         canAnnotate: [
             () => [(_, props: VariantAnnotationsLogicProps) => props.experiment],

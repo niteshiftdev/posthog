@@ -207,3 +207,45 @@ class TestExperimentVariantAnnotationAPI(APIBaseTest):
             ).status_code,
             403,
         )
+
+    @parameterized.expand([("none",), ("viewer",)])
+    def test_specific_parent_editor_can_create_with_restricted_resource_access(self, resource_access: str) -> None:
+        self.organization.available_product_features = [
+            {"key": AvailableFeature.ACCESS_CONTROL, "name": "Access control"}
+        ]
+        self.organization.save()
+        self.organization_membership.level = OrganizationMembership.Level.MEMBER
+        self.organization_membership.save()
+        other_user = User.objects.create_user(
+            email="experiment-owner@example.com", first_name="Owner", password="test-password"
+        )
+        protected_experiment = self._experiment(self.team, key="protected-experiment")
+        for experiment in [self.experiment, protected_experiment]:
+            experiment.created_by = other_user
+            experiment.save()
+        AccessControl.objects.create(
+            team=self.team,
+            resource="experiment",
+            resource_id=None,
+            access_level=resource_access,
+            organization_member=self.organization_membership,
+        )
+        AccessControl.objects.create(
+            team=self.team,
+            resource="experiment",
+            resource_id=str(self.experiment.id),
+            access_level="editor",
+            organization_member=self.organization_membership,
+        )
+
+        response = self.client.post(
+            self._url(), {"experiment": self.experiment.id, "variant_key": "test", "content": "Reviewed."}
+        )
+        self.assertEqual(response.status_code, 201, response.content)
+        response = self.client.post(
+            self._url(), {"experiment": protected_experiment.id, "variant_key": "test", "content": "Reviewed."}
+        )
+        self.assertEqual(response.status_code, 403, response.content)
+        self.assertFalse(
+            ExperimentVariantAnnotation.objects.for_team(self.team.id).filter(experiment=protected_experiment).exists()
+        )
