@@ -22,11 +22,11 @@
     );
     --lemon-skin-border: var(--color-posthog-3000-200);
     --lemon-skin-border-hover: var(--color-posthog-3000-400);
-    --lemon-skin-surface: var(--color-white);
+    --lemon-skin-surface: hsl(90deg 25% 99%);
     --lemon-skin-bg-page: var(--color-posthog-3000-50);
-    --lemon-skin-text-secondary: var(--color-neutral-750);
-    --lemon-skin-radius: 0.375rem;
-    --lemon-skin-radius-lg: 0.625rem;
+    --lemon-skin-text-secondary: hsl(150deg 14% 27%);
+    --lemon-skin-radius: 0.5rem;
+    --lemon-skin-radius-lg: 0.75rem;
 }
 
 [theme='dark'] [data-lemon-skin] {
@@ -34,7 +34,7 @@
     --lemon-skin-border-hover: var(--color-neutral-cool-600);
     --lemon-skin-surface: var(--color-neutral-cool-850);
     --lemon-skin-bg-page: var(--color-neutral-cool-950);
-    --lemon-skin-text-secondary: var(--color-neutral-350);
+    --lemon-skin-text-secondary: hsl(130deg 10% 72%);
 }
 
 /* Core quill tokens → Lemon values: recolors primitive CSS and bespoke Tailwind in one

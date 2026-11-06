@@ -1108,6 +1108,218 @@
     );
 }
 
+// Forest theme
+// Sage and stone surfaces, pine text, emerald accent, amber kept for warnings.
+// Overrides the defaults above through tokens only. The theme attribute sits on <body>, so these
+// :root values are inherited everywhere and the dark block re-sets what dark mode needs.
+// The doubled :root and [theme] selectors keep these ahead of the default blocks by specificity,
+// including the toolbar, which sets [theme] on a container instead of <body>.
+// //////////////////////////////////////////////////////////
+:root:root,
+:host {
+    // Sage-stone surface scale (replaces the PostHog 3000 yellow-greys)
+    --color-posthog-3000-25: hsl(95deg 22% 97.5%);
+    --color-posthog-3000-50: hsl(100deg 17% 95%);
+    --color-posthog-3000-100: hsl(102deg 16% 92%);
+    --color-posthog-3000-150: hsl(104deg 15% 88.5%);
+    --color-posthog-3000-200: hsl(105deg 14% 84.5%);
+    --color-posthog-3000-250: hsl(106deg 11% 80%);
+    --color-posthog-3000-300: hsl(107deg 10% 75%);
+    --color-posthog-3000-350: hsl(108deg 9% 70%);
+    --color-posthog-3000-400: hsl(110deg 9% 64%);
+    --color-posthog-3000-450: hsl(112deg 8% 59%);
+    --color-posthog-3000-500: hsl(115deg 8% 54%);
+
+    // Forest-tinted "cool" neutrals: the dark scale becomes green-black instead of blue-grey
+    --color-neutral-cool-50: hsl(120deg 10% 95%);
+    --color-neutral-cool-75: hsl(122deg 10% 92.5%);
+    --color-neutral-cool-100: hsl(125deg 10% 90%);
+    --color-neutral-cool-150: hsl(128deg 9% 85%);
+    --color-neutral-cool-200: hsl(130deg 9% 80%);
+    --color-neutral-cool-250: hsl(132deg 8% 75%);
+    --color-neutral-cool-300: hsl(135deg 8% 70%);
+    --color-neutral-cool-350: hsl(138deg 8% 65%);
+    --color-neutral-cool-400: hsl(140deg 8% 60%);
+    --color-neutral-cool-450: hsl(142deg 8% 55%);
+    --color-neutral-cool-500: hsl(145deg 8% 50%);
+    --color-neutral-cool-550: hsl(147deg 9% 45%);
+    --color-neutral-cool-600: hsl(148deg 10% 39%);
+    --color-neutral-cool-650: hsl(150deg 11% 33%);
+    --color-neutral-cool-700: hsl(150deg 13% 27%);
+    --color-neutral-cool-750: hsl(151deg 15% 21%);
+    --color-neutral-cool-800: hsl(151deg 17% 17%);
+    --color-neutral-cool-850: hsl(152deg 21% 12.5%);
+    --color-neutral-cool-900: hsl(153deg 24% 9.5%);
+    --color-neutral-cool-950: hsl(154deg 27% 7%);
+
+    // Emerald brand accent (#12805a)
+    --color-brand-primary-hue: 158;
+    --color-brand-primary-saturation: 75%;
+    --color-brand-primary-lightness: 28.5%;
+    --color-accent-inverted: hsl(152deg 52% 52%);
+    --color-accent-hover-inverted: hsl(152deg 52% 60%);
+    --color-accent-active-inverted: hsl(152deg 52% 65%);
+
+    // Surfaces
+    --color-bg-surface-primary: hsl(90deg 25% 99%);
+    --color-bg-surface-popover: hsl(90deg 25% 99%);
+    --color-bg-fill-primary: hsl(90deg 25% 99%);
+    --color-bg-fill-input: hsl(90deg 25% 99%);
+
+    // Content: deep pine text
+    --color-text-primary: hsl(152deg 30% 10%);
+    --color-text-primary-inverse: hsl(110deg 18% 92%);
+    --color-text-secondary: hsl(150deg 14% 27%);
+    --color-text-tertiary: hsl(148deg 8% 40%);
+
+    // Success leans lime so it reads apart from the emerald accent
+    --color-text-success: var(--color-lime-700);
+    --color-border-success: var(--color-lime-500);
+    --color-bg-fill-success-secondary: var(--color-lime-100);
+    --color-bg-fill-success-tertiary: var(--color-lime-50);
+    --color-bg-fill-success-highlight: color-mix(in oklab, var(--color-lime-500) 12%, transparent);
+    --success-highlight: rgb(77 124 15 / 10%);
+    --success-light: #6a9a2a;
+    --success: #4d7c0f;
+    --success-dark: #365314;
+
+    // Warm amber for warnings and highlights
+    --warning: #d98e04;
+    --warning-dark: #b45309;
+    --warning-highlight: rgb(217 142 4 / 12%);
+    --highlight: #d9a33a;
+    --mark: hsl(42deg 90% 82% / 75%);
+
+    // Gentle borders, soft shadows, medium radii
+    --shadow-elevation-3000: 0 1px 2px rgb(18 33 26 / 6%), 0 2px 6px -1px rgb(18 33 26 / 7%);
+    --shadow-elevation-3000-light: var(--shadow-elevation-3000);
+    --shadow-elevation-3000-dark: 0 1px 2px rgb(0 0 0 / 30%), 0 2px 8px -1px rgb(0 0 0 / 35%);
+    --modal-shadow-elevation: 0 18px 36px -14px rgb(18 33 26 / 28%);
+    --modal-backdrop-color: rgb(14 30 22 / 22%);
+    --radius: 0.5rem;
+    --radius-sm: 0.3125rem;
+    --radius-lg: 0.75rem;
+
+    // Legacy 3000 tokens (light)
+    --text-3000-light: hsl(152deg 30% 10%);
+    --color-text-secondary-3000-light: rgb(18 33 26 / 72%);
+    --muted-3000-light: rgb(18 33 26 / 60%);
+    --trace-3000-light: rgb(18 33 26 / 25%);
+    --primary-3000-light: #12805a;
+    --primary-highlight-light: rgb(18 128 90 / 10%);
+    --primary-3000-hover-light: #12805a;
+    --primary-3000-active-light: #12805a;
+    --secondary-3000-light: rgb(196 210 192 / 60%);
+    --secondary-3000-hover-light: #c4d2c0;
+    --color-accent-3000-light: #e7ece3;
+    --color-bg-3000-light: #f0f3ee;
+    --border-3000-light: #d3dbcf;
+    --border-bold-3000-light: #b6c2b1;
+    --glass-bg-3000-light: #e3e9dfb3;
+    --glass-border-3000-light: #e3e9df;
+    --link-3000-light: #12805a;
+    --primary-3000-frame-bg-light: #0b5c40;
+    --primary-3000-button-bg-light: #12805a;
+    --primary-3000-button-border-light: #0b5c40;
+    --primary-3000-button-border-hover-light: #073f2c;
+    --secondary-3000-frame-bg-light: #d7ded3;
+    --secondary-3000-button-bg-light: #f0f3ee;
+    --secondary-3000-button-border-light: #c5cfc1;
+    --secondary-3000-button-border-hover-light: #9fae99;
+    --primary-alt-highlight-light: #e2e9de;
+    --border-light-opaque: #e6ebe3;
+    --color-bg-light: hsl(90deg 25% 99%);
+    --color-bg-table: #f5f7f2;
+    --tooltip-bg: #1a2a21;
+
+    // Legacy 3000 tokens (dark)
+    --text-3000-dark: #e7eee8;
+    --color-text-secondary-3000-dark: rgb(231 238 232 / 72%);
+    --muted-3000-dark: rgb(231 238 232 / 52%);
+    --trace-3000-dark: rgb(231 238 232 / 25%);
+    --primary-3000-dark: #3fc48a;
+    --primary-highlight-dark: rgb(63 196 138 / 12%);
+    --primary-3000-hover-dark: #3fc48a;
+    --primary-3000-active-dark: #3fc48a;
+    --secondary-3000-dark: #13201a;
+    --secondary-3000-hover-dark: #4a6356;
+    --color-accent-3000-dark: #18261f;
+    --color-bg-3000-dark: #111a15;
+    --border-3000-dark: #25342c;
+    --border-bold-3000-dark: #2f4137;
+    --glass-bg-3000-dark: #18261f99;
+    --link-3000-dark: #4fcf96;
+    --primary-3000-frame-bg-dark: #1d6b49;
+    --primary-3000-button-border-dark: #26875c;
+    --primary-3000-button-border-hover-dark: #3fc48a;
+    --primary-alt-highlight-dark: #1a2821;
+    --secondary-3000-frame-bg-dark: #24322b;
+    --secondary-3000-button-bg-dark: #13201a;
+    --secondary-3000-button-border-dark: #3a4d42;
+    --secondary-3000-button-border-hover-dark: #536a5d;
+
+    // Re-bind the active legacy aliases, since they resolved against the old values at :root
+    --primary-3000-button-bg: var(--primary-3000-button-bg-light);
+    --forest-primary-button-fg: #fff;
+}
+
+[theme='dark'][theme] {
+    // Moss-emerald accent (#3fc48a) on forest green-black
+    --color-brand-primary-hue: 153;
+    --color-brand-primary-saturation: 53%;
+    --color-brand-primary-lightness: 51%;
+    --color-accent-inverted: hsl(158deg 75% 28.5%);
+    --color-accent-hover-inverted: hsl(158deg 75% 36%);
+    --color-accent-active-inverted: hsl(158deg 75% 40%);
+
+    // Surfaces and content
+    --color-bg-surface-popover: var(--color-neutral-cool-850);
+    --color-bg-fill-primary: var(--color-neutral-cool-900);
+    --color-bg-fill-input: var(--color-neutral-cool-900);
+    --color-text-primary: hsl(120deg 16% 91%);
+    --color-text-primary-inverse: hsl(152deg 30% 10%);
+    --color-text-secondary: hsl(130deg 10% 72%);
+    --color-text-tertiary: hsl(135deg 8% 62%);
+
+    // Lime success, amber warning
+    --color-text-success: var(--color-lime-400);
+    --color-border-success: var(--color-lime-800);
+    --color-bg-fill-success-secondary: var(--color-lime-950);
+    --color-bg-fill-success-tertiary: color-mix(in oklab, var(--color-lime-950) 50%, transparent);
+    --color-bg-fill-success-highlight: color-mix(in oklab, var(--color-lime-950) 50%, transparent);
+    --success: #8fbf3a;
+    --success-light: #a6d052;
+    --success-dark: #6a9a2a;
+    --success-highlight: rgb(143 191 58 / 12%);
+    --warning: #f0a92a;
+
+    // Legacy and misc
+    --modal-backdrop-color: rgb(0 0 0 / 45%);
+    --tooltip-bg: #0b120e;
+    --color-bg-table: #15211b;
+    --border-light-opaque: #1c2a22;
+    --forest-primary-button-fg: var(--text-3000-light);
+}
+
+// Filled emerald primary buttons need light text; dark mode keeps dark text on the brighter green.
+// Selectors are doubled to outrank LemonButton.scss without depending on <body>, so the toolbar's
+// shadow root gets the same treatment.
+.LemonButton.LemonButton--primary.LemonButton--primary:not(.LemonButton--status-danger, .LemonButton--status-alt) {
+    --lemon-button-color: var(--forest-primary-button-fg);
+}
+
+// Alt primary buttons sit on the pine frame color in both themes
+.LemonButton.LemonButton--primary.LemonButton--primary.LemonButton--status-alt:not(.LemonButton--status-danger) {
+    --lemon-button-color: #fff;
+}
+
+// Colored banners repaint their buttons with the surface color, so text must follow the surface
+.LemonBanner--warning .LemonButton.LemonButton--primary.LemonButton--primary:not(.LemonButton--status-alt),
+.LemonBanner--success .LemonButton.LemonButton--primary.LemonButton--primary:not(.LemonButton--status-alt),
+.LemonBanner--error .LemonButton.LemonButton--primary.LemonButton--primary:not(.LemonButton--status-alt) {
+    --lemon-button-color: var(--text-3000);
+}
+
 // Restore a real default border color (Tailwind v4 preflight resets it to currentColor).
 // Kept in @layer components — one layer above preflight's @layer base — so it wins by layer
 // order rather than source order. Source order is unreliable: vite 8's rolldown CSS pipeline
