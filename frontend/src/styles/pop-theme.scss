@@ -1,0 +1,69 @@
+/*
+ * Pop theme: global finishing touches that tokens alone can't express.
+ * Selectors are prefixed with `html` so they outrank component stylesheets,
+ * which can load after this file.
+ */
+
+html {
+    // Chunkier, bolder buttons with a heavier 3D frame
+    .LemonButton {
+        --lemon-button-radius: var(--radius);
+        --lemon-button-chrome-depth: 0.25rem;
+
+        font-weight: var(--font-semibold);
+    }
+
+    .LemonButton.LemonButton--primary {
+        --lemon-button-color: var(--primary-3000-button-text);
+    }
+
+    // The alt variant fills with the ink frame color, so its label must be light
+    .LemonButton.LemonButton--primary.LemonButton--status-alt {
+        --lemon-button-color: var(--color-white);
+    }
+
+    // Colored banners reset button fills to the surface; keep primary buttons magenta
+    :is(.LemonBanner--warning, .LemonBanner--success, .LemonBanner--error) .LemonButton.LemonButton--primary {
+        --lemon-button-bg-color: var(--primary-3000-button-bg);
+    }
+
+    .LemonButton.LemonButton--primary,
+    .LemonButton.LemonButton--secondary {
+        .LemonButton__chrome::before,
+        .LemonButton__chrome::after {
+            border-width: 2px;
+        }
+    }
+
+    // Thicker borders on the main data containers and inputs
+    .LemonInput,
+    .LemonTextArea,
+    .LemonTable,
+    .InsightCard,
+    .LemonCard,
+    .LemonBanner,
+    .LemonModal {
+        border-width: 2px;
+    }
+
+    .InsightCard,
+    .LemonCard {
+        border-radius: var(--radius-lg);
+    }
+
+    .LemonInput:not([aria-disabled='true']):focus-within {
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 3px var(--color-accent-highlight-primary);
+    }
+
+    // Sunny yellow selection
+    ::selection {
+        color: var(--color-pop-ink);
+        background: var(--color-pop-yellow);
+    }
+
+    .LemonTabs__tab--active,
+    .LemonTabs__tab[aria-selected='true'] {
+        font-weight: var(--font-semibold);
+    }
+}
