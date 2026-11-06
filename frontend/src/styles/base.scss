@@ -1112,7 +1112,8 @@
 // Sage and stone surfaces, pine text, emerald accent, amber kept for warnings.
 // Overrides the defaults above through tokens only. The theme attribute sits on <body>, so these
 // :root values are inherited everywhere and the dark block re-sets what dark mode needs.
-// The doubled :root and body[...] selectors keep these ahead of the default blocks by specificity.
+// The doubled :root and [theme] selectors keep these ahead of the default blocks by specificity,
+// including the toolbar, which sets [theme] on a container instead of <body>.
 // //////////////////////////////////////////////////////////
 :root:root,
 :host {
@@ -1259,9 +1260,10 @@
 
     // Re-bind the active legacy aliases, since they resolved against the old values at :root
     --primary-3000-button-bg: var(--primary-3000-button-bg-light);
+    --forest-primary-button-fg: #fff;
 }
 
-body[theme='dark'] {
+[theme='dark'][theme] {
     // Moss-emerald accent (#3fc48a) on forest green-black
     --color-brand-primary-hue: 153;
     --color-brand-primary-saturation: 53%;
@@ -1296,11 +1298,26 @@ body[theme='dark'] {
     --tooltip-bg: #0b120e;
     --color-bg-table: #15211b;
     --border-light-opaque: #1c2a22;
+    --forest-primary-button-fg: var(--text-3000-light);
 }
 
-// Filled emerald primary buttons need light text (dark mode keeps dark text on the brighter green)
-body:not([theme='dark']) .LemonButton.LemonButton--primary:not(.LemonButton--status-danger, .LemonButton--status-alt) {
+// Filled emerald primary buttons need light text; dark mode keeps dark text on the brighter green.
+// Selectors are doubled to outrank LemonButton.scss without depending on <body>, so the toolbar's
+// shadow root gets the same treatment.
+.LemonButton.LemonButton--primary.LemonButton--primary:not(.LemonButton--status-danger, .LemonButton--status-alt) {
+    --lemon-button-color: var(--forest-primary-button-fg);
+}
+
+// Alt primary buttons sit on the pine frame color in both themes
+.LemonButton.LemonButton--primary.LemonButton--primary.LemonButton--status-alt:not(.LemonButton--status-danger) {
     --lemon-button-color: #fff;
+}
+
+// Colored banners repaint their buttons with the surface color, so text must follow the surface
+.LemonBanner--warning .LemonButton.LemonButton--primary.LemonButton--primary:not(.LemonButton--status-alt),
+.LemonBanner--success .LemonButton.LemonButton--primary.LemonButton--primary:not(.LemonButton--status-alt),
+.LemonBanner--error .LemonButton.LemonButton--primary.LemonButton--primary:not(.LemonButton--status-alt) {
+    --lemon-button-color: var(--text-3000);
 }
 
 // Restore a real default border color (Tailwind v4 preflight resets it to currentColor).
