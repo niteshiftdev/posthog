@@ -440,7 +440,7 @@
     // Backgrounds
     // Behind surfaces, large areas: app scenes, etc.
     // //////////////////////////////////////////////////////////
-    --color-bg-primary: var(--color-posthog-3000-50);
+    --color-bg-primary: #cfe3ff;
 
     /* Most prominent/used background (replaces --color-bg-3000) */
     --color-bg-surface-primary: var(--color-white);
@@ -802,7 +802,7 @@
     --secondary-3000-light: rgb(207 209 194 / 60%);
     --secondary-3000-hover-light: #cfd1c2;
     --color-accent-3000-light: #eeefe9;
-    --color-bg-3000-light: #f3f4ef;
+    --color-bg-3000-light: #cfe3ff;
     --border-3000-light: #dadbd2;
     --border-bold-3000-light: #c1c2b9;
     --glass-bg-3000-light: #e4e5deb3;
@@ -833,7 +833,7 @@
     --secondary-3000-dark: #1d1f27;
     --secondary-3000-hover-dark: #575d77;
     --color-accent-3000-dark: #21242b;
-    --color-bg-3000-dark: #1d1f27;
+    --color-bg-3000-dark: #14264a;
     --border-3000-dark: #35373e;
     --border-bold-3000-dark: #3f4046;
     --glass-bg-3000-dark: #24262a99;
@@ -964,7 +964,7 @@
 
     // Backgrounds (dark mode)
     // //////////////////////////////////////////////////////////
-    --color-bg-primary: var(--color-neutral-cool-950);
+    --color-bg-primary: #14264a;
     --color-bg-surface-primary: var(--color-neutral-cool-850);
     --color-bg-surface-secondary: var(--color-neutral-cool-900);
     --color-bg-surface-tertiary: var(--color-neutral-cool-950);
