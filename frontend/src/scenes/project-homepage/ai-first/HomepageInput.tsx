@@ -76,7 +76,7 @@ function IdleInput(): JSX.Element {
                 <div className="flex w-full py-1 px-1 max-h-[300px] items-end gap-1">
                     {!query && !fillInHint && (
                         <span className="text-tertiary pointer-events-none absolute left-2.5 top-2 flex items-center gap-1">
-                            <span className="text-tertiary">What can I help you with?</span>
+                            <span className="text-tertiary">How can I help you?</span>
                             <span className="text-tertiary opacity-50 contrast-more:opacity-100 hidden @xl/main-content:inline">
                                 / for commands
                             </span>
