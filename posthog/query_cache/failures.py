@@ -20,7 +20,7 @@ QUERY_FAILURE_CACHE_COUNTER = Counter(
 )
 
 # A kind names a failure class that repeats on retry; transient conditions must never get one.
-FailureKind = Literal["memory_limit", "timeout", "too_slow", "query_size", "too_many_bytes"]
+FailureKind = Literal["memory_limit", "timeout", "too_slow", "query_size", "too_many_bytes", "too_many_rows"]
 
 Budget = Literal["interactive", "extended"]
 BUDGET_INTERACTIVE: Budget = "interactive"
@@ -58,6 +58,13 @@ class QueryFailureRecord:
     @property
     def is_open(self) -> bool:
         return self.open_until is not None and datetime.now(UTC) < self.open_until
+
+    @property
+    def retry_after_seconds(self) -> int:
+        """Whole seconds until the breaker lets a recalculation through again, for the Retry-After header."""
+        if self.open_until is None:
+            return 0
+        return max(0, int((self.open_until - datetime.now(UTC)).total_seconds()))
 
     def forbids(self, budget: Budget) -> bool:
         """A failure observed under the extended budget forbids every run, and timeout-independent
@@ -107,7 +114,7 @@ class QueryFailureCache:
             open_until: Optional[datetime] = None
             if failures >= policy.open_threshold:
                 max_doublings = (policy.max_backoff // BASE_BACKOFF).bit_length()
-                doublings = min(failures - policy.open_threshold, max_doublings)
+                doublings = min(failures - policy.open_threshold + 1, max_doublings)
                 open_until = datetime.now(UTC) + min(BASE_BACKOFF * 2**doublings, policy.max_backoff)
             record = QueryFailureRecord(
                 kind=kind,
@@ -147,7 +154,7 @@ class QueryFailureCache:
                 consecutive_failures=data["consecutive_failures"],
                 last_failed_at=datetime.fromisoformat(data["last_failed_at"]),
                 open_until=datetime.fromisoformat(data["open_until"]) if data["open_until"] else None,
-                budget=data.get("budget", BUDGET_INTERACTIVE),
+                budget=data.get("budget", BUDGET_EXTENDED),
             )
         except Exception:
             logger.exception("query_failure_cache_read_failed", key=self.key)
