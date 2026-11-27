@@ -212,6 +212,13 @@ def peek(key: str, budget: Budget) -> BucketDecision | BucketUnavailable:
     )
 
 
+def reset(key: str) -> bool:
+    """Refill a bucket to capacity by dropping its state. Used by support tooling to unblock a caller."""
+    deleted = get_client().delete(key)
+    logger.info("token_bucket_reset", key=key, deleted=deleted)
+    return deleted == 1
+
+
 def TEST_reset_scripts() -> None:
     """Drop cached script bindings so tests that swap the redis client re-register."""
     global _registered_scripts
